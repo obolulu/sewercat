@@ -1,0 +1,17 @@
+﻿title: victoriancat
+tags:
+---
+
+<<if visited("victoriancat") is false>>
+    cat: "Meow!"
+    player: oh hi!!
+<<else>>
+    <<jump Node1>>
+<<endif>>
+===
+title: Node1
+position: 306,5
+---
+    cat:what are you doing here??
+    player: I'm just passing by.
+===
