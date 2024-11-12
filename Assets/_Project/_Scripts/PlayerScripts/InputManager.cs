@@ -13,7 +13,7 @@ public class InputManager : MonoBehaviour
     public static bool CastPressed;
     public static bool SpellChangePressed;
     public static bool InteractPressed;
-
+    public static bool OpenInventory;
     
     private bool _castPressed;
     private bool _jumpPressed;
@@ -72,6 +72,22 @@ public class InputManager : MonoBehaviour
         {
             SpellChangePressed = true;
         }
+        else if (context.canceled)
+        {
+            SpellChangePressed = false;
+        }
+    }
+
+    private void OnOpenInventory(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            OpenInventory = true;
+        }
+        else if (context.canceled)
+        {
+            OpenInventory = false;
+        }
     }
     
     private void OnEnable()
@@ -85,6 +101,7 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.CastSpell.canceled += OnCast;
         _inputManager.PlayerControls.Interact.performed += OnInteract;
         _inputManager.PlayerControls.ChangeSpell.performed += OnChangeSpell;
+        _inputManager.PlayerControls.OpenInventory.performed += OnOpenInventory;
     }
 
     private void OnDisable()
@@ -98,10 +115,7 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.CastSpell.canceled -= OnCast;
         _inputManager.PlayerControls.Interact.performed -= OnInteract;
         _inputManager.PlayerControls.ChangeSpell.performed -= OnChangeSpell;
-    }
+        _inputManager.PlayerControls.OpenInventory.performed -= OnOpenInventory;
 
-    void Update()
-    {
-        
     }
 }

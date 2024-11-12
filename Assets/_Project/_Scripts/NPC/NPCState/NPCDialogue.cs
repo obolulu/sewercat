@@ -27,7 +27,7 @@ public class NPCDialogue : BaseState<NPCStateManager.NPCState>
 
     public override void ExitState()
     {
-        Debug.Log("exiting dialogue state");
+        //Debug.Log("exiting dialogue state");
 
         //DialogueUI.instance.EndDialogue();
     }
