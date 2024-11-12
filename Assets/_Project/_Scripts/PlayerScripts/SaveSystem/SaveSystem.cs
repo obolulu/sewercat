@@ -6,9 +6,14 @@ namespace _Project._Scripts.PlayerScripts.SaveSystem
     public class SaveSystem : MonoBehaviour
     {
         private string _savePath;
+        public SaveSystem Instance;
+        [SerializeField] private GameObject player;
+        
+        
         
         void Start()
         {
+            Instance = this;
             _savePath = Application.persistentDataPath + "/saveData.json";
         }
         

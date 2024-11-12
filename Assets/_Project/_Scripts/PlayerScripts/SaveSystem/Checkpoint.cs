@@ -5,8 +5,6 @@ namespace _Project._Scripts.PlayerScripts.SaveSystem
 {
     public class Checkpoint : MonoBehaviour
     {
-        [SerializeField] private SaveSystem saveSystem;
-        
         public int checkpointID;
 
         private void OnTriggerEnter(Collider other)
@@ -26,6 +24,8 @@ namespace _Project._Scripts.PlayerScripts.SaveSystem
                 playerMana = 100,
                 inventoryItems = new System.Collections.Generic.List<string>(),
             };
+            
         }
+        
     }
 }
