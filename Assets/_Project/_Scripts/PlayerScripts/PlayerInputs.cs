@@ -89,6 +89,24 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Save"",
+                    ""type"": ""Button"",
+                    ""id"": ""11621324-4450-4100-ae93-b68474e648a6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Load"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b48d0b5-b72a-4619-90cb-49d6214053b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,7 +170,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""76eccbe7-5a66-4162-a429-030da699fd5c"",
                     ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
-                    ""processors"": ""Clamp(max=1)"",
+                    ""processors"": ""Normalize(max=1)"",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": true,
@@ -229,7 +247,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""268dc84c-24ff-42ad-86a4-9f7eba7b0948"",
                     ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
-                    ""processors"": ""AxisDeadzone,Clamp(max=1)"",
+                    ""processors"": ""AxisDeadzone,Normalize(max=1)"",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": true,
@@ -289,6 +307,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""OpenInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ca00dbb-28fc-4a0b-ad6a-91955d7746b1"",
+                    ""path"": ""<Keyboard>/f5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Save"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4a9722f-7a99-48fe-bf41-7d4f228994ad"",
+                    ""path"": ""<Keyboard>/f9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Load"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -310,6 +350,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerControls_CastSpell = m_PlayerControls.FindAction("Cast Spell", throwIfNotFound: true);
         m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
         m_PlayerControls_OpenInventory = m_PlayerControls.FindAction("OpenInventory", throwIfNotFound: true);
+        m_PlayerControls_Save = m_PlayerControls.FindAction("Save", throwIfNotFound: true);
+        m_PlayerControls_Load = m_PlayerControls.FindAction("Load", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -378,6 +420,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_CastSpell;
     private readonly InputAction m_PlayerControls_Interact;
     private readonly InputAction m_PlayerControls_OpenInventory;
+    private readonly InputAction m_PlayerControls_Save;
+    private readonly InputAction m_PlayerControls_Load;
     public struct PlayerControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -389,6 +433,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @CastSpell => m_Wrapper.m_PlayerControls_CastSpell;
         public InputAction @Interact => m_Wrapper.m_PlayerControls_Interact;
         public InputAction @OpenInventory => m_Wrapper.m_PlayerControls_OpenInventory;
+        public InputAction @Save => m_Wrapper.m_PlayerControls_Save;
+        public InputAction @Load => m_Wrapper.m_PlayerControls_Load;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -419,6 +465,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @OpenInventory.started += instance.OnOpenInventory;
             @OpenInventory.performed += instance.OnOpenInventory;
             @OpenInventory.canceled += instance.OnOpenInventory;
+            @Save.started += instance.OnSave;
+            @Save.performed += instance.OnSave;
+            @Save.canceled += instance.OnSave;
+            @Load.started += instance.OnLoad;
+            @Load.performed += instance.OnLoad;
+            @Load.canceled += instance.OnLoad;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -444,6 +496,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @OpenInventory.started -= instance.OnOpenInventory;
             @OpenInventory.performed -= instance.OnOpenInventory;
             @OpenInventory.canceled -= instance.OnOpenInventory;
+            @Save.started -= instance.OnSave;
+            @Save.performed -= instance.OnSave;
+            @Save.canceled -= instance.OnSave;
+            @Load.started -= instance.OnLoad;
+            @Load.performed -= instance.OnLoad;
+            @Load.canceled -= instance.OnLoad;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -479,5 +537,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnCastSpell(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
+        void OnSave(InputAction.CallbackContext context);
+        void OnLoad(InputAction.CallbackContext context);
     }
 }

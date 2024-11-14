@@ -4,16 +4,21 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    public static InputManager Instance;
     private PlayerInputs _inputManager;
     public static Vector3 moveDirection;
-    
+    public static Vector3 moveDirectionNormalized => moveDirection.normalized;
     
     public static bool StartJump;
     public static bool CastPressed;
     public static bool SpellChangePressed;
     public static bool InteractPressed;
     public static bool OpenInventory;
+    
+    public static bool SaveButtonPressed;
+    public static bool LoadButtonPressed;
+    
+    public static event Action SaveGame;
+    public static event Action LoadGame;
     
     private bool _castPressed;
     private bool _jumpPressed;
@@ -39,7 +44,7 @@ public class InputManager : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        moveDirection = Vector2.ClampMagnitude(_inputManager.PlayerControls.Move.ReadValue<Vector2>(),1f);
+        moveDirection = _inputManager.PlayerControls.Move.ReadValue<Vector2>();
     }
 
     private void OnCast(InputAction.CallbackContext context)
@@ -89,6 +94,22 @@ public class InputManager : MonoBehaviour
             OpenInventory = false;
         }
     }
+
+    private void OnSaveGame(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            SaveGame?.Invoke();
+        }
+    }
+
+    private void OnLoadGame(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            LoadGame?.Invoke();
+        }
+    }
     
     private void OnEnable()
     {
@@ -102,6 +123,9 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.Interact.performed += OnInteract;
         _inputManager.PlayerControls.ChangeSpell.performed += OnChangeSpell;
         _inputManager.PlayerControls.OpenInventory.performed += OnOpenInventory;
+        _inputManager.PlayerControls.Save.performed += OnSaveGame;
+        _inputManager.PlayerControls.Load.performed += OnLoadGame;
+
     }
 
     private void OnDisable()
@@ -116,6 +140,7 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.Interact.performed -= OnInteract;
         _inputManager.PlayerControls.ChangeSpell.performed -= OnChangeSpell;
         _inputManager.PlayerControls.OpenInventory.performed -= OnOpenInventory;
-
+        _inputManager.PlayerControls.Save.performed -= OnSaveGame;
+        _inputManager.PlayerControls.Load.performed -= OnLoadGame;
     }
 }

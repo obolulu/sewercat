@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts.Stats
 {
-    public class PlayerStats : MonoBehaviour
+    public class PlayerStats
     {
-        public float Health { get; set; }
-
-        public float Mana { get; set; }
+        public PlayerStats()
+        {
+        }
+        [ReadOnly] public float Health { get; set; }
+        [ReadOnly] public float Mana { get; set; }
 
         public float Speed { get; set; }
 

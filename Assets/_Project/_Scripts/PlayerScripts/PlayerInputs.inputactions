@@ -67,6 +67,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Save",
+                    "type": "Button",
+                    "id": "11621324-4450-4100-ae93-b68474e648a6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Load",
+                    "type": "Button",
+                    "id": "6b48d0b5-b72a-4619-90cb-49d6214053b1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -130,7 +148,7 @@
                     "id": "76eccbe7-5a66-4162-a429-030da699fd5c",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
-                    "processors": "Clamp(max=1)",
+                    "processors": "Normalize(max=1)",
                     "groups": "",
                     "action": "Move",
                     "isComposite": true,
@@ -207,7 +225,7 @@
                     "id": "268dc84c-24ff-42ad-86a4-9f7eba7b0948",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
-                    "processors": "AxisDeadzone,Clamp(max=1)",
+                    "processors": "AxisDeadzone,Normalize(max=1)",
                     "groups": "",
                     "action": "Move",
                     "isComposite": true,
@@ -265,6 +283,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "OpenInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ca00dbb-28fc-4a0b-ad6a-91955d7746b1",
+                    "path": "<Keyboard>/f5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Save",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e4a9722f-7a99-48fe-bf41-7d4f228994ad",
+                    "path": "<Keyboard>/f9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Load",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

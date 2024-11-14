@@ -10,13 +10,13 @@ namespace _Project._Scripts.PlayerScripts.SaveSystem
         {
             if (other.CompareTag("Player"))
             {
-                SaveGameAtCheckpoint(checkpointID);
+                SaveGameAtCheckpoint();
             }
         }
 
-        private void SaveGameAtCheckpoint(int cpID)
+        private void SaveGameAtCheckpoint()
         {
-            SaveSystem.Instance.SaveData(cpID);
+            SaveDirectory.SaveSystem.Instance.SaveGame();
         }
     }
 }
