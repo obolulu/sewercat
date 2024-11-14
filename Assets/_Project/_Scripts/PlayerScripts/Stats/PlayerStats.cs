@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-namespace _Project._Scripts.PlayerScripts.Stats
+﻿namespace _Project._Scripts.PlayerScripts.Stats
 {
-    public class PlayerStats : MonoBehaviour
+    public class PlayerStats
     {
         public float Health { get; set; }
 
