@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 134348562}
   - component: {fileID: 134348561}
   - component: {fileID: 134348564}
+  - component: {fileID: 134348565}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -264,6 +265,18 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &134348565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134348558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2304248cbe3b46a78a9a7e8d2064a376, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &216618134
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,7 +954,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -4446246929660399971, guid: 9a2e2431242ba6d45b3f754ae8e6c6c1, type: 3}
+  - {fileID: -1546552553534257281, guid: 9a2e2431242ba6d45b3f754ae8e6c6c1, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1089,6 +1102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 655741904}
   - component: {fileID: 655741905}
+  - component: {fileID: 655741906}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Untagged
@@ -1105,7 +1119,7 @@ Transform:
   m_GameObject: {fileID: 655741903}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.34006405, y: -0.24374509, z: 0.391083}
+  m_LocalPosition: {x: 7.414, y: -0.916, z: 5.697}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1124,6 +1138,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   checkpointID: 1
+--- !u!65 &655741906
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655741903}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,6 +1971,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1254458687}
+  - component: {fileID: 1254458688}
   m_Layer: 0
   m_Name: CheckpointManager
   m_TagString: Untagged
@@ -1960,6 +1996,20 @@ Transform:
   - {fileID: 1796022580}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1254458688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254458686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94b2b82654c242c2ade5c7118c0a43b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 134348558}
+  playerStats: {fileID: 134348565}
 --- !u!1 &1286051897
 GameObject:
   m_ObjectHideFlags: 0
@@ -3223,7 +3273,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7244060264802086511, guid: 9a2e2431242ba6d45b3f754ae8e6c6c1, type: 3}
+  - {fileID: -1546552553534257281, guid: 9a2e2431242ba6d45b3f754ae8e6c6c1, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3277,6 +3327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1796022580}
+  - component: {fileID: 1796022581}
   m_Layer: 0
   m_Name: Checkpoint (1)
   m_TagString: Untagged
@@ -3299,6 +3350,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1254458687}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1796022581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796022579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkpointID: 2
 --- !u!1001 &1796274098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3667,10 +3731,10 @@ SceneRoots:
   - {fileID: 1748255530}
   - {fileID: 1747487145}
   - {fileID: 134348560}
+  - {fileID: 1254458687}
   - {fileID: 1310923979}
   - {fileID: 296358629}
   - {fileID: 945148762}
-  - {fileID: 1254458687}
   - {fileID: 1286051900}
   - {fileID: 971531021}
   - {fileID: 622925874}

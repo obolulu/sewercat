@@ -11,5 +11,6 @@ namespace _Project._Scripts.PlayerScripts.SaveSystem
         public float playerHealth;
         public float playerMana;
         public List<String> inventoryItems;
+        public int playerCheckpoint;
     }
 }

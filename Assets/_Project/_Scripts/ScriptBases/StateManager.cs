@@ -39,17 +39,17 @@ public abstract class StateManager<EState> : MonoBehaviour where EState : Enum
     // not sure if "protected" is the right thing for the functions, check later
     protected void OnTriggerEnter(Collider other)
     {
-        CurrentState.OnTriggerEnter(other);
+        //CurrentState.OnTriggerEnter(other);
     }
 
     protected void OnTriggerStay(Collider other)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     protected void OnTriggerExit(Collider other)
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
     
 }

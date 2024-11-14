@@ -1,6 +1,9 @@
-﻿namespace _Project._Scripts.PlayerScripts.Stats
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+namespace _Project._Scripts.PlayerScripts.Stats
 {
-    public class PlayerStats
+    public class PlayerStats : MonoBehaviour
     {
         public float Health { get; set; }
 
@@ -11,5 +14,7 @@
         public float MaxHealth { get; set; }
 
         public float MaxMana { get; set; }
+        
+        public List<string> InventoryItems { get; set; }
     }
 }

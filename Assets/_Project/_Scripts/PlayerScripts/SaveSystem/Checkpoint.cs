@@ -1,31 +1,22 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts.SaveSystem
 {
     public class Checkpoint : MonoBehaviour
     {
         public int checkpointID;
-
+        
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                SaveGameAtCheckpoint();
+                SaveGameAtCheckpoint(checkpointID);
             }
         }
 
-        private void SaveGameAtCheckpoint()
+        private void SaveGameAtCheckpoint(int cpID)
         {
-            SaveData data = new SaveData
-            {
-                version = "0.1",
-                playerHealth = 100,
-                playerMana = 100,
-                inventoryItems = new System.Collections.Generic.List<string>(),
-            };
-            
+            SaveSystem.Instance.SaveData(cpID);
         }
-        
     }
 }
