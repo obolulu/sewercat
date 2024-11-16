@@ -19,5 +19,7 @@ namespace _Project._Scripts.PlayerScripts.Stats
         public float MaxMana { get; set; }
         
         public List<string> InventoryItems { get; set; }
+        
+        public List<int> InteractedItems { get; set; }
     }
 }

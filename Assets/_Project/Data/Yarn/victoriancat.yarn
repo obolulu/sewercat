@@ -1,12 +1,17 @@
 ﻿title: victoriancat
 tags:
+position: -36,-1
 ---
 
 <<if visited("victoriancat") is false>>
     cat: "Meow!"
     player: oh hi!!
+ <<elseif playerHasItem("test_id")>>
+    cat: "you have item!"
+    player: "yeah i know!"
 <<else>>
-    <<jump Node1>>
+    cat: "you don't have item!"
+    player: "i know!"
 <<endif>>
 ===
 title: Node1

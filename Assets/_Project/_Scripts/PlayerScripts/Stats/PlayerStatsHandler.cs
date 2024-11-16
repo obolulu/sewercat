@@ -1,11 +1,15 @@
 ﻿using System;
 using UnityEngine;
+using Yarn.Unity;
 
 namespace _Project._Scripts.PlayerScripts.Stats
 {
     public class PlayerStatsHandler : MonoBehaviour
     {
-        private PlayerStats playerStats;
+        [SerializeField] private DialogueRunner dialogueRunner;
+        
+        public static PlayerStats playerStats;
+        
         private void Awake()
         {
             playerStats = new PlayerStats();
@@ -16,7 +20,9 @@ namespace _Project._Scripts.PlayerScripts.Stats
             else
             {
                 Debug.LogError("SaveSystem instance is not initialized.");
-            }            
+            }
+            //dialogueRunner?.AddFunction("playerHasItem", new Func<string, object>((string item) => { return PlayerHasItem(item); }));
+            dialogueRunner?.AddFunction("addItemToInventory", new Func<string, object>((string item) => { AddItemToInventory(item); return null; }));
         }
 
         public event Action OnHealthChanged;
@@ -71,6 +77,12 @@ namespace _Project._Scripts.PlayerScripts.Stats
         public void RemoveItemFromInventory(string item)
         {
             playerStats.InventoryItems.Remove(item);
+        }
+        
+        [YarnFunction("playerHasItem")]
+        public static bool PlayerHasItem(string item)
+        {
+            return playerStats.InventoryItems.Contains(item);
         }
         
         public void SetMaxHealth(float maxHealth)

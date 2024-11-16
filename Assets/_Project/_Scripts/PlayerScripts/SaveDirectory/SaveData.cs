@@ -15,5 +15,6 @@ namespace _Project._Scripts.PlayerScripts.SaveSystem
         public List<String> inventoryItems;
         public int playerCheckpoint;
         public UnityEngine.Vector3 playerLocation;
+        public List<int> interactedItems;
     }
 }

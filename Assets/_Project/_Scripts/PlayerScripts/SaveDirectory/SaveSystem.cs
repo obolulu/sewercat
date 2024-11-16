@@ -43,7 +43,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
             Debug.Log("Game Saved on: " + Application.persistentDataPath);
         }
 
-        private SaveData LoadData()
+        public SaveData LoadData()
         {
             if (File.Exists(_savePath))
             {
@@ -68,6 +68,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
                 playerMana      = playerStats.Mana,
                 playerMaxMana   = playerStats.MaxMana,
                 inventoryItems  = playerStats.InventoryItems,
+                interactedItems = playerStats.InteractedItems,
                 playerLocation = new UnityEngine.Vector3(player.transform.position.x, player.transform.position.y,
                     player.transform.position.z),
             };
@@ -83,6 +84,8 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
             playerStats.Mana           = data.playerMana;
             playerStats.MaxMana        = data.playerMaxMana;
             playerStats.InventoryItems = data.inventoryItems;
+            playerStats.InteractedItems = data.interactedItems;
+            
             player.transform.position =
                 new UnityEngine.Vector3(data.playerLocation.x, data.playerLocation.y, data.playerLocation.z);
             

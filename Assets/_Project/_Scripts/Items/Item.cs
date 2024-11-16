@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Project._Scripts.PlayerScripts.Stats;
@@ -15,7 +16,6 @@ public class Item : MonoBehaviour, IInteractable
     
     private void Start()
     {
-        playerStatsHandler = FindObjectOfType<PlayerStatsHandler>();
         if (playerStatsHandler == null)
         {
             Debug.LogError("PlayerStatsHandler not found in the scene.");
@@ -52,5 +52,13 @@ public class Item : MonoBehaviour, IInteractable
         {
             Debug.LogError("PlayerStatsHandler is not assigned.");
         }
+        MakeItemInteracted();
+    }
+
+    private void MakeItemInteracted()
+    {
+        var items = ItemManager.instance.items;
+        int toAdd =  gameObject.GetInstanceID();
+        PlayerStatsHandler.playerStats?.InteractedItems?.Add(toAdd);
     }
 }
