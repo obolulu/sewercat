@@ -1,8 +1,7 @@
-﻿title: victoriancat
-tags:
-position: -36,-1
+title: victoriancat
+tags: 
+position: -21,4
 ---
-
 <<if visited("victoriancat") is false>>
     cat: "Meow!"
     player: oh hi!!

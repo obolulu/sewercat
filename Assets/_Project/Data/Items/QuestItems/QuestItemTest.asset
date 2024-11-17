@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 038b5bf19104471fb70ccbf24412fb70, type: 3}
-  m_Name: testQuestItem
+  m_Name: QuestItemTest
   m_EditorClassIdentifier: 
-  itemID: test_id
-  itemName: testitemoriginal
-  itemDescription: test desc
-  itemIcon: {fileID: 21300000, guid: a6437d2f3b1bf4da7a9619a6b6446a16, type: 3}
-  itemValue: 15
+  itemID: testest
+  itemName: 
+  itemDescription: 
+  itemIcon: {fileID: 0}
+  itemValue: 0
