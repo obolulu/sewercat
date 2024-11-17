@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Yarn.Unity;
 
@@ -7,7 +9,8 @@ namespace _Project._Scripts.PlayerScripts.Stats
     public class PlayerStatsHandler : MonoBehaviour
     {
         [SerializeField] private DialogueRunner dialogueRunner;
-        
+        [SerializeField] private ItemDatabase database;
+
         public static PlayerStats playerStats;
         
         private void Awake()
@@ -78,6 +81,16 @@ namespace _Project._Scripts.PlayerScripts.Stats
         {
             playerStats.InventoryItems.Remove(item);
         }
+
+        public void AddInteractedItem(int item)
+        {
+            playerStats.InteractedItems.Add(item);
+        }
+
+        public void RemoveInteractedItem(int item)
+        {
+            playerStats.InteractedItems.Remove(item);
+        }
         
         [YarnFunction("playerHasItem")]
         public static bool PlayerHasItem(string item)
@@ -85,6 +98,21 @@ namespace _Project._Scripts.PlayerScripts.Stats
             return playerStats.InventoryItems.Contains(item);
         }
         
+        public static List<string> GetInventoryItemsID()
+        {
+            return playerStats.InventoryItems;
+        }
+
+        public List<ItemData> GetInventoryItems()
+        {
+            List<ItemData> items = new List<ItemData>();
+            foreach (var item in playerStats.InventoryItems)
+            {
+                var toAdd = database.GetItemData(item);
+                items.Add(toAdd);
+            }
+            return items;
+        }
         public void SetMaxHealth(float maxHealth)
         {
             playerStats.MaxHealth = maxHealth;

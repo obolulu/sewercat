@@ -14,6 +14,8 @@ public class Item : MonoBehaviour, IInteractable
     public string itemID;
     public int itemValue;
     
+    public int quantity;
+
     private void Start()
     {
         if (playerStatsHandler == null)
@@ -24,15 +26,20 @@ public class Item : MonoBehaviour, IInteractable
         InitializeItem();
     }
 
-    private void InitializeItem()
+    public void InitializeItem(ItemData itemdata = null)
     {
-        if (_itemData != null)
+        if (itemdata == null)
         {
-            itemName        = _itemData.itemName;
-            itemDescription = _itemData.itemDescription;
-            itemIcon        = _itemData.itemIcon;
-            itemID          = _itemData.itemID;
-            itemValue       = _itemData.itemValue;
+            itemdata = _itemData;
+        }
+    
+        if (itemdata != null)
+        {
+            itemName        = itemdata.itemName;
+            itemDescription = itemdata.itemDescription;
+            itemIcon        = itemdata.itemIcon;
+            itemID          = itemdata.itemID;
+            itemValue       = itemdata.itemValue;
         }
         else
         {
