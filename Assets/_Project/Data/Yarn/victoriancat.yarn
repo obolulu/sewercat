@@ -5,10 +5,12 @@ position: -21,4
 <<if visited("victoriancat") is false>>
     cat: "Meow!"
     player: oh hi!!
+    -> test
  <<elseif playerHasItem("test_id")>>
     cat: "you have item!"
     player: "yeah i know!"
     -> Node1
+    -> Node2
 <<else>>
     cat: "you don't have item!"
     player: "i know!"

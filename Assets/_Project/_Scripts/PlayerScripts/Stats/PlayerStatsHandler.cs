@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using Yarn.Unity;
@@ -113,6 +114,13 @@ namespace _Project._Scripts.PlayerScripts.Stats
             }
             return items;
         }
+        
+        public List<ItemData> FilterItemsByType(string typeName)
+        {
+            var items   = GetInventoryItems();
+            var matches = items.Where(item => item.GetType().Name.Equals(typeName)).ToList();
+            return matches;
+        }
         public void SetMaxHealth(float maxHealth)
         {
             playerStats.MaxHealth = maxHealth;
@@ -128,7 +136,7 @@ namespace _Project._Scripts.PlayerScripts.Stats
             playerStats.Speed = speed;
         }
 
-        public PlayerStats getStats()
+        public PlayerStats GetStats()
         {
             return playerStats;
         }

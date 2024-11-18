@@ -25,7 +25,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
         {
             _savePath = Application.persistentDataPath + "/saveData.json";
             Instance              =  this;
-            playerStats           =  playerStatsHandler.getStats() as PlayerStats;
+            playerStats           =  playerStatsHandler.GetStats() as PlayerStats;
             InputManager.SaveGame += SaveGame;
             InputManager.LoadGame += LoadGame;
         }

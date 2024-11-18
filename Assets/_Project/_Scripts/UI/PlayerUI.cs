@@ -17,16 +17,15 @@ namespace _Project._Scripts.UI
 
         private void Start()
         {
-            playerStats                        =  playerStatsHandler.getStats();
+            playerStats                        =  playerStatsHandler.GetStats();
             playerStatsHandler.OnHealthChanged += UpdateHealthSlider;
             playerStatsHandler.OnManaChanged   += UpdateManaSlider;
             SaveSystem.OnLoad                  += UpdateUI;
-            UpdateUI();
         }
 
         private void UpdateUI()
         {
-            playerStats = playerStatsHandler.getStats();
+            playerStats = playerStatsHandler.GetStats();
             UpdateHealthSlider();
             UpdateManaSlider();
         }
