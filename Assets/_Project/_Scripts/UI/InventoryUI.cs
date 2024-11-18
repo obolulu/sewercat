@@ -6,6 +6,9 @@ using UnityEngine.UI;
 using _Project._Scripts.PlayerScripts.SaveDirectory;
 using UnityEngine.UIElements;
 using TMPro;
+using Sirenix.Utilities;
+using Unity.VisualScripting;
+using System.Linq;
 public class InventoryUI : MonoBehaviour
 {
     [SerializeField] private PlayerStatsHandler playerStatsHandler;
@@ -21,6 +24,8 @@ public class InventoryUI : MonoBehaviour
         items = new List<ItemData>();
         spawnedEntries = new List<GameObject>();
         SaveSystem.OnLoad += StartInventoryScreen;
+        var x = FilterItemsByType("QuestItemData");
+        Debug.Log(x);
     }
 
     private void OnEnable()
@@ -39,7 +44,13 @@ public class InventoryUI : MonoBehaviour
         items.Clear();
         ClearInventoryDisplay();
         items = playerStatsHandler.GetInventoryItems();
-        DrawInventoryList();
+        //DrawInventoryList();
+    }
+
+    private List<ItemData> FilterItemsByType(string typeName) 
+    {
+        var matches = items.Where(item => item.GetType().Name.Equals(typeName)).ToList();
+        return matches;
     }
 
     private void ClearInventoryDisplay()
