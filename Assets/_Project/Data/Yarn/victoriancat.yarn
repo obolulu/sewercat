@@ -8,6 +8,7 @@ position: -21,4
  <<elseif playerHasItem("test_id")>>
     cat: "you have item!"
     player: "yeah i know!"
+    -> Node1
 <<else>>
     cat: "you don't have item!"
     player: "i know!"
