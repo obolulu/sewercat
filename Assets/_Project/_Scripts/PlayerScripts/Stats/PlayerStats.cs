@@ -17,8 +17,7 @@ namespace _Project._Scripts.PlayerScripts.Stats
         public float MaxHealth { get; set; }
 
         public float MaxMana { get; set; }
-        
-        public List<string> InventoryItems { get; set; }
+        //public List<ItemData> InventoryDatas { get; set; } = new List<ItemData>();
         
         public List<int> InteractedItems { get; set; }
     }

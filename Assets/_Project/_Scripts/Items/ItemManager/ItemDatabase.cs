@@ -13,16 +13,17 @@ public class ItemDatabase : ScriptableObject
 {
     [SerializeField, AssetList(Path = "_Project/Data/Items")]
     private List<ItemData> availableItems = new List<ItemData>();
-    
     private Dictionary<string, ItemData> itemLookup = new Dictionary<string, ItemData>();
 
+    //public static ItemDatabase Instance { get; private set; }
     private void Awake()
     {
         SaveSystem.OnLoad += BuildLookupDictionary;
+        BuildLookupDictionary();
     }
     private void OnEnable()
     {
-        BuildLookupDictionary();
+        //BuildLookupDictionary();
     }
 
     private void BuildLookupDictionary()

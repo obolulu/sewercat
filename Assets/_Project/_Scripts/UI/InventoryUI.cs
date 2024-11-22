@@ -33,12 +33,12 @@ public class InventoryUI : MonoBehaviour
         ClearInventoryDisplay();
         items.Clear();
     }
-
+    
     private void StartInventoryScreen()
     {
         items.Clear();
         ClearInventoryDisplay();
-        items = playerStatsHandler.GetInventoryItems();
+        //items = playerStatsHandler.GetInventoryItems();
         //DrawInventoryList();
     }
 

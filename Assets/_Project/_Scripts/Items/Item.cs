@@ -52,8 +52,8 @@ public class Item : MonoBehaviour, IInteractable
     {
         if (playerStatsHandler)
         {
-            playerStatsHandler.AddItemToInventory(itemID);
-            Destroy(gameObject);
+            playerStatsHandler.AddItem(_itemData);
+            gameObject.SetActive(false);
         }
         else
         {

@@ -56,7 +56,11 @@ public class ItemManager : MonoBehaviour
             {
                 if (interactedItems.Contains(items[j]))
                 {
-                    Destroy(itemManager.transform.GetChild(j).gameObject);
+                    itemManager.transform.GetChild(j).gameObject.SetActive(false);
+                }
+                else
+                {
+                    itemManager.transform.GetChild(j).gameObject.SetActive(true);
                 }
             }
         

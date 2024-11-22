@@ -10,13 +10,17 @@ namespace _Project._Scripts.PlayerScripts.Stats
     public class PlayerStatsHandler : MonoBehaviour
     {
         [SerializeField] private DialogueRunner dialogueRunner;
-        [SerializeField] private ItemDatabase database;
+        [SerializeField] public ItemDatabase database;
 
+        public static PlayerInventory playerInventory;
         public static PlayerStats playerStats;
+        public static PlayerStatsHandler Instance;
         
         private void Awake()
         {
-            playerStats = new PlayerStats();
+            Instance        = this;
+            playerStats     = new PlayerStats();
+            playerInventory = new PlayerInventory();
             if (SaveDirectory.SaveSystem.Instance != null)
             {
                 SaveDirectory.SaveSystem.Instance.LoadGame();
@@ -25,8 +29,7 @@ namespace _Project._Scripts.PlayerScripts.Stats
             {
                 Debug.LogError("SaveSystem instance is not initialized.");
             }
-            //dialogueRunner?.AddFunction("playerHasItem", new Func<string, object>((string item) => { return PlayerHasItem(item); }));
-            dialogueRunner?.AddFunction("addItemToInventory", new Func<string, object>((string item) => { AddItemToInventory(item); return null; }));
+            //dialogueRunner.AddFunction("playerHasItem", (string item) => PlayerHasItem(item));
         }
 
         public event Action OnHealthChanged;
@@ -72,15 +75,21 @@ namespace _Project._Scripts.PlayerScripts.Stats
                 playerStats.Mana = 0;
             }
         }
-        
-        public void AddItemToInventory(string item)
+
+        public void AddItem(ItemData itemData)
         {
-            playerStats.InventoryItems.Add(item);
+            playerInventory.AddItem(itemData);
         }
         
-        public void RemoveItemFromInventory(string item)
+        [YarnCommand("AddItem")]
+        public static void AddItem(string itemID)
         {
-            playerStats.InventoryItems.Remove(item);
+            playerInventory.AddItem(PlayerStatsHandler.Instance.database.GetItemData(itemID));
+        }
+        
+        public void RemoveItemFromInventory(ItemData itemData)
+        {
+            playerInventory.RemoveItem(itemData);
         }
 
         public void AddInteractedItem(int item)
@@ -96,31 +105,42 @@ namespace _Project._Scripts.PlayerScripts.Stats
         [YarnFunction("playerHasItem")]
         public static bool PlayerHasItem(string item)
         {
-            return playerStats.InventoryItems.Contains(item);
+            Debug.Log("Checking for item: " + item);
+            var inventory = playerInventory.GetInventory();
+            for (int i = 0; i <inventory.Count; i++)
+            {
+                if (inventory[i].itemID == item)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
         
-        public static List<string> GetInventoryItemsID()
-        {
-            return playerStats.InventoryItems;
-        }
-
+        /*
         public List<ItemData> GetInventoryItems()
         {
             List<ItemData> items = new List<ItemData>();
-            foreach (var item in playerStats.InventoryItems)
+            foreach (var item in playerStats.InventoryDatas)
             {
                 var toAdd = database.GetItemData(item);
                 items.Add(toAdd);
             }
             return items;
         }
+        */
         
+        
+        /*
+         !!!!!! 
         public List<ItemData> FilterItemsByType(string typeName)
         {
-            var items   = GetInventoryItems();
+            var items   = playerStats.InventoryDatas;
             var matches = items.Where(item => item.GetType().Name.Equals(typeName)).ToList();
             return matches;
         }
+        */
         public void SetMaxHealth(float maxHealth)
         {
             playerStats.MaxHealth = maxHealth;

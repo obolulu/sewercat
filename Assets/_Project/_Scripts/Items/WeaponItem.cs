@@ -1,6 +1,6 @@
 ﻿namespace _Project._Scripts.Items
 {
-    public class Weapon : Item
+    public class WeaponItem : Item
     {
         
     }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using _Project._Scripts.PlayerScripts.SaveSystem;
 using _Project._Scripts.PlayerScripts.Stats;
 using UnityEngine;
@@ -9,10 +11,10 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
 {
     public class SaveSystem : MonoBehaviour
     {
-        [SerializeField] private GameObject         player;
-        [SerializeField] private PlayerStatsHandler playerStatsHandler;
-
-        public static SaveSystem  Instance;
+        [SerializeField]            private GameObject         player;
+        [SerializeField]            private PlayerStatsHandler playerStatsHandler;
+        //[SerializeField] private ItemDatabase       database;
+        public static                       SaveSystem         Instance;
         
         private       string      _savePath;
         private       StatsBase[] stats;
@@ -67,25 +69,48 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
                 playerMaxHealth = playerStats.MaxHealth,
                 playerMana      = playerStats.Mana,
                 playerMaxMana   = playerStats.MaxMana,
-                inventoryItems  = playerStats.InventoryItems,
+                inventoryItems = SaveItems(),
                 interactedItems = playerStats.InteractedItems,
                 playerLocation = new UnityEngine.Vector3(player.transform.position.x, player.transform.position.y,
                     player.transform.position.z),
             };
+            //SaveItems(data);
             SaveData(data);
             OnSave?.Invoke();
         }
 
+        public static List<string> SaveItems()
+        {
+            var inventory = PlayerStatsHandler.playerInventory.GetInventory();
+            string[] itemIDs = new string[inventory.Count];
+            for (int i = 0; i < inventory.Count; i++)
+            {
+                //data.inventoryItems.Add(playerStats.InventoryDatas[i].itemID);
+                itemIDs[i] = (inventory[i].itemID);
+            }
+
+            return itemIDs.ToList();
+        }
+
+        private static void LoadItems(SaveData data)
+        {
+            PlayerStatsHandler.playerInventory.ClearInventory();
+            for (var i = 0; i < data.inventoryItems.Count; i++)
+            {
+               PlayerStatsHandler.playerInventory.AddItem(data.inventoryItems[i]);
+            }
+
+        }
+    
         public void LoadGame()
         {
             var data = LoadData();
-            playerStats.Health         = data.playerHealth;
-            playerStats.MaxHealth      = data.playerMaxHealth;
-            playerStats.Mana           = data.playerMana;
-            playerStats.MaxMana        = data.playerMaxMana;
-            playerStats.InventoryItems = data.inventoryItems;
+            playerStats.Health          = data.playerHealth;
+            playerStats.MaxHealth       = data.playerMaxHealth;
+            playerStats.Mana            = data.playerMana;
+            playerStats.MaxMana         = data.playerMaxMana;
             playerStats.InteractedItems = data.interactedItems;
-            
+            LoadItems(data);
             player.transform.position =
                 new UnityEngine.Vector3(data.playerLocation.x, data.playerLocation.y, data.playerLocation.z);
             
