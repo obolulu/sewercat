@@ -18,7 +18,7 @@ public class ItemDatabase : ScriptableObject
     //public static ItemDatabase Instance { get; private set; }
     private void Awake()
     {
-        SaveSystem.OnLoad += BuildLookupDictionary;
+        //SaveSystem.OnLoad += BuildLookupDictionary;
         BuildLookupDictionary();
     }
     private void OnEnable()
@@ -26,7 +26,7 @@ public class ItemDatabase : ScriptableObject
         //BuildLookupDictionary();
     }
 
-    private void BuildLookupDictionary()
+    public void BuildLookupDictionary()
     {
         itemLookup.Clear();
         foreach (var item in availableItems) 

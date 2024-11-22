@@ -21,6 +21,7 @@ namespace _Project._Scripts.PlayerScripts.Stats
             Instance        = this;
             playerStats     = new PlayerStats();
             playerInventory = new PlayerInventory();
+            database.BuildLookupDictionary();
             if (SaveDirectory.SaveSystem.Instance != null)
             {
                 SaveDirectory.SaveSystem.Instance.LoadGame();
@@ -84,7 +85,7 @@ namespace _Project._Scripts.PlayerScripts.Stats
         [YarnCommand("AddItem")]
         public static void AddItem(string itemID)
         {
-            playerInventory.AddItem(PlayerStatsHandler.Instance.database.GetItemData(itemID));
+            playerInventory.AddItem(Instance.database.GetItemData(itemID));
         }
         
         public void RemoveItemFromInventory(ItemData itemData)
