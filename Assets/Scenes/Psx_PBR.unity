@@ -882,7 +882,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -1089900307388307348, guid: 631146ac6ec5dbd45b761111df95684e, type: 3}
+  - {fileID: -2625441520227608164, guid: 9a2e2431242ba6d45b3f754ae8e6c6c1, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1551,6 +1551,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 14482395387772978, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 14482395387772978, guid: 40d07eda9fc4a06468dc78e340ec050c,
         type: 3}
