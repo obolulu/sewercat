@@ -1,7 +1,5 @@
 using _Project._Scripts;
 using UnityEngine;
-using Shapes;
-
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private float interactRange;

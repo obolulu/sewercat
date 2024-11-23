@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Shapes;
 namespace _Project._Scripts
 {
     public abstract class Interactable : MonoBehaviour, IInteractable

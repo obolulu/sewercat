@@ -812,6 +812,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3568635b664d404694eda4992a44e683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalMaterials:
+  - {fileID: -1089900307388307348, guid: 631146ac6ec5dbd45b761111df95684e, type: 3}
+  materialsWithOutline:
+  - {fileID: -1089900307388307348, guid: 631146ac6ec5dbd45b761111df95684e, type: 3}
+  meshRenderer: {fileID: 479822327}
+  outlineShader: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   _itemData: {fileID: 11400000, guid: 9c469365333e3d547b4869ccd08d908d, type: 2}
   playerStatsHandler: {fileID: 134348566}
   itemName: 
@@ -876,7 +882,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -1089900307388307348, guid: 631146ac6ec5dbd45b761111df95684e, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1483,6 +1489,90 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1001 &675084053
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.768642
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000009536743
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.7025013
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4216859302048453862, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_Name
+      value: Rock_1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 14482395387772978, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 14482395387772978, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 14482395387772978, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -1089900307388307348, guid: 631146ac6ec5dbd45b761111df95684e,
+        type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 40d07eda9fc4a06468dc78e340ec050c, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2552,6 +2642,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 264704a8ef587f842992507ca3735d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalMaterials: []
+  materialsWithOutline: []
+  meshRenderer: {fileID: 0}
+  outlineShader: {fileID: 0}
   npcStateManager: {fileID: 1351630876}
 --- !u!1001 &1364880466
 PrefabInstance:
@@ -4426,3 +4520,4 @@ SceneRoots:
   - {fileID: 1770649656}
   - {fileID: 46314332}
   - {fileID: 789622604}
+  - {fileID: 675084053}
