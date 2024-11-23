@@ -18,13 +18,5 @@ public class YarnCommands : MonoBehaviour
         );
         */
     }
-
-    /*
-    private bool PlayerHasItem(string item)
-    {
-        bool hasItem = playerStatsHandler.PlayerHasItem(item);
-        dialogueRunner.VariableStorage.SetValue("$playerHasItem", hasItem);
-        return hasItem;
-    }
-    */
+    
 }

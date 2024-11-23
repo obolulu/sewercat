@@ -1,9 +1,10 @@
+using _Project._Scripts;
 using UnityEngine;
 
-public class NPCScript : MonoBehaviour, IInteractable
+public class NPCScript : Interactable
 {
     [SerializeField] private NPCStateManager npcStateManager;
-    public void onInteract()
+    public override void onInteract()
     {
         npcStateManager.TransitionToState(NPCStateManager.NPCState.Dialogue);
     }

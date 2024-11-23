@@ -2,6 +2,7 @@
 using _Project._Scripts.PlayerScripts.Stats;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 namespace _Project._Scripts.UI
 {
@@ -22,7 +23,6 @@ namespace _Project._Scripts.UI
             playerStatsHandler.OnManaChanged   += UpdateManaSlider;
             SaveSystem.OnLoad                  += UpdateUI;
         }
-
         private void UpdateUI()
         {
             playerStats = playerStatsHandler.GetStats();

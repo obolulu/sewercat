@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Project._Scripts;
 using _Project._Scripts.PlayerScripts.Stats;
 using UnityEngine;
 
-public class Item : MonoBehaviour, IInteractable
+public class Item : Interactable
 {
     [SerializeField]             private ItemData _itemData;
     [SerializeField] private PlayerStatsHandler playerStatsHandler;
@@ -48,7 +49,7 @@ public class Item : MonoBehaviour, IInteractable
     }
     
     
-    public void onInteract()
+    public override void onInteract()
     {
         if (playerStatsHandler)
         {
