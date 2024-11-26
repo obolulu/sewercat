@@ -105,14 +105,14 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
         public void LoadGame()
         {
             var data = LoadData();
+            player.transform.position =
+                new UnityEngine.Vector3(data.playerLocation.x, data.playerLocation.y, data.playerLocation.z);
             playerStats.Health          = data.playerHealth;
             playerStats.MaxHealth       = data.playerMaxHealth;
             playerStats.Mana            = data.playerMana;
             playerStats.MaxMana         = data.playerMaxMana;
-            playerStats.InteractedItems = data.interactedItems;
+            playerStats.InteractedItems = data.interactedItems;;
             LoadItems(data);
-            player.transform.position =
-                new UnityEngine.Vector3(data.playerLocation.x, data.playerLocation.y, data.playerLocation.z);
             
             OnLoad?.Invoke();
 

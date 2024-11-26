@@ -14,7 +14,7 @@ public class WeaponWheelUI : MonoBehaviour
     public class WeaponChoice
     {
         public string     name;
-        public GameObject weaponPrefab;
+        public WeaponData weaponData;
         public Sprite icon;
     }
     
@@ -23,11 +23,11 @@ public class WeaponWheelUI : MonoBehaviour
     [SerializeField] private List<WeaponChoice> weapons       = new List<WeaponChoice>();
     [SerializeField] private float slowMotionTimeScale = 0.2f;
     
-
     [Header("References")] 
     [SerializeField] private Transform selectedWeaponSlot;
-    [SerializeField]             private GameObject wheelUI;
-    [SerializeField] private TextMeshProUGUI          text;
+    [SerializeField]             private GameObject      wheelUI;
+    [SerializeField]             private TextMeshProUGUI text;
+    [SerializeField] private WeaponHandler               weaponHandler;
     
     [Header("UI References")]
     [SerializeField] private Transform wheelCenter;
@@ -49,14 +49,14 @@ public class WeaponWheelUI : MonoBehaviour
         
         if(weapons.Count > 0)
         {
-            //EquipWeapon(0);
+            EquipWeapon(0);
         }
         InputManager.OpenInventoryEvent += ToggleWheelOn;
         InputManager.CloseInventoryEvent += ToggleWheelOff;
         SaveSystem.OnLoad += InstantiateWeapons;
         InstantiateWeapons();
     }
-
+    
     private void Update()
     {
         if (isWheelActive)
@@ -64,6 +64,7 @@ public class WeaponWheelUI : MonoBehaviour
             HandleWeaponSelection();
         }
     }
+    
     private void HandleWeaponSelection()
     {
         // Get mouse position relative to wheel center
@@ -110,9 +111,11 @@ public class WeaponWheelUI : MonoBehaviour
 
         // Spawn new weapon
         WeaponChoice weapon = weapons[index];
-        currentWeapon = Instantiate(weapon.weaponPrefab, selectedWeaponSlot.position, selectedWeaponSlot.rotation, selectedWeaponSlot);
+        //currentWeapon = Instantiate(weapon.weaponPrefab, selectedWeaponSlot.position, selectedWeaponSlot.rotation, selectedWeaponSlot);
         currentWeaponIndex = index;
         text.text = weapon.name;
+        weaponHandler.EquipWeapon(weapon.weaponData);
+        
     }
     
     
@@ -168,7 +171,7 @@ public class WeaponWheelUI : MonoBehaviour
         WeaponChoice newWeapon = new WeaponChoice
         {
             name         = weaponData.itemName,
-            weaponPrefab = weaponData.weaponPrefab,
+            weaponData   = weaponData,
             icon         = weaponData.itemIcon
         };
         weapons.Add(newWeapon);

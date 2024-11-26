@@ -23,6 +23,12 @@ public class InputManager : MonoBehaviour
     public static event Action OpenInventoryEvent;
     public static event Action CloseInventoryEvent;
     
+    public static event Action LeftClickDown;
+    public static event Action LeftClickUp;
+    
+    public static event Action RightClickDown;
+    public static event Action RightClickUp;
+    
     private bool _castPressed;
     private bool _jumpPressed;
     private bool _leftClickDown;
@@ -50,16 +56,16 @@ public class InputManager : MonoBehaviour
         moveDirection = _inputManager.PlayerControls.Move.ReadValue<Vector2>();
     }
 
-    private void OnCast(InputAction.CallbackContext context)
+    private void OnLeftMouseDown(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            CastPressed = true;
+            LeftClickDown?.Invoke();
         }
         
         else if (context.canceled)
         {
-            CastPressed = false;
+            LeftClickUp?.Invoke();
         }
     }
 
@@ -117,33 +123,33 @@ public class InputManager : MonoBehaviour
     private void OnEnable()
     {
         _inputManager.Enable();
-        _inputManager.PlayerControls.Jump.performed += OnJump;
-        _inputManager.PlayerControls.Jump.canceled += OnJump;
-        _inputManager.PlayerControls.Move.performed += OnMove;
-        _inputManager.PlayerControls.Move.canceled +=  OnMove;
-        _inputManager.PlayerControls.CastSpell.performed += OnCast;
-        _inputManager.PlayerControls.CastSpell.canceled += OnCast;
-        _inputManager.PlayerControls.Interact.performed += OnInteract;
-        _inputManager.PlayerControls.ChangeSpell.performed += OnChangeSpell;
+        _inputManager.PlayerControls.Jump.performed          += OnJump;
+        _inputManager.PlayerControls.Jump.canceled           += OnJump;
+        _inputManager.PlayerControls.Move.performed          += OnMove;
+        _inputManager.PlayerControls.Move.canceled           += OnMove;
+        _inputManager.PlayerControls.CastSpell.performed     += OnLeftMouseDown;
+        _inputManager.PlayerControls.CastSpell.canceled      += OnLeftMouseDown;
+        _inputManager.PlayerControls.Interact.performed      += OnInteract;
+        _inputManager.PlayerControls.ChangeSpell.performed   += OnChangeSpell;
         _inputManager.PlayerControls.OpenInventory.performed += OnOpenInventory;
-        _inputManager.PlayerControls.Save.performed += OnSaveGame;
-        _inputManager.PlayerControls.Load.performed += OnLoadGame;
+        _inputManager.PlayerControls.Save.performed          += OnSaveGame;
+        _inputManager.PlayerControls.Load.performed          += OnLoadGame;
 
     }
 
     private void OnDisable()
     {
         _inputManager.Disable();
-        _inputManager.PlayerControls.Jump.performed -= OnJump;
-        _inputManager.PlayerControls.Jump.canceled -= OnJump;
-        _inputManager.PlayerControls.Move.performed -= OnMove;
-        _inputManager.PlayerControls.Move.canceled -=  OnMove;
-        _inputManager.PlayerControls.CastSpell.performed -= OnCast;
-        _inputManager.PlayerControls.CastSpell.canceled -= OnCast;
-        _inputManager.PlayerControls.Interact.performed -= OnInteract;
-        _inputManager.PlayerControls.ChangeSpell.performed -= OnChangeSpell;
+        _inputManager.PlayerControls.Jump.performed          -= OnJump;
+        _inputManager.PlayerControls.Jump.canceled           -= OnJump;
+        _inputManager.PlayerControls.Move.performed          -= OnMove;
+        _inputManager.PlayerControls.Move.canceled           -= OnMove;
+        _inputManager.PlayerControls.CastSpell.performed     -= OnLeftMouseDown;
+        _inputManager.PlayerControls.CastSpell.canceled      -= OnLeftMouseDown;
+        _inputManager.PlayerControls.Interact.performed      -= OnInteract;
+        _inputManager.PlayerControls.ChangeSpell.performed   -= OnChangeSpell;
         _inputManager.PlayerControls.OpenInventory.performed -= OnOpenInventory;
-        _inputManager.PlayerControls.Save.performed -= OnSaveGame;
-        _inputManager.PlayerControls.Load.performed -= OnLoadGame;
+        _inputManager.PlayerControls.Save.performed          -= OnSaveGame;
+        _inputManager.PlayerControls.Load.performed          -= OnLoadGame;
     }
 }
