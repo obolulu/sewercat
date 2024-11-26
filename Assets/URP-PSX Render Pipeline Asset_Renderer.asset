@@ -18,15 +18,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   outlineSettings:
-    outlineColor: {r: 0.9622642, g: 0.59460664, b: 0.59460664, a: 1}
-    outlineScale: 1.02
+    outlineColor: {r: 0.43702343, g: 0.4433962, b: 0.4203898, a: 1}
+    outlineScale: 0.86
     depthThreshold: 21.2
     robertsCrossMultiplier: 116
-    normalThreshold: 0.4
-    steepAngleThreshold: 0.306
-    steepAngleMultiplier: 68
+    normalThreshold: 0.303
+    steepAngleThreshold: 1.299
+    steepAngleMultiplier: 2
     transparentBackground: 0
-    backgroundColor: {r: 1, g: 1, b: 1, a: 0}
+    backgroundColor: {r: 0, g: 0, b: 0, a: 0}
     colorFormat: 0
     depthBufferBits: 0
     filterMode: 0

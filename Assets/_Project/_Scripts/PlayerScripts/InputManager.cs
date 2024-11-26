@@ -20,6 +20,9 @@ public class InputManager : MonoBehaviour
     public static event Action SaveGame;
     public static event Action LoadGame;
     
+    public static event Action OpenInventoryEvent;
+    public static event Action CloseInventoryEvent;
+    
     private bool _castPressed;
     private bool _jumpPressed;
     private bool _leftClickDown;
@@ -87,11 +90,11 @@ public class InputManager : MonoBehaviour
     {
         if(context.performed)
         {
-            OpenInventory = true;
+            OpenInventoryEvent?.Invoke();
         }
-        else if (context.canceled)
+        else if(context.canceled)
         {
-            OpenInventory = false;
+            CloseInventoryEvent?.Invoke();
         }
     }
 

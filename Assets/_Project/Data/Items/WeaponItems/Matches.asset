@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6839426168400cbf5cebcff1057cda, type: 3}
+  m_Name: Matches
+  m_EditorClassIdentifier: 
+  itemID: match
+  itemName: matches weapon
+  itemDescription: matches weapon. pickable.
+  itemIcon: {fileID: 21300000, guid: 528a6dd601766934abb8b1053bd798ef, type: 3}
+  itemValue: 0
+  weaponPrefab: {fileID: -927199367670048503, guid: 9549f75e9d333504d84f0a299e4931a1,
+    type: 3}

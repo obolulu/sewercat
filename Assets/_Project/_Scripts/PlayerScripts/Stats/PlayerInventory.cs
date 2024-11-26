@@ -51,7 +51,6 @@ public class PlayerInventory
     {
         Type itemType = item.GetType();
         _inventoryCategories[itemType].Add(item);
-        
     }
     public void RemoveItem(ItemData item)
     {
@@ -88,6 +87,11 @@ public class PlayerInventory
     {
         Debug.Log(_inventoryCategories.SelectMany(category => category.Value).ToList());
         return _inventoryCategories.SelectMany(category => category.Value).ToList();
+    }
+    
+    public List<ItemData> GetInventory(Type type)
+    {
+        return _inventoryCategories[type];
     }
     /*
     private Type GetItemCategory(ItemData item)
