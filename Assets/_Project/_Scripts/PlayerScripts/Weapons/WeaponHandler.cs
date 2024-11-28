@@ -61,7 +61,7 @@ public class WeaponHandler : MonoBehaviour
     
     private void Attack()
     {
-        currentWeapon?.Attack();
+        currentWeapon?.TryAttack();
         //TODO: Implement attack logic
     }
 }

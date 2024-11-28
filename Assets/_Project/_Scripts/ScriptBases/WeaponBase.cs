@@ -9,6 +9,8 @@ namespace _Project._Scripts.ScriptBases
     {
         [SerializeField] private WeaponData weaponData;
 
+        public virtual void TryAttack(){}
+
         public virtual void Attack(){}
 
         public void OnEquip(Vector3 visiblePosition, float animationDuration)
