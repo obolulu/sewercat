@@ -100,7 +100,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 8fc9d6e4e4a520c49802b985ede51d35, type: 2}
-  collider: {fileID: 0}
+  attackDamage: 25
+  attackRange: 5
+  attackCooldown: 0.5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  animator: {fileID: 0}
+  attackTriggerName: Attack
+  attackSpeedParameter: AttackSpeed
+  slashEffect: {fileID: 0}
+  attackSound: {fileID: 0}
 --- !u!95 &9142478415287183383
 Animator:
   serializedVersion: 5

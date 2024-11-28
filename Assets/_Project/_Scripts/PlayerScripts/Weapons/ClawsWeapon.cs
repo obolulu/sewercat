@@ -8,9 +8,10 @@ public class ClawsWeapon : WeaponBase
 {
     [Header("Attack Properties")]
     [SerializeField] private float attackDamage = 25f;
-    [SerializeField] private float     attackRange    = 2f;
-    [SerializeField] private float     attackCooldown = 0.5f;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField]             private float attackRange    = 2f;
+    [SerializeField]             private float attackCooldown = 0.5f;
+    [SerializeField] private LayerMask     enemyLayer;
+    
     
     [Header("Animation")]
     [SerializeField] private Animator animator;
@@ -36,8 +37,7 @@ public class ClawsWeapon : WeaponBase
 
     public override void Attack()
     {
-        Debug.Log("Attacking with claws");
-        animator.SetTrigger(attackTriggerName);
+        animator?.SetTrigger(attackTriggerName);
         
         if(slashEffect)
             slashEffect?.Play();
@@ -50,7 +50,6 @@ public class ClawsWeapon : WeaponBase
 
     private void HitDetect()
     {
-        Debug.Log("HitDetect");
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
         
         foreach (Collider hit in hitColliders)
