@@ -4,8 +4,10 @@ namespace _Project._Scripts.Enemy.StateMachine
 {
     public class EnemyStunned : BaseState<EnemyStateMachine.EnemyState>
     {
-        public EnemyStunned(EnemyStateMachine.EnemyState key) : base(key)
+        private EnemyStateMachine _enemyStateMachine;
+        public EnemyStunned(EnemyStateMachine.EnemyState key, EnemyStateMachine enemyStateMachine) : base(key)
         {
+            _enemyStateMachine = enemyStateMachine;
         }
 
         public override void EnterState()
