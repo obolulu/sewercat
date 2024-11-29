@@ -2457,17 +2457,17 @@ PrefabInstance:
     - target: {fileID: 1801235544713521009, guid: 49898b217e875ef4b805745226d6eb1d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.829718
+      value: -2.74
       objectReference: {fileID: 0}
     - target: {fileID: 1801235544713521009, guid: 49898b217e875ef4b805745226d6eb1d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.6569102
+      value: -1.64
       objectReference: {fileID: 0}
     - target: {fileID: 1801235544713521009, guid: 49898b217e875ef4b805745226d6eb1d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.411732
+      value: -20.25
       objectReference: {fileID: 0}
     - target: {fileID: 1801235544713521009, guid: 49898b217e875ef4b805745226d6eb1d,
         type: 3}
@@ -4686,9 +4686,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bceccb471274a6e87bfa57c04b3bd1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waypoints:
+  waypoints:
   - {fileID: 1912706811}
   - {fileID: 320784807}
+  agent: {fileID: 1718116509}
+  disengageRange: 15
+  engageRange: 5
+  maxHealth: 100
+  player: {fileID: 134348560}
 --- !u!1 &1747487144
 GameObject:
   m_ObjectHideFlags: 0

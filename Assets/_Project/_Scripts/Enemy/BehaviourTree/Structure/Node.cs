@@ -6,7 +6,51 @@ using UnityEditor.Experimental.GraphView;
 
 namespace _Project._Scripts.Enemy.BehaviourTree.Structure
 {
-    
+    public class Parallel : Node
+    {
+        public enum Policy
+        {
+            RequireOne, // Success if one child succeeds, fail if all fail
+            RequireAll, // Success if all children succeed, fail if one fails
+            RequireNone // Always returns Running to let all children execute
+        }
+        
+        private readonly Policy _successPolicy;
+        private readonly Policy _failurePolicy;
+        
+        public Parallel(string name, Policy successPolicy = Policy.RequireOne, Policy failurePolicy = Policy.RequireOne) : base(name)
+        {
+            _successPolicy = successPolicy;
+            _failurePolicy = failurePolicy;
+        }
+
+        public override NodeState Evaluate()
+        {
+            int successCount = 0;
+            int failureCount = 0;
+            
+            foreach (var child in children)
+            {
+                switch (child.Evaluate())
+                {
+                    case NodeState.Success:
+                        successCount++;
+                        break;
+                    case NodeState.Failure:
+                        failureCount++;
+                        break;
+                }
+            }
+            if (successCount == children.Count && _successPolicy == Policy.RequireAll)
+                return NodeState.Success;
+            
+            if (failureCount == children.Count && _failurePolicy == Policy.RequireAll)
+                return NodeState.Failure;
+            
+            return NodeState.Running;
+        }
+        
+    }
     public class UntilFail: Node
     {
         public UntilFail(string name) : base(name) { }
@@ -179,12 +223,11 @@ namespace _Project._Scripts.Enemy.BehaviourTree.Structure
         {
             while(currentChild < children.Count )
             {
-                var state = children[currentChild].Evaluate();
+                var state = children[0].Evaluate();
                 if (state != NodeState.Success)
                 {
                     return state;
                 }
-                currentChild++;
             }
             return NodeState.Success;
         }
