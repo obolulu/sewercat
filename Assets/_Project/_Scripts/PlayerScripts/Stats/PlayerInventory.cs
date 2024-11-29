@@ -28,7 +28,6 @@ public class PlayerInventory
     }
     public void InitializePlayerInventory()
     {
-        Debug.Log("Initializing Player Inventory");
         _inventoryCategories ??= new Dictionary<Type, List<ItemData>>
         {
             { typeof(WeaponData), new List<ItemData>() },
@@ -36,7 +35,6 @@ public class PlayerInventory
             { typeof(ClothingData), new List<ItemData>() },
             { typeof(ItemData), new List<ItemData>() }
         };
-        Debug.Log(_inventoryCategories);
     }
 
     public void LoadInventory(SaveData data)

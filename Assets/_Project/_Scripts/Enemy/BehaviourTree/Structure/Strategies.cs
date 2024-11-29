@@ -61,13 +61,12 @@ namespace _Project._Scripts.Enemy.BehaviourTree.Structure
         
         public Node.NodeState Evaluate()
         {
-            UnityEngine.Debug.Log("Patrolling");
-            if(_currentIndex == _patrolPoints.Count) return Node.NodeState.Success;
+            //if(_currentIndex == _patrolPoints.Count) return Node.NodeState.Success;
+            if(_currentIndex == _patrolPoints.Count) _currentIndex = 0;
             
             var target = _patrolPoints[_currentIndex];
             _agent.SetDestination(target.position);
             _entity.LookAt(target);
-            
             if(_isPathCalculated && _agent.remainingDistance <= 0.1f)
             {
                 _currentIndex++;

@@ -36,12 +36,10 @@ namespace _Project._Scripts.UI
         }
         private void UpdateHealthSlider()
         {
-            Debug.Log(playerStats.Health / playerStats.MaxHealth);
             healthSlider.value = playerStats.Health / playerStats.MaxHealth;
         }
         private void UpdateManaSlider()
         {
-            Debug.Log(playerStats.Mana / playerStats.MaxMana);
             manaSlider.value = playerStats.Mana / playerStats.MaxMana;     
         }
 

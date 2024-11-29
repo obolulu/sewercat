@@ -104,6 +104,7 @@ namespace _Project._Scripts.Enemy.BehaviourTree.Structure
         }
     }
     
+    
     public class Sequence : Node
     {
         public Sequence(string name, int priority = 0) : base(name, priority) { }

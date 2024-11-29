@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour, IDamageable
             damageSequence.AddChild(checkDamage);
             damageSequence.AddChild(handleDamage);
             
-            var patrol = new Leaf("Patrol", new PatrolStrategy(transform, _agent, _waypoints));
+            var patrol = new Leaf("Patrol", new PatrolStrategy(transform, _agent, _waypoints), 10);
             
             var prioritySelector = new PrioritySelector("Priority Selector");
             prioritySelector.AddChild(damageSequence);
@@ -45,8 +45,7 @@ public class Enemy : MonoBehaviour, IDamageable
         }
         private void HandleDamage()
         {
-            // Perform actions when damaged
             Debug.Log("Handling damage");
-            _isDamaged = false; // Reset damage status after handling
+            _isDamaged = false; 
         }
     }

@@ -130,7 +130,6 @@ public class WeaponWheelUI : MonoBehaviour
         {
             WeaponData weaponData = (WeaponData) item;
             AddWeapon(weaponData);
-            Debug.Log(weaponData.itemName);
         }
         PositionWeaponIcons();
     }
