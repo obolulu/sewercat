@@ -2,27 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using _Project._Scripts.Enemy.StateMachine;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyStateMachine : StateManager<EnemyStateMachine.EnemyState>
 {
     public EnemyState currentEnemyState;
-    private Stack<BaseState<EnemyState>> _stateStack = new Stack<BaseState<EnemyState>>(); // for priority states
     private List<EnemyStateMachine.EnemyState> _priorityStatesList;
-
+    
+    [SerializeField] private Transform    _playerTransform;
+    [SerializeField] private NavMeshAgent _navMeshAgent;
+    
     public enum EnemyState
     {
-        Idle,
-        Stunned,
-        Dying
+        Chase,
+        Attack
     }
     private void Awake()
     {
-        States[EnemyState.Idle]    = new EnemyIdleState(EnemyState.Idle, this);
-        States[EnemyState.Stunned] = new EnemyDying(EnemyState.Stunned, this);
-        States[EnemyState.Dying]   = new EnemyStunned(EnemyState.Dying, this);
-        CurrentState               = States[EnemyState.Idle];
+        States[EnemyState.Attack] = new EnemyAttackState(EnemyState.Attack,_navMeshAgent, _playerTransform, transform);
+        States[EnemyState.Chase]  = new EnemyChaseState(EnemyState.Chase, _playerTransform, _navMeshAgent);
+        CurrentState = States[EnemyState.Chase];
     }
-
+    
+    /*
     void FixedUpdate()
     {
         EnemyState nextStateKey = CurrentState.GetNextState();
@@ -37,22 +39,17 @@ public class EnemyStateMachine : StateManager<EnemyStateMachine.EnemyState>
             TransitionToState(nextStateKey);
         }
     }
-
-    void CheckPriorityStates()
+    */
+    public void CustomUpdate()
     {
-        if (_stateStack.Count > 0 //&& !IsInPriorityState()
-                                  )
+        EnemyState nextStateKey = CurrentState.GetNextState();
+        if (!IsTransitioningState&&nextStateKey.Equals(CurrentState.StateKey))
         {
-            PopPriorityState();
+            CurrentState.UpdateState();
         }
-    }
-    private void PopPriorityState()
-    {
-        if (_stateStack.Count > 0)
+        else if (!IsTransitioningState)
         {
-            CurrentState.ExitState();
-            CurrentState = _stateStack.Pop();
-            CurrentState.EnterState();
+            TransitionToState(nextStateKey);
         }
     }
 }

@@ -19,13 +19,12 @@ public class Enemy : MonoBehaviour, IDamageable
         [SerializeField] private float     maxHealth   = 100f;
         [SerializeField] private Transform player;
         
-        
+        [Header("StateMachine")]
+        [SerializeField] private EnemyStateMachine enemyStateMachine;
         BehaviourTree                    _tree;
         private float _currentHealth;
         private          bool            _isDamaged;
-        
         private bool _isInActiveCombat = true;
-
         private bool _isDisengaged = true;
         //Animator _animator;
 
@@ -117,6 +116,7 @@ private void SetupBehaviourTree()
     _tree.AddChild(prioritySelector);
 }
 
+
         
         private void Awake()
         {
@@ -151,7 +151,7 @@ private void SetupBehaviourTree()
 
         private void HandleCombat()
         {
-            
+            enemyStateMachine.CustomUpdate();
         }
         private void HandleDamage()
         {

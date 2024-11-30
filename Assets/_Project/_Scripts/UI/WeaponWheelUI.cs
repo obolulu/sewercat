@@ -5,10 +5,11 @@ using System.Linq;
 using _Project._Scripts.Items;
 using _Project._Scripts.PlayerScripts.SaveDirectory;
 using _Project._Scripts.PlayerScripts.Stats;
+using _Project._Scripts.ScriptBases;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class WeaponWheelUI : MonoBehaviour
+public class WeaponWheelUI : MonoBehaviour, IToggleMenu
 {
     [System.Serializable]
     public class WeaponChoice
@@ -43,7 +44,7 @@ public class WeaponWheelUI : MonoBehaviour
     
     private List<ItemData> weaponItems = new List<ItemData>();
     
-    private void Start()
+    public void SetupMenu()
     {
         wheelUI.SetActive(false);
         
@@ -56,7 +57,12 @@ public class WeaponWheelUI : MonoBehaviour
         SaveSystem.OnLoad += InstantiateWeapons;
         InstantiateWeapons();
     }
-    
+
+    public void ToggleMenu()
+    {
+        
+    }
+
     private void Update()
     {
         if (isWheelActive)

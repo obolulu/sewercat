@@ -24,10 +24,12 @@ public class InputManager : MonoBehaviour
     public static event Action CloseInventoryEvent;
     
     public static event Action LeftClickDown;
-    public static event Action LeftClickUp;
+    public  static  event  Action LeftClickUp;
     
     public static event Action RightClickDown;
     public static event Action RightClickUp;
+    
+    public static event Action OpenPauseMenu;
     
     private bool _castPressed;
     private bool _jumpPressed;
@@ -120,6 +122,14 @@ public class InputManager : MonoBehaviour
         }
     }
     
+    private void OnopenMenu(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            OpenPauseMenu?.Invoke();
+        }
+    }
+    
     private void OnEnable()
     {
         _inputManager.Enable();
@@ -134,7 +144,7 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.OpenInventory.performed += OnOpenInventory;
         _inputManager.PlayerControls.Save.performed          += OnSaveGame;
         _inputManager.PlayerControls.Load.performed          += OnLoadGame;
-
+        _inputManager.PlayerControls.OpenPauseMenu.performed += OnopenMenu;
     }
 
     private void OnDisable()
@@ -151,5 +161,6 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.OpenInventory.performed -= OnOpenInventory;
         _inputManager.PlayerControls.Save.performed          -= OnSaveGame;
         _inputManager.PlayerControls.Load.performed          -= OnLoadGame;
+        _inputManager.PlayerControls.OpenPauseMenu.performed -= OnopenMenu;
     }
 }
