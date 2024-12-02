@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "OpenInventoryMenu",
+                    "type": "Button",
+                    "id": "8f38f041-40b2-4299-83d2-65b0ceb18d5a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -296,7 +305,7 @@
                 {
                     "name": "",
                     "id": "dbf26b3c-5b71-4828-960f-6057351451c9",
-                    "path": "<Keyboard>/tab",
+                    "path": "<Mouse>/middleButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -356,6 +365,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d7fade93-30e9-44fd-b1ab-5d8905401b08",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenInventoryMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "59ebc362-d012-4d30-9aa3-dc0813be19d6",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenInventoryMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -125,6 +125,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenInventoryMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""8f38f041-40b2-4299-83d2-65b0ceb18d5a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -318,7 +327,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dbf26b3c-5b71-4828-960f-6057351451c9"",
-                    ""path"": ""<Keyboard>/tab"",
+                    ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -380,6 +389,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d7fade93-30e9-44fd-b1ab-5d8905401b08"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenInventoryMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59ebc362-d012-4d30-9aa3-dc0813be19d6"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenInventoryMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -405,6 +436,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerControls_Load = m_PlayerControls.FindAction("Load", throwIfNotFound: true);
         m_PlayerControls_OpenPauseMenu = m_PlayerControls.FindAction("OpenPauseMenu", throwIfNotFound: true);
         m_PlayerControls__1 = m_PlayerControls.FindAction("1", throwIfNotFound: true);
+        m_PlayerControls_OpenInventoryMenu = m_PlayerControls.FindAction("OpenInventoryMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -477,6 +509,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Load;
     private readonly InputAction m_PlayerControls_OpenPauseMenu;
     private readonly InputAction m_PlayerControls__1;
+    private readonly InputAction m_PlayerControls_OpenInventoryMenu;
     public struct PlayerControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -492,6 +525,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Load => m_Wrapper.m_PlayerControls_Load;
         public InputAction @OpenPauseMenu => m_Wrapper.m_PlayerControls_OpenPauseMenu;
         public InputAction @_1 => m_Wrapper.m_PlayerControls__1;
+        public InputAction @OpenInventoryMenu => m_Wrapper.m_PlayerControls_OpenInventoryMenu;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -534,6 +568,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @_1.started += instance.On_1;
             @_1.performed += instance.On_1;
             @_1.canceled += instance.On_1;
+            @OpenInventoryMenu.started += instance.OnOpenInventoryMenu;
+            @OpenInventoryMenu.performed += instance.OnOpenInventoryMenu;
+            @OpenInventoryMenu.canceled += instance.OnOpenInventoryMenu;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -571,6 +608,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @_1.started -= instance.On_1;
             @_1.performed -= instance.On_1;
             @_1.canceled -= instance.On_1;
+            @OpenInventoryMenu.started -= instance.OnOpenInventoryMenu;
+            @OpenInventoryMenu.performed -= instance.OnOpenInventoryMenu;
+            @OpenInventoryMenu.canceled -= instance.OnOpenInventoryMenu;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -610,5 +650,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnLoad(InputAction.CallbackContext context);
         void OnOpenPauseMenu(InputAction.CallbackContext context);
         void On_1(InputAction.CallbackContext context);
+        void OnOpenInventoryMenu(InputAction.CallbackContext context);
     }
 }

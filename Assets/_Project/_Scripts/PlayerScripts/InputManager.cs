@@ -30,6 +30,8 @@ public class InputManager : MonoBehaviour
     public static event Action RightClickUp;
     
     public static event Action OpenPauseMenu;
+
+    public static event Action OpenInventoryMenu;
     
     private bool _castPressed;
     private bool _jumpPressed;
@@ -105,6 +107,13 @@ public class InputManager : MonoBehaviour
             CloseInventoryEvent?.Invoke();
         }
     }
+    private void OnOpenInventoryMenu(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            OpenInventoryMenu?.Invoke();
+        }
+    }
 
     private void OnSaveGame(InputAction.CallbackContext context)
     {
@@ -145,22 +154,25 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.Save.performed          += OnSaveGame;
         _inputManager.PlayerControls.Load.performed          += OnLoadGame;
         _inputManager.PlayerControls.OpenPauseMenu.performed += OnopenMenu;
+        _inputManager.PlayerControls.OpenInventoryMenu.performed += OnOpenInventoryMenu;
     }
 
     private void OnDisable()
     {
         _inputManager.Disable();
-        _inputManager.PlayerControls.Jump.performed          -= OnJump;
-        _inputManager.PlayerControls.Jump.canceled           -= OnJump;
-        _inputManager.PlayerControls.Move.performed          -= OnMove;
-        _inputManager.PlayerControls.Move.canceled           -= OnMove;
-        _inputManager.PlayerControls.CastSpell.performed     -= OnLeftMouseDown;
-        _inputManager.PlayerControls.CastSpell.canceled      -= OnLeftMouseDown;
-        _inputManager.PlayerControls.Interact.performed      -= OnInteract;
-        _inputManager.PlayerControls.ChangeSpell.performed   -= OnChangeSpell;
-        _inputManager.PlayerControls.OpenInventory.performed -= OnOpenInventory;
-        _inputManager.PlayerControls.Save.performed          -= OnSaveGame;
-        _inputManager.PlayerControls.Load.performed          -= OnLoadGame;
-        _inputManager.PlayerControls.OpenPauseMenu.performed -= OnopenMenu;
+        _inputManager.PlayerControls.Jump.performed              -= OnJump;
+        _inputManager.PlayerControls.Jump.canceled               -= OnJump;
+        _inputManager.PlayerControls.Move.performed              -= OnMove;
+        _inputManager.PlayerControls.Move.canceled               -= OnMove;
+        _inputManager.PlayerControls.CastSpell.performed         -= OnLeftMouseDown;
+        _inputManager.PlayerControls.CastSpell.canceled          -= OnLeftMouseDown;
+        _inputManager.PlayerControls.Interact.performed          -= OnInteract;
+        _inputManager.PlayerControls.ChangeSpell.performed       -= OnChangeSpell;
+        _inputManager.PlayerControls.OpenInventory.performed     -= OnOpenInventory;
+        _inputManager.PlayerControls.Save.performed              -= OnSaveGame;
+        _inputManager.PlayerControls.Load.performed              -= OnLoadGame;
+        _inputManager.PlayerControls.OpenPauseMenu.performed     -= OnopenMenu;
+        _inputManager.PlayerControls.OpenInventoryMenu.performed -= OnOpenInventoryMenu;
+
     }
 }

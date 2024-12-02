@@ -17,8 +17,6 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         SetupUIs();
-        InputManager.OpenInventoryEvent += ToggleInventoryUI;
-        InputManager.OpenPauseMenu += TogglePauseMenu;
     }
     
     void SetupUIs()
@@ -28,21 +26,5 @@ public class UIManager : MonoBehaviour
             //_currentInteractable = ui.GetComponent<IInteractable>();
             ui.GetComponent<IToggleMenu>().SetupMenu();
         }
-    }
-    
-    private void OnDestroy()
-    {
-        InputManager.OpenInventoryEvent -= ToggleInventoryUI;
-        InputManager.OpenPauseMenu -= TogglePauseMenu;
-    }
-
-    private void ToggleInventoryUI()
-    {
-        inventoryUI.ToggleMenu();
-    }
-
-    private void TogglePauseMenu()
-    {
-        pauseMenuUI.ToggleMenu();
     }
 }

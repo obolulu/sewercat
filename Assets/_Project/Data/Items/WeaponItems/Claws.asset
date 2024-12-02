@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: claws
   itemDescription: long, long claws.
   itemIcon: {fileID: 21300000, guid: 76d08d996a288451a9644f52ba7cbf74, type: 3}
-  itemValue: 0
+  itemValue: 5
   weaponPrefab: {fileID: 8020709604545090256, guid: 5e34c83425c9bd54890f4e2749788216,
     type: 3}
   weapon: {fileID: 0}

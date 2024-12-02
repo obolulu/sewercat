@@ -27,7 +27,6 @@ public class WeaponWheelUI : MonoBehaviour, IToggleMenu
     [Header("References")] 
     [SerializeField] private Transform selectedWeaponSlot;
     [SerializeField]             private GameObject      wheelUI;
-    [SerializeField]             private TextMeshProUGUI text;
     [SerializeField] private WeaponHandler               weaponHandler;
     
     [Header("UI References")]
@@ -119,7 +118,7 @@ public class WeaponWheelUI : MonoBehaviour, IToggleMenu
         WeaponChoice weapon = weapons[index];
         //currentWeapon = Instantiate(weapon.weaponPrefab, selectedWeaponSlot.position, selectedWeaponSlot.rotation, selectedWeaponSlot);
         currentWeaponIndex = index;
-        text.text = weapon.name;
+        //text.text = weapon.name;
         weaponHandler.EquipWeapon(weapon.weaponData);
         
     }

@@ -89,7 +89,7 @@ public class PlayerInventory
     
     public List<ItemData> GetInventory(Type type)
     {
-        return _inventoryCategories[type];
+        return _inventoryCategories[type].ToList();
     }
     /*
     private Type GetItemCategory(ItemData item)
