@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour, IDamageable
         
         [Header("StateMachine")]
         [SerializeField] private EnemyStateMachine enemyStateMachine;
+        [SerializeField] private FloatingText dialogue;
+        
+        
         BehaviourTree                    _tree;
         private float _currentHealth;
         private          bool            _isDamaged;
@@ -134,6 +137,8 @@ private void SetupBehaviourTree()
         {
             _isDamaged = true;
             _currentHealth -= damage;
+            dialogue.ShowDialogue("Ouch!");
+            dialogue.HideDialogue();
         }
 
         private void HandleDying()
