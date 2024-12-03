@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{bb88e305-271b-4ff9-b950-b5e434d72740}">
+		<property name="note" />
+		<property name="assetPath">
+			<value>SFX/Claws/ClawAttack/paper-tear-81241.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>24</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>2.52</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{9a142b23-8a75-4c7f-a9c1-89a8f4ae52bc}</destination>
+		</relationship>
+	</object>
+</objects>

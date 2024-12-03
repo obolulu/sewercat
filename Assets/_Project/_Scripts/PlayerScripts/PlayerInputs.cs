@@ -134,6 +134,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PutWeaponDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""fe004978-63ad-4ef4-a85e-8f2f123ab05d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -411,6 +420,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""OpenInventoryMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07688706-f730-467d-bab7-947956fde697"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PutWeaponDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -437,6 +457,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerControls_OpenPauseMenu = m_PlayerControls.FindAction("OpenPauseMenu", throwIfNotFound: true);
         m_PlayerControls__1 = m_PlayerControls.FindAction("1", throwIfNotFound: true);
         m_PlayerControls_OpenInventoryMenu = m_PlayerControls.FindAction("OpenInventoryMenu", throwIfNotFound: true);
+        m_PlayerControls_PutWeaponDown = m_PlayerControls.FindAction("PutWeaponDown", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -510,6 +531,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_OpenPauseMenu;
     private readonly InputAction m_PlayerControls__1;
     private readonly InputAction m_PlayerControls_OpenInventoryMenu;
+    private readonly InputAction m_PlayerControls_PutWeaponDown;
     public struct PlayerControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -526,6 +548,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @OpenPauseMenu => m_Wrapper.m_PlayerControls_OpenPauseMenu;
         public InputAction @_1 => m_Wrapper.m_PlayerControls__1;
         public InputAction @OpenInventoryMenu => m_Wrapper.m_PlayerControls_OpenInventoryMenu;
+        public InputAction @PutWeaponDown => m_Wrapper.m_PlayerControls_PutWeaponDown;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -571,6 +594,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @OpenInventoryMenu.started += instance.OnOpenInventoryMenu;
             @OpenInventoryMenu.performed += instance.OnOpenInventoryMenu;
             @OpenInventoryMenu.canceled += instance.OnOpenInventoryMenu;
+            @PutWeaponDown.started += instance.OnPutWeaponDown;
+            @PutWeaponDown.performed += instance.OnPutWeaponDown;
+            @PutWeaponDown.canceled += instance.OnPutWeaponDown;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -611,6 +637,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @OpenInventoryMenu.started -= instance.OnOpenInventoryMenu;
             @OpenInventoryMenu.performed -= instance.OnOpenInventoryMenu;
             @OpenInventoryMenu.canceled -= instance.OnOpenInventoryMenu;
+            @PutWeaponDown.started -= instance.OnPutWeaponDown;
+            @PutWeaponDown.performed -= instance.OnPutWeaponDown;
+            @PutWeaponDown.canceled -= instance.OnPutWeaponDown;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -651,5 +680,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnOpenPauseMenu(InputAction.CallbackContext context);
         void On_1(InputAction.CallbackContext context);
         void OnOpenInventoryMenu(InputAction.CallbackContext context);
+        void OnPutWeaponDown(InputAction.CallbackContext context);
     }
 }

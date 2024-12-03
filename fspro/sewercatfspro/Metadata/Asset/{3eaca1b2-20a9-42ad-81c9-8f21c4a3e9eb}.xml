@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="EncodableAsset" id="{3eaca1b2-20a9-42ad-81c9-8f21c4a3e9eb}">
+		<property name="assetPath">
+			<value>SFX/Claws/ClawAttack/</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{9a142b23-8a75-4c7f-a9c1-89a8f4ae52bc}</destination>
+		</relationship>
+	</object>
+</objects>

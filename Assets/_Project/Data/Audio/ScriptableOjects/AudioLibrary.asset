@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1f1da12dab948f6b9d487274092b296, type: 3}
+  m_Name: AudioLibrary
+  m_EditorClassIdentifier: 
+  categories:
+  - categoryName: WeaponSFX
+    events:
+    - eventName: ClawAttack
+      eventReference:
+        Guid:
+          Data1: 479376854
+          Data2: 1230895477
+          Data3: 57191087
+          Data4: 933010645
+        Path: event:/SFX/ClawAttack
+      is3D: 1
+      isLooping: 0

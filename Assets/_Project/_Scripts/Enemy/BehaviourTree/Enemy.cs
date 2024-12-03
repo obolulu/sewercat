@@ -11,6 +11,10 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour, IDamageable
     {
+        [Header("Enemy id")]
+        [SerializeField] private string enemyId = Guid.NewGuid().ToString();
+        public string EnemyId => enemyId;
+        
         [Header("Patrol Settings")]
         [SerializeField]List<Transform> waypoints;
         [SerializeField]NavMeshAgent agent;
@@ -109,6 +113,7 @@ private void SetupBehaviourTree()
     {
         enemySaveData = new EnemySaveData
         {
+            id = enemyId,
             position = transform.position,
             rotation = transform.rotation,
             health = _currentHealth,
@@ -118,7 +123,7 @@ private void SetupBehaviourTree()
         return enemySaveData;    
     }
 
-    public void LoadEnemyData(EnemySaveData data)
+    public void LoadSaveData(EnemySaveData data)
     {
         transform.position = data.position;
         transform.rotation = data.rotation;
@@ -131,6 +136,11 @@ private void SetupBehaviourTree()
         
         private void Awake()
         {
+            if (string.IsNullOrEmpty(enemyId))
+            {
+                enemyId = System.Guid.NewGuid().ToString();
+            }
+            
             _currentHealth = maxHealth;
             SetupBehaviourTree();
         }

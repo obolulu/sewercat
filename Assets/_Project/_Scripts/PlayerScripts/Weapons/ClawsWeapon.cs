@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using _Project._Scripts.ScriptBases;
 using UnityEngine;
-
+using FMODUnity;
 public class ClawsWeapon : WeaponBase
 {
     [Header("Attack Properties")]
@@ -21,7 +18,7 @@ public class ClawsWeapon : WeaponBase
     
     [Header("Effects")]
     [SerializeField] private ParticleSystem slashEffect;
-    [SerializeField] private AudioSource attackSound;
+    [SerializeField] private EventReference clawAttackSound;
     
     private Collider collider;
     private float lastAttackTime;
@@ -41,9 +38,7 @@ public class ClawsWeapon : WeaponBase
         
         if(slashEffect)
             slashEffect?.Play();
-        if(attackSound)
-            attackSound?.Play();
-        
+        AudioManager.Instance.PlaySound("clawAttack", transform.position);
         HitDetect();
         
     }

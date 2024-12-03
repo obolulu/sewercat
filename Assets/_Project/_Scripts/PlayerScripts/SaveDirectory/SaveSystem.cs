@@ -10,6 +10,12 @@ using Vector3 = System.Numerics.Vector3;
 
 namespace _Project._Scripts.PlayerScripts.SaveDirectory
 {
+    [System.Serializable]
+    public class EnemyDataCollection
+    {
+        public List<EnemySaveData> enemies = new List<EnemySaveData>();
+    }
+    
     public class SaveSystem : MonoBehaviour
     {
         [SerializeField]            private GameObject         player;
@@ -64,6 +70,11 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
         //turn to private after deciding what to do with checkpoints
         public void SaveGame()
         {
+            //
+            var enemyData       = enemyManager.SaveEnemyData();
+            var enemyCollection = enemyManager.SaveEnemyData();
+            //
+            
             var data = new SaveData
             {
                 version         = "0.1",
@@ -75,7 +86,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
                 interactedItems = playerStats.InteractedItems,
                 playerLocation = new UnityEngine.Vector3(player.transform.position.x, player.transform.position.y,
                     player.transform.position.z),
-                enemySaveDatas = enemyManager.SaveEnemyData()
+                enemyDataCollection = enemyCollection
             };
             //SaveItems(data);
             SaveData(data);
@@ -114,7 +125,8 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
             playerStats.MaxHealth       = data.playerMaxHealth;
             playerStats.Mana            = data.playerMana;
             playerStats.MaxMana         = data.playerMaxMana;
-            playerStats.InteractedItems = data.interactedItems;;
+            playerStats.InteractedItems = data.interactedItems;
+            enemyManager.UpdateSaveData(data.enemyDataCollection);
             LoadItems(data);
             
             OnLoad?.Invoke();

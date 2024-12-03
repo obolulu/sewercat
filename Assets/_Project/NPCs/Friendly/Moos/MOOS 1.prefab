@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8799762271795906844}
   - component: {fileID: 126219046827035014}
   - component: {fileID: 7518622888058616017}
-  - component: {fileID: 7513246646440661299}
   m_Layer: 7
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -172,14 +171,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 126219046827035014}
   m_maskType: 0
---- !u!33 &7513246646440661299
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2041377013851161337}
-  m_Mesh: {fileID: 0}
 --- !u!1 &7701519584326996252
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,22 +299,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
@@ -333,7 +324,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
@@ -459,6 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bceccb471274a6e87bfa57c04b3bd1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyId: f2abefb4-bd4c-4870-bc21-76332b4f426e
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -469,6 +461,12 @@ MonoBehaviour:
   player: {fileID: 0}
   enemyStateMachine: {fileID: 295640229472971820}
   dialogue: {fileID: 0}
+  enemySaveData:
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+    health: 0
+    isDisengaged: 0
+    isInActiveCombat: 0
 --- !u!114 &295640229472971820
 MonoBehaviour:
   m_ObjectHideFlags: 0
