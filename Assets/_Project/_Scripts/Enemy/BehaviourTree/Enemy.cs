@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using _Project._Scripts.Enemy.BehaviourTree.Structure;
+using _Project._Scripts.EnemyDir;
+using _Project._Scripts.EnemyDir.BehaviourTree.Structure;
+using _Project._Scripts.EnemyDir;
 using _Project._Scripts.ScriptBases;
 using UnityEngine;
 using UnityEngine.AI;
@@ -29,25 +31,9 @@ public class Enemy : MonoBehaviour, IDamageable
         private          bool            _isDamaged;
         private bool _isInActiveCombat = true;
         private bool _isDisengaged = true;
+        
+        public EnemySaveData enemySaveData;
         //Animator _animator;
-
-        private void SetupBehaviourTreeOld()
-        {
-            _tree = new BehaviourTree("Enemy");
-            var checkDamage    = new Leaf("Check Damage", new Condition(() => _isDamaged));
-            var handleDamage   = new Leaf("Handle Damage", new ActionStrategy(HandleDamage));
-            var damageSequence = new Sequence("Damage Sequence", 20);
-            damageSequence.AddChild(checkDamage);
-            damageSequence.AddChild(handleDamage);
-            
-            var patrol = new Leaf("Patrol", new PatrolStrategy(transform, agent, waypoints), 10);
-            
-            var prioritySelector = new PrioritySelector("Priority Selector");
-            prioritySelector.AddChild(damageSequence);
-            prioritySelector.AddChild(patrol);
-            
-            _tree.AddChild(prioritySelector);
-        }
         
 private void SetupBehaviourTree()
 {
@@ -118,6 +104,28 @@ private void SetupBehaviourTree()
 
     _tree.AddChild(prioritySelector);
 }
+
+    public EnemySaveData GetSaveData()
+    {
+        enemySaveData = new EnemySaveData
+        {
+            position = transform.position,
+            rotation = transform.rotation,
+            health = _currentHealth,
+            isDisengaged = _isDisengaged,
+            isInActiveCombat = _isInActiveCombat,
+        };
+        return enemySaveData;    
+    }
+
+    public void LoadEnemyData(EnemySaveData data)
+    {
+        transform.position = data.position;
+        transform.rotation = data.rotation;
+        _currentHealth = data.health;
+        _isDisengaged = data.isDisengaged;
+        _isInActiveCombat = data.isInActiveCombat;
+    }
 
 
         

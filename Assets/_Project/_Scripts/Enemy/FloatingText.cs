@@ -23,6 +23,9 @@ public class FloatingText : MonoBehaviour
     private bool      isDisplaying       = false;
     private float     currentDisplayTime = 0f;
 
+    private Coroutine floatingCoroutine;
+    private Coroutine displayCoroutine;
+    
     private void Start()
     {
         npcTransform = transform;
@@ -48,10 +51,40 @@ public class FloatingText : MonoBehaviour
             currentDisplayTime = 0f;
 
             // Start fade in
+            floatingCoroutine = StartCoroutine(FloatingMovement());
+            displayCoroutine  = StartCoroutine(DisplayTimer());
             StartCoroutine(FadeText(0f, 1f, fadeInDuration));
             
         }
     }
+    private IEnumerator FloatingMovement()
+    {
+        float startTime = Time.time;
+        
+        while (isDisplaying)
+        {
+            // Calculate position only when needed
+            targetPosition = npcTransform.position + offset + Vector3.up * floatHeight;
+            float newY = targetPosition.y + amplitude * Mathf.Sin((Time.time - startTime) * frequency);
+            dialogueText.transform.position = new Vector3(targetPosition.x, newY, targetPosition.z);
+            
+            // Face camera
+            if (Camera.main != null)
+            {
+                dialogueText.transform.rotation = Camera.main.transform.rotation;
+            }
+            
+            // Using WaitForSeconds instead of checking every frame
+            yield return new WaitForSeconds(0.016f); // Approximately 60fps
+        }
+    }
+    
+    private IEnumerator DisplayTimer()
+    {
+        yield return new WaitForSeconds(displayDuration);
+        HideDialogue();
+    }
+    
     public void HideDialogue()
     {
         if (dialogueText != null && isDisplaying)

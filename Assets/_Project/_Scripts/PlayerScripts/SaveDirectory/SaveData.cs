@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Numerics;
+using _Project._Scripts.EnemyDir;
 
 namespace _Project._Scripts.PlayerScripts.SaveSystem
 {
@@ -16,5 +17,6 @@ namespace _Project._Scripts.PlayerScripts.SaveSystem
         public int                 playerCheckpoint;
         public UnityEngine.Vector3 playerLocation;
         public List<int>           interactedItems;
+        public List<EnemySaveData> enemySaveDatas = new List<EnemySaveData>();
     }
 }

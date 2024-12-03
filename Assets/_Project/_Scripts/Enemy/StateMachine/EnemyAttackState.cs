@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-namespace _Project._Scripts.Enemy.StateMachine
+namespace _Project._Scripts.EnemyDir.StateMachine
 {
     public class EnemyAttackState : BaseState<EnemyStateMachine.EnemyState>
     {

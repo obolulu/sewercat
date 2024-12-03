@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 
-namespace _Project._Scripts.Enemy.BehaviourTree.Structure
+namespace _Project._Scripts.EnemyDir.BehaviourTree.Structure
 {
     public class Parallel : Node
     {
