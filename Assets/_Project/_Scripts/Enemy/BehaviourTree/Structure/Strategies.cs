@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace _Project._Scripts.Enemy.BehaviourTree.Structure
+namespace _Project._Scripts.EnemyDir.BehaviourTree.Structure
 {
     public interface IStrategy
     {

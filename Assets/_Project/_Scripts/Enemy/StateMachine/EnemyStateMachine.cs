@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using _Project._Scripts.Enemy.StateMachine;
+using _Project._Scripts.EnemyDir.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
 

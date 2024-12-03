@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Project._Scripts.EnemyDir;
 using _Project._Scripts.PlayerScripts.SaveSystem;
 using _Project._Scripts.PlayerScripts.Stats;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
     {
         [SerializeField]            private GameObject         player;
         [SerializeField]            private PlayerStatsHandler playerStatsHandler;
+        [SerializeField]            private EnemyManager       enemyManager;
         //[SerializeField] private ItemDatabase       database;
         public static                       SaveSystem         Instance;
         
@@ -73,6 +75,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
                 interactedItems = playerStats.InteractedItems,
                 playerLocation = new UnityEngine.Vector3(player.transform.position.x, player.transform.position.y,
                     player.transform.position.z),
+                enemySaveDatas = enemyManager.SaveEnemyData()
             };
             //SaveItems(data);
             SaveData(data);
@@ -117,8 +120,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
             OnLoad?.Invoke();
 
         }
-
-
+        
     }
 
 
