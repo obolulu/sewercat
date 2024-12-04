@@ -1,3 +1,4 @@
+using _Project._Scripts.CameraEffects;
 using _Project._Scripts.ScriptBases;
 using UnityEngine;
 using FMODUnity;
@@ -18,6 +19,9 @@ public class ClawsWeapon : WeaponBase
     
     [Header("Effects")]
     [SerializeField] private ParticleSystem slashEffect;
+    
+    [Header("Camera Effects")]
+    [SerializeField] private EffectChainData attackEffects;
     
     [Header("Audio")]
     [SerializeField] private FMODEventSO clawAttackSound;
@@ -41,6 +45,8 @@ public class ClawsWeapon : WeaponBase
         if(slashEffect)
             slashEffect?.Play();
         AudioManager.Instance.PlaySound(clawAttackSound, transform.position);
+        if(attackEffects != null)
+            CameraEffectsManager.Instance.PlayChain(attackEffects);
         HitDetect();
         
     }

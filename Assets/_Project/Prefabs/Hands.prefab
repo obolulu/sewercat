@@ -62,8 +62,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7652652691876225241}
-  - component: {fileID: 5166506623490055826}
   - component: {fileID: 9142478415287183383}
+  - component: {fileID: 5166506623490055826}
+  - component: {fileID: 2448113347648841540}
   m_Layer: 0
   m_Name: Hands
   m_TagString: Untagged
@@ -87,6 +88,27 @@ Transform:
   - {fileID: 936581208891387502}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &9142478415287183383
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020709604545090256}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e656438f5fe2c8347b03620ead903f86, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5166506623490055826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,28 +132,27 @@ MonoBehaviour:
   attackTriggerName: Attack
   attackSpeedParameter: AttackSpeed
   slashEffect: {fileID: 0}
+  attackEffects: {fileID: 2448113347648841540}
   clawAttackSound: {fileID: 11400000, guid: 8a059a410134c36418e7cc5142814230, type: 2}
---- !u!95 &9142478415287183383
-Animator:
-  serializedVersion: 5
+--- !u!114 &2448113347648841540
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8020709604545090256}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e656438f5fe2c8347b03620ead903f86, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5319f7b64064128af01b786daf219d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effects:
+  - effect: {fileID: 11400000, guid: 650aa6a8af294ad4ea25ad8717780cb2, type: 2}
+    delay: 0
+  - effect: {fileID: 11400000, guid: 3b3868f670b45a94e9a6fd1e74f5ac9a, type: 2}
+    delay: 0
+  - effect: {fileID: 11400000, guid: 2334f1d2f57ec7249bb00743d89eb04f, type: 2}
+    delay: 0
 --- !u!1001 &825811129442470277
 PrefabInstance:
   m_ObjectHideFlags: 0
