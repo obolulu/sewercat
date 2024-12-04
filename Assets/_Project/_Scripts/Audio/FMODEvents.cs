@@ -1,38 +1,37 @@
-/*
 using UnityEngine;
 using FMODUnity;
+using FMOD.Studio;
 
-[CreateAssetMenu(fileName = "FMODEvents", menuName = "Audio/FMODEvents")]
-public class FMODEvents : ScriptableObject
+public enum AudioType
 {
-    [Header("SFX")]
-    [SerializeField] private EventReference playerFootsteps;
-    [SerializeField] private EventReference playerJump;
-    [SerializeField] private EventReference playerLand;
-    
-    [Header("Music")]
-    [SerializeField] private EventReference backgroundMusic;
-    [SerializeField] private EventReference combatMusic;
-    
-    [Header("Ambience")]
-    [SerializeField] private EventReference environmentAmbience;
-    
-    public EventReference PlayerFootsteps     => playerFootsteps;
-    public EventReference PlayerJump          => playerJump;
-    public EventReference PlayerLand          => playerLand;
-    public EventReference BackgroundMusic     => backgroundMusic;
-    public EventReference CombatMusic         => combatMusic;
-    public EventReference EnvironmentAmbience => environmentAmbience;
-    
-    private static FMODEvents instance;
-    public static FMODEvents Instance
-    {
-        get
-        {
-            if (instance == null)
-                instance = Resources.Load<FMODEvents>("FMODEvents");
-            return instance;
-        }
-    }
+    SFX,
+    Music,
+    Ambience,
+    Voice,
+    UI
 }
-*/
+
+[CreateAssetMenu(fileName = "New FMOD Event", menuName = "Audio/FMOD Event")]
+public class FMODEventSO : ScriptableObject
+{
+    [Header("Event Settings")]
+    public EventReference eventReference;
+    public AudioType audioType;
+    public bool      is3D      = true;
+    public bool      isLooping = false;
+    
+    [Header("Default Parameters")]
+    public FMODEventParameter[] defaultParameters;
+    
+    [Header("Optional Settings")]
+    public float minDistance = 1f;
+    public float maxDistance = 20f;
+}
+
+
+[System.Serializable]
+public struct FMODEventParameter
+{
+    public string name;
+    public float  defaultValue;
+}

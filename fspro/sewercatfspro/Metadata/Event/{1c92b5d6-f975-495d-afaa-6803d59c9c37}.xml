@@ -5,7 +5,7 @@
 			<value>ClawAttack</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{06edd64b-2993-4afe-836b-101e381d6ba0}</destination>
@@ -32,7 +32,7 @@
 			<destination>{12ee1842-2850-4446-9229-3b8eb4d0ccaa}</destination>
 		</relationship>
 		<relationship name="banks">
-			<destination>{13664163-31cc-41ad-bf80-5584ec272c88}</destination>
+			<destination>{c0cc3a86-40c9-4806-bb41-8914b134cbc6}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixer" id="{b2eb0f75-a76d-4d50-885d-766632cb78cf}">
@@ -61,7 +61,11 @@
 	</object>
 	<object class="EventAutomatableProperties" id="{664c24de-6aad-4690-831b-c7dd35b0e14c}" />
 	<object class="MarkerTrack" id="{59a4ba01-e11c-4810-a8b5-f2e7d5abf327}" />
-	<object class="Timeline" id="{3adf4bca-5ac7-4349-bace-ba11a15993e5}" />
+	<object class="Timeline" id="{3adf4bca-5ac7-4349-bace-ba11a15993e5}">
+		<property name="isProxyEnabled">
+			<value>false</value>
+		</property>
+	</object>
 	<object class="ActionSheet" id="{12ee1842-2850-4446-9229-3b8eb4d0ccaa}">
 		<relationship name="modules">
 			<destination>{d7fba728-1cf7-401f-95c4-bb68ab77a709}</destination>
@@ -95,7 +99,31 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{992b9fff-e05b-4f9a-9457-6a8398e0224e}" />
-	<object class="MultiSound" id="{928b0728-0e01-490e-a26d-2035a44d7162}" />
+	<object class="MultiSound" id="{928b0728-0e01-490e-a26d-2035a44d7162}">
+		<property name="playlistMode">
+			<value>1</value>
+		</property>
+		<relationship name="sounds">
+			<destination>{e263d51b-5062-4068-a181-223c2d1148e1}</destination>
+			<destination>{7c715b9e-a15c-4d0e-9f4b-542792028df9}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{e4c62877-4b4c-4819-903a-e9eada455dcc}" />
 	<object class="MixerBusFader" id="{1b3b09e2-7458-4ce7-afb4-d91c9f4a0578}" />
+	<object class="SingleSound" id="{e263d51b-5062-4068-a181-223c2d1148e1}">
+		<property name="startOffset">
+			<value>16</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{bb88e305-271b-4ff9-b950-b5e434d72740}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{7c715b9e-a15c-4d0e-9f4b-542792028df9}">
+		<property name="startOffset">
+			<value>15.5</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{0ccd1ac0-294f-482e-a116-844f508a9536}</destination>
+		</relationship>
+	</object>
 </objects>

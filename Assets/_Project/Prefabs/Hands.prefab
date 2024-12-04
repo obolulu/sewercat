@@ -110,13 +110,7 @@ MonoBehaviour:
   attackTriggerName: Attack
   attackSpeedParameter: AttackSpeed
   slashEffect: {fileID: 0}
-  clawAttackSound:
-    Guid:
-      Data1: 479376854
-      Data2: 1230895477
-      Data3: 57191087
-      Data4: 933010645
-    Path: event:/SFX/ClawAttack
+  clawAttackSound: {fileID: 11400000, guid: 8a059a410134c36418e7cc5142814230, type: 2}
 --- !u!95 &9142478415287183383
 Animator:
   serializedVersion: 5

@@ -25,3 +25,13 @@ MonoBehaviour:
         Path: event:/SFX/ClawAttack
       is3D: 1
       isLooping: 0
+    - eventName: PlayerWalk
+      eventReference:
+        Guid:
+          Data1: -1336613701
+          Data2: 1159679468
+          Data3: 768846010
+          Data4: 325046765
+        Path: event:/SFX/Walk
+      is3D: 1
+      isLooping: 0

@@ -1,16 +1,14 @@
-using System.Collections.Generic;
-using _Project._Scripts.Audio;
-using FMOD.Studio;
 using UnityEngine;
 using FMODUnity;
+using FMOD.Studio;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
     private static AudioManager instance;
     public static AudioManager Instance => instance;
 
-    [SerializeField] private AudioLibrary audioLibrary;
-    private Dictionary<string, EventInstance> activeInstances;
+    private Dictionary<string, EventInstance> activeInstances = new Dictionary<string, EventInstance>();
 
     private void Awake()
     {
@@ -22,80 +20,99 @@ public class AudioManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
-        
-        activeInstances = new Dictionary<string, EventInstance>();
-        audioLibrary.Initialize();
     }
 
-    public void PlaySound(string eventName, Vector3? position = null, params (string name, float value)[] parameters)
+    public void PlaySound(FMODEventSO eventSO, Vector3? position = null, params (string name, float value)[] parameters)
     {
-        Debug.Log($"Playing sound: {eventName}");
-        var eventData = audioLibrary.GetEventData(eventName);
-        if (eventData == null)
+        if (eventSO == null || eventSO.eventReference.IsNull)
         {
-            Debug.LogWarning($"Audio event '{eventName}' not found!");
+            Debug.LogWarning("Attempted to play null or invalid FMOD event!");
             return;
         }
 
-        if (eventData.isLooping)
+        if (eventSO.isLooping)
         {
-            PlayLoopingSound(eventName, position, parameters);
+            PlayLoopingSound(eventSO, position, parameters);
         }
         else
         {
-            Debug.Log("Playing one shot sound");
-            PlayOneShot(eventName, position, parameters);
+            PlayOneShot(eventSO, position, parameters);
         }
     }
 
-    private void PlayOneShot(string eventName, Vector3? position, params (string name, float value)[] parameters)
+    private void PlayOneShot(FMODEventSO eventSO, Vector3? position, params (string name, float value)[] parameters)
     {
-        var eventRef = audioLibrary.GetEventReference(eventName);
-        var instance = RuntimeManager.CreateInstance(eventRef);
-
-        if (position.HasValue)
-            instance.set3DAttributes(RuntimeUtils.To3DAttributes(position.Value));
-
-        foreach (var (name, value) in parameters)
-            instance.setParameterByName(name, value);
-
+        var instance = CreateInstance(eventSO, position);
+        ApplyParameters(instance, eventSO.defaultParameters);
+        ApplyParameters(instance, parameters);
+        
         instance.start();
         instance.release();
     }
 
-    private void PlayLoopingSound(string eventName, Vector3? position, params (string name, float value)[] parameters)
+    private void PlayLoopingSound(FMODEventSO eventSO, Vector3? position, params (string name, float value)[] parameters)
     {
-        if (activeInstances.ContainsKey(eventName))
-        {
-            StopSound(eventName);
-        }
+        string eventKey = eventSO.name;
+        
+        // Stop existing instance if it exists
+        StopSound(eventKey);
 
-        var eventRef = audioLibrary.GetEventReference(eventName);
-        var instance = RuntimeManager.CreateInstance(eventRef);
-
-        if (position.HasValue)
-            instance.set3DAttributes(RuntimeUtils.To3DAttributes(position.Value));
-
-        foreach (var (name, value) in parameters)
-            instance.setParameterByName(name, value);
-
+        var instance = CreateInstance(eventSO, position);
+        ApplyParameters(instance, eventSO.defaultParameters);
+        ApplyParameters(instance, parameters);
+        
         instance.start();
-        activeInstances[eventName] = instance;
+        activeInstances[eventKey] = instance;
     }
 
-    public void StopSound(string eventName)
+    private EventInstance CreateInstance(FMODEventSO eventSO, Vector3? position)
     {
-        if (activeInstances.TryGetValue(eventName, out EventInstance instance))
+        var instance = RuntimeManager.CreateInstance(eventSO.eventReference);
+        
+        if (eventSO.is3D && position.HasValue)
+        {
+            var attributes = RuntimeUtils.To3DAttributes(position.Value);
+            instance.set3DAttributes(attributes);
+            instance.setProperty(EVENT_PROPERTY.MINIMUM_DISTANCE, eventSO.minDistance);
+            instance.setProperty(EVENT_PROPERTY.MAXIMUM_DISTANCE, eventSO.maxDistance);
+        }
+        
+        return instance;
+    }
+
+    private void ApplyParameters(EventInstance instance, FMODEventParameter[] parameters)
+    {
+        if (parameters == null) return;
+        
+        foreach (var param in parameters)
+        {
+            instance.setParameterByName(param.name, param.defaultValue);
+        }
+    }
+
+    private void ApplyParameters(EventInstance instance, (string name, float value)[] parameters)
+    {
+        if (parameters == null) return;
+        
+        foreach (var (name, value) in parameters)
+        {
+            instance.setParameterByName(name, value);
+        }
+    }
+
+    public void StopSound(string eventKey)
+    {
+        if (activeInstances.TryGetValue(eventKey, out EventInstance instance))
         {
             instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             instance.release();
-            activeInstances.Remove(eventName);
+            activeInstances.Remove(eventKey);
         }
     }
 
-    public void SetParameter(string eventName, string parameterName, float value)
+    public void SetParameter(string eventKey, string parameterName, float value)
     {
-        if (activeInstances.TryGetValue(eventName, out EventInstance instance))
+        if (activeInstances.TryGetValue(eventKey, out EventInstance instance))
         {
             instance.setParameterByName(parameterName, value);
         }

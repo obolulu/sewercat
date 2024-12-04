@@ -4330,7 +4330,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f5b99e9390b554babc1367a85e580f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioLibrary: {fileID: 11400000, guid: 450cd3712458a9544bd54539c7f1c297, type: 2}
 --- !u!224 &1200957570 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7084386685998634907, guid: 7f29e5f7ffdea4a6793cefb278b61f0c,

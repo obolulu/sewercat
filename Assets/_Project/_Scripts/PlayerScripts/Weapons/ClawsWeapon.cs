@@ -18,7 +18,9 @@ public class ClawsWeapon : WeaponBase
     
     [Header("Effects")]
     [SerializeField] private ParticleSystem slashEffect;
-    [SerializeField] private EventReference clawAttackSound;
+    
+    [Header("Audio")]
+    [SerializeField] private FMODEventSO clawAttackSound;
     
     private Collider collider;
     private float lastAttackTime;
@@ -38,7 +40,7 @@ public class ClawsWeapon : WeaponBase
         
         if(slashEffect)
             slashEffect?.Play();
-        AudioManager.Instance.PlaySound("clawAttack", transform.position);
+        AudioManager.Instance.PlaySound(clawAttackSound, transform.position);
         HitDetect();
         
     }

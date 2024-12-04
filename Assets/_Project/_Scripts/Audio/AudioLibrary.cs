@@ -31,7 +31,7 @@ namespace _Project._Scripts.Audio
             if (eventDictionary == null)
                 Initialize();
 
-            return eventDictionary.TryGetValue(eventName, out EventReference eventRef) ? eventRef : default;
+            return eventDictionary.GetValueOrDefault(eventName);
         }
 
         public AudioEventData GetEventData(string eventName)
