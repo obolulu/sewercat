@@ -133,6 +133,7 @@ MonoBehaviour:
   FeedbacksList:
   - rid: 2209787632987668484
   - rid: 2209787632987668485
+  - rid: 2209787642359054342
   - rid: 2209787642359054336
   - rid: 2209787642359054337
   KeepPlayModeChanges: 0
@@ -294,8 +295,8 @@ MonoBehaviour:
         DebugActive: 0
         RepeatUntilStopped: 0
         CameraShakeProperties:
-          Duration: 0.1
-          Amplitude: 0.4
+          Duration: 0.15
+          Amplitude: 0.5
           Frequency: 40
           AmplitudeX: 0
           AmplitudeY: 0
@@ -382,7 +383,7 @@ MonoBehaviour:
     - rid: 2209787642359054337
       type: {class: MMF_Vignette, ns: MoreMountains.FeedbacksForThirdParty, asm: MoreMountains.Tools}
       data:
-        Active: 1
+        Active: 0
         UniqueID: 1106739113
         Label: Vignette
         ChannelMode: 0
@@ -538,6 +539,85 @@ MonoBehaviour:
         RemapColorZero: 0
         RemapColorOne: 1
         TargetColor: {r: 1, g: 0, b: 0, a: 1}
+    - rid: 2209787642359054342
+      type: {class: MMFeedbackFMOD, ns: MoreMountains.Feedbacks, asm: Assembly-CSharp}
+      data:
+        Active: 1
+        UniqueID: -1613697987
+        Label: FMOD Sound
+        ChannelMode: 0
+        Channel: 0
+        MMChannelDefinition: {fileID: 0}
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          PlayCount: 0
+          LimitPlayCount: 0
+          MaxPlayCount: 3
+          SetPlayCountToZeroOnReset: 0
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        AutomatedTargetAcquisition:
+          Mode: 0
+          ChildIndex: 0
+        RandomizeOutput: 0
+        RandomMultiplier: {x: 0.8, y: 1}
+        RandomizeDuration: 0
+        RandomDurationMultiplier: {x: 0.5, y: 2}
+        UseRange: 0
+        RangeDistance: 5
+        UseRangeFalloff: 0
+        RangeFalloff:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        RemapRangeFalloff: {x: 0, y: 1}
+        AutomaticShakerSetupButton:
+          ButtonText: 
+        Owner: {fileID: 5845962622817715206}
+        DebugActive: 0
+        eventSO: {fileID: 11400000, guid: 8a059a410134c36418e7cc5142814230, type: 2}
+        usePosition: 1
+        useOwnerPosition: 1
+        specificPosition: {x: 0, y: 0, z: 0}
+        parameters: []
 --- !u!1 &8020709604545090256
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +703,7 @@ MonoBehaviour:
   attackEffects: {fileID: 2448113347648841540}
   attackFeedbacks: {fileID: 814761742620678526}
   hitFeedbacks: {fileID: 5845962622817715206}
-  clawAttackSound: {fileID: 11400000, guid: 8a059a410134c36418e7cc5142814230, type: 2}
+  clawAttackSound: {fileID: 11400000, guid: 6c4af108689a91b42870bf7630550473, type: 2}
 --- !u!114 &2448113347648841540
 MonoBehaviour:
   m_ObjectHideFlags: 0

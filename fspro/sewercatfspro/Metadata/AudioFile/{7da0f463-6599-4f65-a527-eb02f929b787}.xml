@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{7da0f463-6599-4f65-a527-eb02f929b787}">
+		<property name="assetPath">
+			<value>ClawSwoosh1.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.28734693877551021</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{9a142b23-8a75-4c7f-a9c1-89a8f4ae52bc}</destination>
+		</relationship>
+	</object>
+</objects>
