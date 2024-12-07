@@ -22,6 +22,8 @@ MonoBehaviour:
   audioType: 0
   is3D: 1
   isLooping: 0
-  defaultParameters: []
+  defaultParameters:
+  - name: PitchVariation
+    defaultValue: 12
   minDistance: 1
   maxDistance: 20

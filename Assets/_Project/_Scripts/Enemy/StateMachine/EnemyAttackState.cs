@@ -5,70 +5,80 @@ namespace _Project._Scripts.EnemyDir.StateMachine
 {
     public class EnemyAttackState : BaseState<EnemyStateMachine.EnemyState>
     {
-        private readonly Transform    _playerTransform;
-        private readonly Transform    _enemyTransform;
-        private readonly NavMeshAgent _navMeshAgent;
-        private readonly float _attackRange = 2.0f;
-        private readonly float _attackCooldown = 1.0f;
-        private float _lastAttackTime;
+        private readonly Transform playerTransform;
+        private readonly Transform enemyTransform;
+        private readonly float     attackRange    = 4f;
+        private readonly float     attackCooldown = 2.0f;
+        private          float     lastAttackTime;
 
-        public EnemyAttackState(EnemyStateMachine.EnemyState key, NavMeshAgent navMeshAgent, Transform playerTransform, Transform enemyTransform) : base(key)
+        public EnemyAttackState(EnemyStateMachine.EnemyState key, Transform playerTransform, 
+                                Transform                    enemyTransform) : base(key)
         {
-            _navMeshAgent = navMeshAgent;
-            _playerTransform = playerTransform;
-            _enemyTransform  = enemyTransform;
+            this.playerTransform = playerTransform;
+            this.enemyTransform  = enemyTransform;
         }
 
         public override void EnterState()
         {
-            _navMeshAgent.isStopped = true;
-            _lastAttackTime = Time.time;
+            Debug.Log("Entering attack state");
+            lastAttackTime = Time.time - attackCooldown; // Allow immediate first attack
         }
 
         public override void ExitState()
         {
-            _navMeshAgent.isStopped = false;
-            _navMeshAgent.Stop();
+            Debug.Log("Exiting attack state");
         }
 
         public override void UpdateState()
         {
-            if (_playerTransform != null && Time.time >= _lastAttackTime + _attackCooldown)
+            if (playerTransform != null && Time.time >= lastAttackTime + attackCooldown)
             {
                 AttackPlayer();
-                _lastAttackTime = Time.time;
+                lastAttackTime += Time.time;
             }
         }
 
         private void AttackPlayer()
         {
-            // Implement the logic to attack the player
             Debug.Log("Attacking the player");
+            // Implement actual attack logic here
         }
 
         public override EnemyStateMachine.EnemyState GetNextState()
         {
-            if (_playerTransform != null && Vector3.Distance
-                    (_enemyTransform.position, _playerTransform.position) > _attackRange)
+            if (playerTransform == null) return StateKey;
+
+            float distanceToPlayer = Vector3.Distance(enemyTransform.position, playerTransform.position);
+        
+            // If too far, chase
+            if (distanceToPlayer > attackRange)
             {
                 return EnemyStateMachine.EnemyState.Chase;
             }
+        
+            // If attack is on cooldown, go to idle
+            if (Time.time < lastAttackTime + attackCooldown)
+            {
+                return EnemyStateMachine.EnemyState.Idle;
+            }
+        
+            // Otherwise stay in attack state
             return EnemyStateMachine.EnemyState.Attack;
         }
 
         public override void OnTriggerEnter(Collider other)
         {
-            // Implement logic for when the enemy collides with something
+            throw new System.NotImplementedException();
         }
 
         public override void OnTriggerStay(Collider other)
         {
-            // Implement logic for when the enemy stays in collision with something
+            throw new System.NotImplementedException();
         }
 
         public override void OnTriggerExit(Collider other)
         {
-            // Implement logic for when the enemy exits collision with something
+            throw new System.NotImplementedException();
         }
     }
 }

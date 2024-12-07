@@ -1,7 +1,10 @@
+using System.Collections;
 using _Project._Scripts.CameraEffects;
 using _Project._Scripts.ScriptBases;
 using UnityEngine;
 using FMODUnity;
+using MoreMountains.Feedbacks;
+
 public class ClawsWeapon : WeaponBase
 {
     [Header("Attack Properties")]
@@ -15,6 +18,7 @@ public class ClawsWeapon : WeaponBase
     [SerializeField] private Animator animator;
     [SerializeField] private string attackTriggerName    = "Attack";
     [SerializeField] private string attackSpeedParameter = "AttackSpeed";
+    [SerializeField] private int framesUntilAttack = 4;
     
     
     [Header("Effects")]
@@ -22,6 +26,10 @@ public class ClawsWeapon : WeaponBase
     
     [Header("Camera Effects")]
     [SerializeField] private EffectChainData attackEffects;
+
+    [SerializeField] private MMFeedbacks attackFeedbacks;
+    [SerializeField] private MMFeedbacks hitFeedbacks;
+    
     
     [Header("Audio")]
     [SerializeField] private FMODEventSO clawAttackSound;
@@ -45,10 +53,22 @@ public class ClawsWeapon : WeaponBase
         if(slashEffect)
             slashEffect?.Play();
         AudioManager.Instance.PlaySound(clawAttackSound, transform.position);
-        if(attackEffects != null)
-            CameraEffectsManager.Instance.PlayChain(attackEffects);
+        //if(attackEffects != null)
+            //CameraEffectsManager.Instance.PlayChain(attackEffects);
+        attackFeedbacks?.PlayFeedbacks();
+        Debug.Log("waiting for: " + attackCooldown);
+        StartCoroutine(DelayedHitDetect());
+    }
+
+    private IEnumerator DelayedHitDetect()
+    {
+        int frameCount = 0;
+        while (frameCount < framesUntilAttack)
+        {
+            frameCount++;
+            yield return new WaitForEndOfFrame();
+        }
         HitDetect();
-        
     }
 
     private void HitDetect()
@@ -61,7 +81,7 @@ public class ClawsWeapon : WeaponBase
             if (enemy != null)
             {
                 Vector3 hitDirection = (hit.transform.position - transform.position).normalized;
-                
+                hitFeedbacks?.PlayFeedbacks();
                 enemy.TakeDamage(attackDamage, hitDirection);
             }
         }    

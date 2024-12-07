@@ -402,7 +402,8 @@ MonoBehaviour:
   - Assets/Bakery/examples/content/floor_lamp.FBX
   - Assets/Models/Rock_1.obj
   - Assets/Models/buddhaPreaching.obj
-  uvOverlapAssetList: 00000000ffffffff0000000000000000
+  - Assets/_Project/Imports/MOOShandsanim.fbx
+  uvOverlapAssetList: 00000000ffffffff000000000000000000000000
   xatlasWarningShown: 0
   foundCompatibleSetup: 1
   gpuName: NVIDIA GeForce RTX 3080 Ti

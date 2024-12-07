@@ -15,12 +15,14 @@ public class EnemyStateMachine : StateManager<EnemyStateMachine.EnemyState>
     public enum EnemyState
     {
         Chase,
-        Attack
+        Attack,
+        Idle
     }
     private void Awake()
     {
-        States[EnemyState.Attack] = new EnemyAttackState(EnemyState.Attack,_navMeshAgent, _playerTransform, transform);
+        States[EnemyState.Attack] = new EnemyAttackState(EnemyState.Attack, _playerTransform, transform);
         States[EnemyState.Chase]  = new EnemyChaseState(EnemyState.Chase, _playerTransform, _navMeshAgent);
+        States[EnemyState.Idle]  = new EnemyIdleState(EnemyState.Idle, _navMeshAgent, _playerTransform, transform);
         CurrentState = States[EnemyState.Chase];
     }
     

@@ -5,41 +5,48 @@ namespace _Project._Scripts.EnemyDir.StateMachine
 {
     public class EnemyChaseState : BaseState<EnemyStateMachine.EnemyState>
     {
-        private readonly Transform    _playerTransform;
-        private readonly NavMeshAgent _navMeshAgent;
-        private readonly float        _attackRange = 5.0f;
+        private readonly Transform    playerTransform;
+        private readonly NavMeshAgent navMeshAgent;
+        private readonly float        attackRange = 4f; // Match the attack range with other states
 
-        public EnemyChaseState(EnemyStateMachine.EnemyState key, Transform playerTransform, NavMeshAgent navMeshAgent) : base(key)
+        public EnemyChaseState(EnemyStateMachine.EnemyState key, Transform playerTransform, 
+                               NavMeshAgent                 navMeshAgent) : base(key)
         {
-            _playerTransform = playerTransform;
-            _navMeshAgent    = navMeshAgent;
+            this.playerTransform = playerTransform;
+            this.navMeshAgent    = navMeshAgent;
         }
 
         public override void EnterState()
         {
-            _navMeshAgent.isStopped = false;
+            navMeshAgent.isStopped = false;
         }
 
         public override void ExitState()
         {
-            _navMeshAgent.isStopped = true;
+            navMeshAgent.isStopped = true;
         }
 
         public override void UpdateState()
         {
-            if (_playerTransform != null)
+            if (playerTransform != null)
             {
-                _navMeshAgent.SetDestination(_playerTransform.position);
-            }        
+                navMeshAgent.SetDestination(playerTransform.position);
+            }
         }
 
         public override EnemyStateMachine.EnemyState GetNextState()
         {
-            if (_playerTransform != null && Vector3.Distance
-                    (_navMeshAgent.transform.position, _playerTransform.position) <= _attackRange)
+            if (playerTransform == null) return StateKey;
+
+            float distanceToPlayer = Vector3.Distance(navMeshAgent.transform.position, playerTransform.position);
+        
+            // If close enough, transition to attack state
+            if (distanceToPlayer <= attackRange)
             {
                 return EnemyStateMachine.EnemyState.Attack;
             }
+        
+            // Otherwise keep chasing
             return EnemyStateMachine.EnemyState.Chase;
         }
 
