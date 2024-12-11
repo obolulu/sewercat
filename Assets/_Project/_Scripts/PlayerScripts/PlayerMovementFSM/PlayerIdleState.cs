@@ -8,10 +8,8 @@ namespace _Project._Scripts.PlayerScripts
     
         public PlayerIdleState(PlayerController.PlayerState key, PlayerController controller) : base(key)
         {
-            InputManager.JumpPressed += () => isJumping = true;
             this.controller = controller;
         }
-        private bool isJumping = false;
         public override void EnterState()
         {
             controller.ResetVerticalVelocity();
@@ -29,9 +27,8 @@ namespace _Project._Scripts.PlayerScripts
             if (!controller.IsGrounded())
                 return PlayerController.PlayerState.Falling;
 
-            if (isJumping == true)
+            if (InputManager.StartJump)
             {
-                isJumping = false;
                 return PlayerController.PlayerState.Jumping;
             }
                 

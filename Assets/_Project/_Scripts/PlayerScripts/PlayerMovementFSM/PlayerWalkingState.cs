@@ -10,7 +10,6 @@ namespace _Project._Scripts.PlayerScripts
         public PlayerWalkingState(PlayerController.PlayerState key, PlayerController controller) : base(key)
         {
             this.controller          =  controller;
-            InputManager.JumpPressed += () => isJumping = true;
         }
 
         public override void EnterState()
@@ -34,7 +33,7 @@ namespace _Project._Scripts.PlayerScripts
                 return PlayerController.PlayerState.Falling;
             }
 
-            if (isJumping)
+            if (InputManager.StartJump)
             {
                 isJumping = false;
                 return PlayerController.PlayerState.Jumping;

@@ -12,7 +12,7 @@ namespace _Project._Scripts.PlayerScripts
 
         public override void EnterState()
         {
-            if (controller.velocity.y > 0)
+            if (controller.verticalVelocity.y > 0)
                 controller.ResetVerticalVelocity();        }
 
         public override void ExitState()

@@ -6,8 +6,13 @@ public class MouseLook : MonoBehaviour
 {
     public float mouseSensitivity = 100f;
     public Transform playerBody;
+    
+    [SerializeField] private float tiltAngle = 10f; // Adjust the tilt angle as needed
+    [SerializeField] private float tiltSpeed = 5f; // Adjust the tilt speed as needed
+    
     float xRotation;
     float yRotation;
+    
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -28,6 +33,10 @@ public class MouseLook : MonoBehaviour
         xRotation -= mouseY;//idk man
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);//prevent overrotation
         transform.rotation = Quaternion.Euler(xRotation,yRotation,0f);//apply rotation to camera
-        //playerBody.rotation = Quaternion.Euler(0, yRotation, 0f);//apply rotation to player
+
+        float targetTilt = InputManager.moveDirection.x * tiltAngle;
+        float currentTilt = Mathf.LerpAngle(transform.localEulerAngles.z, targetTilt, tiltSpeed * Time.deltaTime);
+        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, currentTilt);
+        
     }
 }

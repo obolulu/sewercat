@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour
 {
     private PlayerInputs _inputManager;
-    public static Vector3 moveDirection;
+    public static Vector2 moveDirection;
     public static Vector3 moveDirectionNormalized => moveDirection.normalized;
     
     public static bool StartJump;
@@ -33,8 +33,6 @@ public class InputManager : MonoBehaviour
 
     public static event Action OpenInventoryMenu;
     
-    public static event Action JumpPressed;
-    
     private bool _castPressed;
     private bool _jumpPressed;
     private bool _leftClickDown;
@@ -50,7 +48,6 @@ public class InputManager : MonoBehaviour
         if (context.performed)
         {
             StartJump = true;
-            JumpPressed?.Invoke();
         }
         else if (context.canceled)
         {
