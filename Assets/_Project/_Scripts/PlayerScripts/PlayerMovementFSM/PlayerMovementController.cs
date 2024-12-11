@@ -2,7 +2,7 @@
 
 namespace _Project._Scripts.PlayerScripts
 {
-    public class PlayerController : StateManager<PlayerStateMachine.PlayerState>
+    public class PlayerController : StateManager<PlayerController.PlayerState>
     {
         public enum PlayerState
         {
@@ -31,28 +31,29 @@ namespace _Project._Scripts.PlayerScripts
         [SerializeField] private Transform    cameraTransform;
         public InputManager inputManager;
         
-        private Vector3   velocity;
+        public Vector3   velocity;
         private Vector2   input;
         private bool     isLocked;
-
+        
+        
         void Awake()
         {
-            States[PlayerStateMachine.PlayerState.Idle]    = new PlayerIdleState
-                (PlayerStateMachine.PlayerState.Idle, this);
+            States[PlayerController.PlayerState.Idle]    = new PlayerIdleState
+                (PlayerController.PlayerState.Idle, this);
             
-            States[PlayerStateMachine.PlayerState.Walking] = new PlayerWalkingState
-                (PlayerStateMachine.PlayerState.Walking, this);
+            States[PlayerController.PlayerState.Walking] = new PlayerWalkingState
+                (PlayerController.PlayerState.Walking, this);
             
-            States[PlayerStateMachine.PlayerState.Falling] = new PlayerFallingState
-                (PlayerStateMachine.PlayerState.Falling, this);
+            States[PlayerController.PlayerState.Falling] = new PlayerFallingState
+                (PlayerController.PlayerState.Falling, this);
             
-            States[PlayerStateMachine.PlayerState.Jumping] = new PlayerJumpingState
-                (PlayerStateMachine.PlayerState.Jumping, this);
+            States[PlayerController.PlayerState.Jumping] = new PlayerJumpingState
+                (PlayerController.PlayerState.Jumping, this);
             
-            States[PlayerStateMachine.PlayerState.Locked]  = new PlayerLockedState
-                (PlayerStateMachine.PlayerState.Locked, this);
+            States[PlayerController.PlayerState.Locked]  = new PlayerLockedState
+                (PlayerController.PlayerState.Locked, this);
             
-            CurrentState                                   = States[PlayerStateMachine.PlayerState.Idle];
+            CurrentState                                   = States[PlayerController.PlayerState.Idle];
         }
         private void Update()
         {
@@ -62,9 +63,8 @@ namespace _Project._Scripts.PlayerScripts
     
         public bool IsGrounded()
         {
-            //return Physics.CheckSphere(transform.position + Vector3.down * groundCheckDistance, 0.5f, groundMask);
-            return Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundMask);
-            //return characterController.isGrounded;
+            return Physics.CheckSphere(transform.position + Vector3.down * groundCheckDistance, 0.5f, groundMask);
+            return characterController.isGrounded;
         }
     
         public void Move()
@@ -73,10 +73,8 @@ namespace _Project._Scripts.PlayerScripts
         
             if (moveDirection != Vector3.zero)
             {
-                // Convert move direction to be relative to camera
                 moveDirection = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0) * moveDirection;
             
-                // Smooth rotation towards movement direction
                 Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }

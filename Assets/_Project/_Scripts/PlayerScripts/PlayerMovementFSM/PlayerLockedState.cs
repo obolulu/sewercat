@@ -2,12 +2,12 @@
 
 namespace _Project._Scripts.PlayerScripts
 {
-    public class PlayerLockedState: BaseState<PlayerStateMachine.PlayerState>
+    public class PlayerLockedState: BaseState<PlayerController.PlayerState>
     {
         private readonly PlayerController               controller;
         private          PlayerStateMachine.PlayerState previousState;
     
-        public PlayerLockedState(PlayerStateMachine.PlayerState key, PlayerController controller) : base(key)
+        public PlayerLockedState(PlayerController.PlayerState key, PlayerController controller) : base(key)
         {
             this.controller = controller;
         }
@@ -28,7 +28,7 @@ namespace _Project._Scripts.PlayerScripts
             controller.ApplyGravity(controller.gravity);
         }
     
-        public override PlayerStateMachine.PlayerState GetNextState()
+        public override PlayerController.PlayerState GetNextState()
         {
             // Add your condition here to determine when to unlock
             // For example: if (someCondition) return previousState;

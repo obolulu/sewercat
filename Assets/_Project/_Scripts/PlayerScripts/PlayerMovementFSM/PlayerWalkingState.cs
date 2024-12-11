@@ -2,16 +2,12 @@
 
 namespace _Project._Scripts.PlayerScripts
 {
-    public class PlayerWalkingState : BaseState<PlayerStateMachine.PlayerState>
+    public class PlayerWalkingState : BaseState<PlayerController.PlayerState>
     {
-        public PlayerWalkingState(PlayerStateMachine.PlayerState key) : base(key)
-        {
-        }
-
         private readonly PlayerController controller;
         private          bool             isJumping = false;
 
-        public PlayerWalkingState(PlayerStateMachine.PlayerState key, PlayerController controller) : base(key)
+        public PlayerWalkingState(PlayerController.PlayerState key, PlayerController controller) : base(key)
         {
             this.controller          =  controller;
             InputManager.JumpPressed += () => isJumping = true;
@@ -31,21 +27,21 @@ namespace _Project._Scripts.PlayerScripts
             controller.ApplyGravity(controller.groundedGravity);
         }
 
-        public override PlayerStateMachine.PlayerState GetNextState()
+        public override PlayerController.PlayerState GetNextState()
         {
             if (!controller.IsGrounded())
             {
-                return PlayerStateMachine.PlayerState.Falling;
+                return PlayerController.PlayerState.Falling;
             }
 
             if (isJumping)
             {
                 isJumping = false;
-                return PlayerStateMachine.PlayerState.Jumping;
+                return PlayerController.PlayerState.Jumping;
             }
 
             if (!controller.HasMovementInput())
-                return PlayerStateMachine.PlayerState.Idle;
+                return PlayerController.PlayerState.Idle;
 
             return StateKey;
         }

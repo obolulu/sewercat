@@ -2,22 +2,22 @@
 
 namespace _Project._Scripts.PlayerScripts
 {
-    public class PlayerFallingState: BaseState<PlayerStateMachine.PlayerState>
+    public class PlayerFallingState: BaseState<PlayerController.PlayerState>
     {
         private readonly PlayerController controller;
-        public PlayerFallingState(PlayerStateMachine.PlayerState key, PlayerController controller) : base(key)
+        public PlayerFallingState(PlayerController.PlayerState key, PlayerController controller) : base(key)
         {
             this.controller = controller;
         }
 
         public override void EnterState()
         {
-            throw new System.NotImplementedException();
-        }
+            if (controller.velocity.y > 0)
+                controller.ResetVerticalVelocity();        }
 
         public override void ExitState()
         {
-            throw new System.NotImplementedException();
+            controller.ResetVerticalVelocity();
         }
 
         public override void UpdateState()
@@ -26,10 +26,10 @@ namespace _Project._Scripts.PlayerScripts
             controller.ApplyGravity(controller.gravity);
         }
     
-        public override PlayerStateMachine.PlayerState GetNextState()
+        public override PlayerController.PlayerState GetNextState()
         {
             if (controller.IsGrounded())
-                return controller.HasMovementInput() ? PlayerStateMachine.PlayerState.Walking : PlayerStateMachine.PlayerState.Idle;
+                return controller.HasMovementInput() ? PlayerController.PlayerState.Walking : PlayerController.PlayerState.Idle;
             
             return StateKey;
         }

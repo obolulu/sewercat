@@ -2,10 +2,10 @@
 
 namespace _Project._Scripts.PlayerScripts
 {
-    public class PlayerJumpingState : BaseState<PlayerStateMachine.PlayerState>
+    public class PlayerJumpingState : BaseState<PlayerController.PlayerState>
     {
         private readonly PlayerController controller;
-        public PlayerJumpingState(PlayerStateMachine.PlayerState key, PlayerController controller) : base(key)
+        public PlayerJumpingState(PlayerController.PlayerState key, PlayerController controller) : base(key)
         {
             this.controller = controller;
         }
@@ -26,9 +26,9 @@ namespace _Project._Scripts.PlayerScripts
             controller.ApplyGravity(controller.gravity);
         }
 
-        public override PlayerStateMachine.PlayerState GetNextState()
+        public override PlayerController.PlayerState GetNextState()
         {
-            return PlayerStateMachine.PlayerState.Falling;
+            return PlayerController.PlayerState.Falling;
         }
     }
 }
