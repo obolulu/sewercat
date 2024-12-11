@@ -16,15 +16,16 @@ public abstract class StateManager<EState> : MonoBehaviour where EState : Enum
     }
     void FixedUpdate()
     {
-        // EState nextStateKey = CurrentState.GetNextState();
-        // if (!IsTransitioningState&&nextStateKey.Equals(CurrentState.StateKey))
-        // {
-        //     CurrentState.UpdateState();
-        // }
-        // else if (!IsTransitioningState)
-        // {
-        //     TransitionToState(nextStateKey);
-        // }
+        Debug.Log("FixedUpdate" + CurrentState.StateKey);
+         EState nextStateKey = CurrentState.GetNextState();
+         if (!IsTransitioningState&&nextStateKey.Equals(CurrentState.StateKey))
+         {
+             CurrentState.UpdateState();
+         }
+         else if (!IsTransitioningState)
+         {
+             TransitionToState(nextStateKey);
+         }
     }
 
     public void TransitionToState(EState stateKey)

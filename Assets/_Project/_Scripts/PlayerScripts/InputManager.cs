@@ -33,6 +33,8 @@ public class InputManager : MonoBehaviour
 
     public static event Action OpenInventoryMenu;
     
+    public static event Action JumpPressed;
+    
     private bool _castPressed;
     private bool _jumpPressed;
     private bool _leftClickDown;
@@ -48,6 +50,7 @@ public class InputManager : MonoBehaviour
         if (context.performed)
         {
             StartJump = true;
+            JumpPressed?.Invoke();
         }
         else if (context.canceled)
         {

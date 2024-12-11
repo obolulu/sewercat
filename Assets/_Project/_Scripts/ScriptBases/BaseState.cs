@@ -13,8 +13,8 @@ public abstract class BaseState<EState> where EState : Enum
     public abstract void ExitState();
     public abstract void UpdateState();
     public abstract EState GetNextState();
-    public abstract void OnTriggerEnter(Collider other);
-    public abstract void OnTriggerStay(Collider other);
-    public abstract void OnTriggerExit(Collider other);
+    public virtual void OnTriggerEnter(Collider other){}
+    public virtual void OnTriggerStay(Collider other){}
+    public virtual void OnTriggerExit(Collider other){}
 
 }
