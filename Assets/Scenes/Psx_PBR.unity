@@ -576,7 +576,7 @@ Transform:
   m_GameObject: {fileID: 134348558}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.42, y: 4.91, z: 0.34}
+  m_LocalPosition: {x: -9.8, y: 4.91, z: 0.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -664,9 +664,8 @@ MonoBehaviour:
     m_Bits: 64
   characterController: {fileID: 134348567}
   cameraTransform: {fileID: 963194228}
+  virtualCamera: {fileID: 0}
   inputManager: {fileID: 134348561}
-  tiltAngle: 10
-  tiltSpeed: 5
   moveVelocity: {x: 0, y: 0, z: 0}
   verticalVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &141877372
@@ -1355,7 +1354,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &387283576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6636,7 +6635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2612f5930e8803444bd2a860619ec67a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _psm: {fileID: 0}
+  psm: {fileID: 134348568}
   dialogueUI: {fileID: 1540903047}
   onDialogueComplete:
     m_PersistentCalls:

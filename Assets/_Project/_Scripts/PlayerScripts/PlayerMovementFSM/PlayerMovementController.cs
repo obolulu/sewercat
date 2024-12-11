@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cinemachine;
+using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts
 {
@@ -36,11 +37,9 @@ namespace _Project._Scripts.PlayerScripts
         [Header("References")]
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Transform    cameraTransform;
+        [SerializeField] private CinemachineVirtualCamera virtualCamera;
+        
         public InputManager inputManager;
-
-        [Header("Tilt Settings")] 
-        [SerializeField] private float tiltAngle = 10f;
-        [SerializeField] private float tiltSpeed = 5f;
 
         
         public Vector3   moveVelocity;
@@ -83,14 +82,16 @@ namespace _Project._Scripts.PlayerScripts
             ApplyHorizontalMovement();
             ApplyVerticalMovement();
             ApplyFinalMovement();
-            ApplyCameraTilt();
+            //ApplyCameraTilt();
         }
+        /*
         private void ApplyCameraTilt()
         {
             float targetTilt = input.x * tiltAngle;
             float currentTilt = Mathf.LerpAngle(cameraTransform.localEulerAngles.z, targetTilt, tiltSpeed * Time.deltaTime);
             cameraTransform.localEulerAngles = new Vector3(cameraTransform.localEulerAngles.x, cameraTransform.localEulerAngles.y, currentTilt);
         }
+        */
         private void ApplyHorizontalMovement()
         {
             Vector3 moveDirection = new Vector3(input.x, 0, input.y);

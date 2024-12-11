@@ -16,16 +16,18 @@ namespace _Project._Scripts.PlayerScripts
         {
             controller.LockPlayer();
             previousState = controller.IsGrounded() ? PlayerStateMachine.PlayerState.Idle : PlayerStateMachine.PlayerState.Falling;
+            Cursor.lockState = CursorLockMode.None;
         }
     
         public override void ExitState()
         {
             controller.UnlockPlayer();
+            Cursor.lockState = CursorLockMode.Locked;
         }
     
         public override void UpdateState()
         {
-            controller.ApplyGravity(controller.gravity);
+            //controller.ApplyGravity(controller.gravity);
         }
     
         public override PlayerController.PlayerState GetNextState()

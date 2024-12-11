@@ -1,4 +1,5 @@
 using System;
+using _Project._Scripts.PlayerScripts;
 using UnityEngine;
 using UnityEngine.Events;
 public class DialogueUI : MonoBehaviour
@@ -7,7 +8,7 @@ public class DialogueUI : MonoBehaviour
     
     private NPCStateManager NpcStateManager;
 
-    [SerializeField] private PlayerStateMachine _psm;
+    [SerializeField] private PlayerController psm;
     
     [SerializeField] private GameObject dialogueUI;
     
@@ -23,7 +24,7 @@ public class DialogueUI : MonoBehaviour
     public void StartDialogue(NPCStateManager npcStateManager)
     {
         //dialogueUI.SetActive(true);
-        _psm.TransitionToState(PlayerStateMachine.PlayerState.Locked);
+        psm.TransitionToState(PlayerController.PlayerState.Locked);
         
         NpcStateManager = npcStateManager;
     }
@@ -31,7 +32,7 @@ public class DialogueUI : MonoBehaviour
     public void EndDialogue()
     {
         //dialogueUI.SetActive(false);
-        _psm.TransitionToState(PlayerStateMachine.PlayerState.Idle);
+        psm.TransitionToState(PlayerController.PlayerState.Idle);
         NpcStateManager.TransitionToState(NPCStateManager.NPCState.Idle);
         //NpcStateManager = null;
     }
