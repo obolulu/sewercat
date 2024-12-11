@@ -28,6 +28,6 @@ public class MouseLook : MonoBehaviour
         xRotation -= mouseY;//idk man
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);//prevent overrotation
         transform.rotation = Quaternion.Euler(xRotation,yRotation,0f);//apply rotation to camera
-        playerBody.rotation = Quaternion.Euler(0, yRotation, 0f);//apply rotation to player
+        //playerBody.rotation = Quaternion.Euler(0, yRotation, 0f);//apply rotation to player
     }
 }
