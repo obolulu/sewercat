@@ -44,14 +44,10 @@ namespace _Project._Scripts.PlayerScripts
 
         [Header("Headbob")] 
         [SerializeField] private bool  headbobEnabled;
-        [SerializeField, Range(0, 0.1f)]     private float headbobAmplitude = 0.05f;
-        [SerializeField, Range(0,  30) ]     private float headbobfrequency = 10f;
 
         public Transform CameraTransform => cameraTransform;
         
         public bool  HeadbobEnabled   => headbobEnabled;
-        public float HeadbobAmplitude => headbobAmplitude;
-        public float HeadbobFrequency => headbobfrequency;
         
         
         public InputManager inputManager;
@@ -149,7 +145,7 @@ namespace _Project._Scripts.PlayerScripts
         public void ApplyGravity(float gravityValue)
         {
             verticalVelocity.y += gravityValue * Time.deltaTime;
-            characterController.Move(verticalVelocity * Time.deltaTime);
+            //characterController.Move(verticalVelocity * Time.deltaTime);
         }
         
         public bool HasMovementInput()

@@ -18,7 +18,7 @@ namespace _Project._Scripts.PlayerScripts
 
         public override void ExitState()
         {
-            controller.ResetVerticalVelocity();
+            //controller.ResetVerticalVelocity();
         }
 
         public override void UpdateState()

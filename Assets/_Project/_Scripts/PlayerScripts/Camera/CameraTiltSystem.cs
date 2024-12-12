@@ -37,24 +37,21 @@ public class CameraTiltSystem : MonoBehaviour
     private void HandleMovementTilt()
     {
         float inputX = InputManager.moveDirection.x;
-        targetTilt = -inputX * maxTiltAngle;
+        targetTilt = inputX * maxTiltAngle;
     }
 
     private void HandleJumpLandTilt()
     {
-        // Jump
         if (controller.currentPlayerState.StateKey == PlayerController.PlayerState.Jumping)
         {
             verticalTilt = -jumpTiltAmount;
         }
         
-        // Land
         if (!wasGrounded && controller.IsGrounded())
         {
             verticalTilt = landTiltAmount;
         }
         
-        // Recovery
         verticalTilt = Mathf.Lerp(verticalTilt, 0, Time.deltaTime * recoverySpeed);
         wasGrounded  = controller.IsGrounded();
     }
@@ -63,8 +60,7 @@ public class CameraTiltSystem : MonoBehaviour
     {
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.deltaTime * tiltSpeed);
         
-        // Combine movement and vertical tilt
-        Vector3 finalRotation = new Vector3(verticalTilt, 0, currentTilt);
+        Vector3 finalRotation = new Vector3(verticalTilt, 0, -currentTilt);
         transform.localRotation = Quaternion.Euler(finalRotation);
     }
 }
