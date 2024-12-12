@@ -650,16 +650,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   rotationSpeed: 0
-  jumpForce: 5
+  jumpForce: 6
   gravity: -9.81
   groundedGravity: -0.5
   maxFallSpeed: -20
   minJumpTime: 0.1
   maxJumpTime: 0.7
   jumpCooldown: 0
-  smoothTime: 0.1
+  smoothTime: 0.2
   lastJumpTime: 0
-  groundCheckDistance: 0.7
+  groundCheckDistance: 0.51
   minimumMoveSpeed: 0.1
   groundMask:
     serializedVersion: 2
@@ -1448,11 +1448,14 @@ MonoBehaviour:
   clampAngle: 80
   verticalSensitivity: 10
   horizontalSensitivity: 10
+  isTiltEnabled: 1
   tiltAngle: -3
-  tiltSpeed: 3.67
-  jumpTiltAmount: 2.54
-  landTiltAmount: 2
-  recoverySpeed: 5.8
+  tiltSpeed: 2.5
+  isJumpTiltEnabled: 1
+  jumpTiltAmount: 3.55
+  landTiltAmount: 1.36
+  recoverySpeed: 10
+  groundCheckDelay: 0.53
   controller: {fileID: 134348568}
 --- !u!114 &387283580
 MonoBehaviour:
@@ -2423,7 +2426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointID: 0
 --- !u!65 &655741906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4975,6 +4977,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentBlackboard: {fileID: 0}
+  _serializedBlackboard: '{"_variables":{}}'
+  _objectReferences: []
+  _serializedVariables: []
 --- !u!114 &1240474681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4987,6 +4993,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad115aca74ce3c4891b3f6de0b4aae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _serializedExposedParameters: []
+  _boundGraphSerialization: 
+  _boundGraphObjectReferences: []
+  _boundGraphSource:
+    _version: 0
+    _category: 
+    _comments: 
+    _translation: {x: 0, y: 0}
+    _zoomFactor: 1
+  _firstActivation: 0
+  _enableAction: 0
+  _disableAction: 0
+  _lockBoundGraphPrefabOverrides: 1
+  _preInitializeSubGraphs: 0
+  _updateMode: 0
+  _graph: {fileID: 0}
+  _blackboard: {fileID: 0}
 --- !u!1 &1254458686
 GameObject:
   m_ObjectHideFlags: 0
@@ -7645,7 +7668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointID: 0
 --- !u!1001 &1796274098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9743,7 +9765,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046859422}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4ccfab1663f5b64da17e7d315eca672, type: 3}
   m_Name: 

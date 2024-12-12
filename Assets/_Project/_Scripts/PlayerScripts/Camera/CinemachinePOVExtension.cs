@@ -17,25 +17,28 @@ public class CinemachinePOVExtension : CinemachineExtension
 
     [Header("Jump/Land Effects")] 
     [SerializeField] private bool isJumpTiltEnabled;
-    [SerializeField] private float jumpTiltAmount = 3f;
-    [SerializeField] private float              landTiltAmount = 2f;
-    [SerializeField] private float              recoverySpeed  = 10f;  
+    [SerializeField] private float jumpTiltAmount   = 3f;
+    [SerializeField] private float landTiltAmount   = 2f;
+    [SerializeField] private float recoverySpeed    = 10f;  
+    [SerializeField] private float groundCheckDelay = 0.1f; // seconds
     
     [Header("References")]
     [SerializeField] private PlayerController controller;
     
 
-    
-    private Vector3 startingRotation;
+    private Vector2 currentRotation;
+    private float   timeSinceJump;
     private float   currentTilt;
     private float   verticalTilt;
+    private float   targetVerticalTilt;
     private bool    wasGrounded;
+    
     protected override void Awake()
     {
         Cursor.lockState       =  CursorLockMode.Locked;
         base.Awake();
-        startingRotation = transform.localRotation.eulerAngles;
-        wasGrounded      = controller.IsGrounded();
+        currentRotation = Vector2.zero;
+        wasGrounded     = controller.IsGrounded();
     }
 
     protected override void PostPipelineStageCallback(CinemachineVirtualCameraBase vcam,  CinemachineCore.Stage stage,
@@ -46,14 +49,18 @@ public class CinemachinePOVExtension : CinemachineExtension
         if (stage == CinemachineCore.Stage.Aim)
         {
             Vector2 deltaInput = InputManager.GetMouseDelta();
-            startingRotation.x   += deltaInput.x * verticalSensitivity   * Time.deltaTime;
-            startingRotation.y   += deltaInput.y * horizontalSensitivity * Time.deltaTime;
-            startingRotation.y   =  Mathf.Clamp(startingRotation.y, -clampAngle, clampAngle);
+            currentRotation.x += deltaInput.x * verticalSensitivity   * Time.deltaTime;
+            currentRotation.y += deltaInput.y * horizontalSensitivity * Time.deltaTime;
+            currentRotation.y =  Mathf.Clamp(currentRotation.y, -clampAngle, clampAngle);
             
             if(isTiltEnabled) HandleMovementTilt(deltaTime);
             if(isJumpTiltEnabled) HandleJumpLandTilt(deltaTime);
 
-            state.RawOrientation = Quaternion.Euler(-startingRotation.y + verticalTilt, startingRotation.x, currentTilt);
+            Quaternion rotation     = Quaternion.Euler(-currentRotation.y + verticalTilt, currentRotation.x , 0);
+            Quaternion tiltRotation = Quaternion.AngleAxis(currentTilt, Vector3.forward);
+
+
+            state.RawOrientation =  rotation * tiltRotation;
 
         }
     }
@@ -67,15 +74,17 @@ public class CinemachinePOVExtension : CinemachineExtension
     {
         if (controller.CurrentState.StateKey == PlayerController.PlayerState.Jumping)
         {
-            verticalTilt = -jumpTiltAmount;
+            timeSinceJump      = 0f;
+            targetVerticalTilt = -jumpTiltAmount;
         }
         
-        if (!wasGrounded && controller.IsGrounded())
+        if (!wasGrounded && controller.IsGrounded() && timeSinceJump >= groundCheckDelay)
         {
-            verticalTilt = landTiltAmount;
+            targetVerticalTilt = -landTiltAmount;
         }
-        
-        verticalTilt = Mathf.Lerp(verticalTilt, 0, deltaTime * recoverySpeed);
-        wasGrounded  = controller.IsGrounded();
+
+        timeSinceJump += deltaTime;
+        verticalTilt  =  Mathf.Lerp(verticalTilt, targetVerticalTilt, deltaTime * recoverySpeed);
+        wasGrounded   =  controller.IsGrounded();
     }
 }
