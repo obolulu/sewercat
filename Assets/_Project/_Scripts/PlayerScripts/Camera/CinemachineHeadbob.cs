@@ -50,7 +50,7 @@ public class CameraHeadbob : MonoBehaviour
             float verticalBob = Mathf.Sin(_timer) * walkingBobbingAmount * speedPercent;
             verticalBob += Mathf.Sin(Time.time * breathingSpeed) * breathingAmount;
             
-            float horizontalBob = Mathf.Cos(_timer /2f) * walkingHorizontalBobbingAmount * speedPercent;
+            float horizontalBob = Mathf.Cos(_timer/2f) * walkingHorizontalBobbingAmount * speedPercent;
             
             targetBobPosition = new Vector3(
                 _defaultPosX + horizontalBob,

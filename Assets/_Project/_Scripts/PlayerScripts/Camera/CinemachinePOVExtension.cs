@@ -9,12 +9,14 @@ public class CinemachinePOVExtension : CinemachineExtension
     [SerializeField] private float clampAngle = 80f;
     [SerializeField] private float verticalSensitivity = 10f;
     [SerializeField] private float horizontalSensitivity = 10f;
-    
-    [Header("Movement Tilt")]
+
+    [Header("Movement Tilt")] 
+    [SerializeField] private bool isTiltEnabled;
     [SerializeField] private float tiltAngle = 5f;
     [SerializeField] private float tiltSpeed = 8f;
-    
-    [Header("Jump/Land Effects")]
+
+    [Header("Jump/Land Effects")] 
+    [SerializeField] private bool isJumpTiltEnabled;
     [SerializeField] private float jumpTiltAmount = 3f;
     [SerializeField] private float              landTiltAmount = 2f;
     [SerializeField] private float              recoverySpeed  = 10f;  
@@ -48,16 +50,19 @@ public class CinemachinePOVExtension : CinemachineExtension
             startingRotation.y   += deltaInput.y * horizontalSensitivity * Time.deltaTime;
             startingRotation.y   =  Mathf.Clamp(startingRotation.y, -clampAngle, clampAngle);
             
-            float targetTilt = InputManager.moveDirection.x * tiltAngle;
-            currentTilt = Mathf.Lerp(currentTilt, targetTilt, tiltSpeed * deltaTime);
-            
-            HandleJumpLandTilt(deltaTime);
+            if(isTiltEnabled) HandleMovementTilt(deltaTime);
+            if(isJumpTiltEnabled) HandleJumpLandTilt(deltaTime);
 
             state.RawOrientation = Quaternion.Euler(-startingRotation.y + verticalTilt, startingRotation.x, currentTilt);
 
         }
     }
 
+    private void HandleMovementTilt(float deltaTime)
+    {
+        float targetTilt = InputManager.moveDirection.x * tiltAngle;
+        currentTilt = Mathf.Lerp(currentTilt, targetTilt, tiltSpeed * deltaTime);
+    }
     private void HandleJumpLandTilt(float deltaTime)
     {
         if (controller.CurrentState.StateKey == PlayerController.PlayerState.Jumping)

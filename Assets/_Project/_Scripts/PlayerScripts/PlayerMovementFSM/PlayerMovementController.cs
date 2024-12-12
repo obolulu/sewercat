@@ -29,6 +29,8 @@ namespace _Project._Scripts.PlayerScripts
         public float minJumpTime = 0.2f;
         public float maxJumpTime     = 1f;
         [SerializeField] private float jumpCooldown = 0.5f;
+        [SerializeField] private float smoothTime = 0.1f;
+        private float _smoothVelocity;
         public float lastJumpTime;
         
         
@@ -84,7 +86,8 @@ namespace _Project._Scripts.PlayerScripts
     
         public bool IsGrounded()
         {
-            return Physics.CheckSphere(transform.position + Vector3.down * groundCheckDistance, 0.5f, groundMask);
+            return Physics.CheckSphere(transform.position + Vector3.down * groundCheckDistance, 0.5f, groundMask)
+                   || characterController.isGrounded; // ||Physics.Raycast(Vector3.down,
             return characterController.isGrounded;
         }
 
@@ -122,9 +125,10 @@ namespace _Project._Scripts.PlayerScripts
         
         private void ApplyVerticalMovement()
         {
-            if (IsGrounded() && verticalVelocity.y < 0)
+            if (IsGrounded())
             {
-                verticalVelocity.y = groundedGravity;
+                if (verticalVelocity.y < 0f)
+                    verticalVelocity.y = Mathf.SmoothDamp(verticalVelocity.y, groundedGravity, ref _smoothVelocity, smoothTime);
             }
             else
             {

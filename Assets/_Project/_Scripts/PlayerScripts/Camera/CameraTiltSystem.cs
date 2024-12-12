@@ -60,7 +60,7 @@ public class CameraTiltSystem : MonoBehaviour
     {
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.deltaTime * tiltSpeed);
         
-        Vector3 finalRotation = new Vector3(verticalTilt, 0, -currentTilt);
+        Vector3 finalRotation = new Vector3(verticalTilt, 0, currentTilt);
         transform.localRotation = Quaternion.Euler(finalRotation);
     }
 }
