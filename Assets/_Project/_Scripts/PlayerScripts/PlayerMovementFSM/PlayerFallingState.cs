@@ -12,8 +12,9 @@ namespace _Project._Scripts.PlayerScripts
 
         public override void EnterState()
         {
-            if (controller.verticalVelocity.y > 0)
-                controller.ResetVerticalVelocity();        }
+            //if (controller.verticalVelocity.y > 0)
+                //controller.ResetVerticalVelocity();
+        }
 
         public override void ExitState()
         {
@@ -22,7 +23,7 @@ namespace _Project._Scripts.PlayerScripts
 
         public override void UpdateState()
         {
-            controller.Move();
+            controller.Move(0.8f);
             controller.ApplyGravity(controller.gravity);
         }
     

@@ -56,7 +56,7 @@ private void SetupBehaviourTree()
                             Vector3.Distance(transform.position, player.position) < disengageRange));
     var handleCombat = new Leaf("Handle Combat", new ActionStrategy(() =>
     {
-        Debug.Log("Handling combat...");
+        //Debug.Log("Handling combat...");
         HandleCombat();
     }));
     var combatSequence = new Sequence("Combat Sequence", 30);

@@ -28,6 +28,8 @@ namespace _Project._Scripts.PlayerScripts
         public float maxFallSpeed    = -20f;
         public float minJumpTime = 0.2f;
         public float maxJumpTime     = 1f;
+        [SerializeField] private float jumpCooldown = 0.5f;
+        public float lastJumpTime;
         
         
         [Header("Ground Settings")]
@@ -95,9 +97,9 @@ namespace _Project._Scripts.PlayerScripts
             cameraHolder.transform.localPosition += offset;
         }
     
-        public void Move()
+        public void Move(float speed =1f)
         {
-            ApplyHorizontalMovement();
+            ApplyHorizontalMovement(speed);
             ApplyVerticalMovement();
             ApplyFinalMovement();
             //ApplyCameraTilt();
@@ -110,7 +112,7 @@ namespace _Project._Scripts.PlayerScripts
             cameraTransform.localEulerAngles = new Vector3(cameraTransform.localEulerAngles.x, cameraTransform.localEulerAngles.y, currentTilt);
         }
         */
-        private void ApplyHorizontalMovement()
+        private void ApplyHorizontalMovement(float speed = 1f)
         {
             Vector3 moveDirection = new Vector3(input.x, 0, input.y);
             if (moveDirection != Vector3.zero)
@@ -119,7 +121,7 @@ namespace _Project._Scripts.PlayerScripts
                 Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
-            moveVelocity = moveDirection * moveSpeed;
+            moveVelocity = moveDirection * (moveSpeed * speed);
         }
         
         private void ApplyVerticalMovement()
@@ -158,6 +160,14 @@ namespace _Project._Scripts.PlayerScripts
         public void Jump()
         {
             verticalVelocity.y = jumpForce;
+        }
+
+        public bool CheckJump()
+        {
+            var condition = (Time.time > lastJumpTime + jumpCooldown)
+                             && IsGrounded();
+            condition = condition && InputManager.StartJump;
+            return condition;
         }
     
         public void ResetVerticalVelocity()

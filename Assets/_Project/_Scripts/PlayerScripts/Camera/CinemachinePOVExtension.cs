@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using _Project._Scripts.PlayerScripts;
 using Cinemachine;
-using ParadoxNotion;
 using UnityEngine;
 
 public class CinemachinePOVExtension : CinemachineExtension

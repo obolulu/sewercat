@@ -37,18 +37,18 @@ public class CameraTiltSystem : MonoBehaviour
     private void HandleMovementTilt()
     {
         float inputX = InputManager.moveDirection.x;
-        targetTilt = -inputX * maxTiltAngle; // Negative for correct tilt direction
+        targetTilt = -inputX * maxTiltAngle;
     }
 
     private void HandleJumpLandTilt()
     {
-        // Jump tilt
+        // Jump
         if (controller.currentPlayerState.StateKey == PlayerController.PlayerState.Jumping)
         {
             verticalTilt = -jumpTiltAmount;
         }
         
-        // Land tilt
+        // Land
         if (!wasGrounded && controller.IsGrounded())
         {
             verticalTilt = landTiltAmount;
