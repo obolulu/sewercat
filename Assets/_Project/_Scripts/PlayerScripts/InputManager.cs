@@ -8,6 +8,8 @@ public class InputManager : MonoBehaviour
     public static Vector2 moveDirection;
     public static Vector3 moveDirectionNormalized => moveDirection.normalized;
     
+    public static Vector3 MousePosition => Mouse.current.position.ReadValue();
+    
     public static bool StartJump;
     public static bool CastPressed;
     public static bool SpellChangePressed;
@@ -37,6 +39,12 @@ public class InputManager : MonoBehaviour
     private bool _jumpPressed;
     private bool _leftClickDown;
     private bool _leftClickUp;
+
+    public static Vector2 GetMouseDelta()
+    {
+        return Mouse.current.delta.ReadValue();
+    }
+    
     void Awake()
     {
         _inputManager = new PlayerInputs();
@@ -138,6 +146,7 @@ public class InputManager : MonoBehaviour
             OpenPauseMenu?.Invoke();
         }
     }
+    
     
     private void OnEnable()
     {

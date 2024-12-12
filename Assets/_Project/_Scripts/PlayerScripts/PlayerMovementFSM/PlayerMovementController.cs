@@ -13,7 +13,8 @@ namespace _Project._Scripts.PlayerScripts
             Jumping,
             Locked
         }
-        public PlayerState currentPlayerState;
+        
+        public BaseState<PlayerState> currentPlayerState => CurrentState; 
         
         [Header("Movement Settings")]
         public float moveSpeed = 6f;
@@ -37,7 +38,19 @@ namespace _Project._Scripts.PlayerScripts
         [Header("References")]
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Transform    cameraTransform;
-        [SerializeField] private CinemachineVirtualCamera virtualCamera;
+        [SerializeField] private GameObject cameraHolder;
+
+        [Header("Headbob")] 
+        [SerializeField] private bool  headbobEnabled;
+        [SerializeField, Range(0, 0.1f)]     private float headbobAmplitude = 0.05f;
+        [SerializeField, Range(0,  30) ]     private float headbobfrequency = 10f;
+
+        public Transform CameraTransform => cameraTransform;
+        
+        public bool  HeadbobEnabled   => headbobEnabled;
+        public float HeadbobAmplitude => headbobAmplitude;
+        public float HeadbobFrequency => headbobfrequency;
+        
         
         public InputManager inputManager;
 
@@ -68,13 +81,18 @@ namespace _Project._Scripts.PlayerScripts
         }
         private void Update()
         {
-            input = InputManager.moveDirection;
+            input = InputManager.moveDirection.normalized;
         }
     
         public bool IsGrounded()
         {
             return Physics.CheckSphere(transform.position + Vector3.down * groundCheckDistance, 0.5f, groundMask);
             return characterController.isGrounded;
+        }
+
+        public void MoveCamera(Vector3 offset)
+        {
+            cameraHolder.transform.localPosition += offset;
         }
     
         public void Move()
@@ -149,11 +167,13 @@ namespace _Project._Scripts.PlayerScripts
         public void LockPlayer()
         {
             isLocked = true;
+            Cursor.lockState = CursorLockMode.None;
             input    = Vector2.zero;
         }
     
         public void UnlockPlayer()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             isLocked = false;
         }
     }
