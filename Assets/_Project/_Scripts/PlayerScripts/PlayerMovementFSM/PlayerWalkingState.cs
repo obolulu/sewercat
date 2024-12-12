@@ -21,7 +21,6 @@ namespace _Project._Scripts.PlayerScripts
     public class PlayerWalkingState : BaseState<PlayerController.PlayerState>
     {
         private readonly PlayerController controller;
-        private          bool             isJumping = false;
         private          float            time;
         public PlayerWalkingState(PlayerController.PlayerState key, PlayerController controller) : base(key)
         {
@@ -50,9 +49,8 @@ namespace _Project._Scripts.PlayerScripts
                 return PlayerController.PlayerState.Falling;
             }
 
-            if (InputManager.StartJump)
+            if (controller.CheckJump())
             {
-                isJumping = false;
                 return PlayerController.PlayerState.Jumping;
             }
 

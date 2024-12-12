@@ -27,7 +27,7 @@ namespace _Project._Scripts.PlayerScripts
             if (!controller.IsGrounded())
                 return PlayerController.PlayerState.Falling;
 
-            if (InputManager.StartJump)
+            if (controller.CheckJump())
             {
                 return PlayerController.PlayerState.Jumping;
             }

@@ -656,7 +656,9 @@ MonoBehaviour:
   maxFallSpeed: -20
   minJumpTime: 0.1
   maxJumpTime: 0.7
-  groundCheckDistance: 1
+  jumpCooldown: 0.3
+  lastJumpTime: 0
+  groundCheckDistance: 0.7
   minimumMoveSpeed: 0.1
   groundMask:
     serializedVersion: 2
@@ -665,8 +667,8 @@ MonoBehaviour:
   cameraTransform: {fileID: 963194228}
   cameraHolder: {fileID: 2046859422}
   headbobEnabled: 1
-  headbobAmplitude: 0.0022
-  headbobfrequency: 16.27
+  headbobAmplitude: 0.05
+  headbobfrequency: 10
   inputManager: {fileID: 134348561}
   moveVelocity: {x: 0, y: 0, z: 0}
   verticalVelocity: {x: 0, y: 0, z: 0}
@@ -1460,7 +1462,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387283575}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7373b8b6f4142b543af95674f9a0d78e, type: 3}
   m_Name: 
@@ -1690,7 +1692,7 @@ GameObject:
   - component: {fileID: 479822328}
   - component: {fileID: 479822327}
   - component: {fileID: 479822326}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: testItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2422,6 +2424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: 0
 --- !u!65 &655741906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4973,10 +4976,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _parentBlackboard: {fileID: 0}
-  _serializedBlackboard: '{"_variables":{}}'
-  _objectReferences: []
-  _serializedVariables: []
 --- !u!114 &1240474681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4989,23 +4988,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad115aca74ce3c4891b3f6de0b4aae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _serializedExposedParameters: []
-  _boundGraphSerialization: 
-  _boundGraphObjectReferences: []
-  _boundGraphSource:
-    _version: 0
-    _category: 
-    _comments: 
-    _translation: {x: 0, y: 0}
-    _zoomFactor: 1
-  _firstActivation: 0
-  _enableAction: 0
-  _disableAction: 0
-  _lockBoundGraphPrefabOverrides: 1
-  _preInitializeSubGraphs: 0
-  _updateMode: 0
-  _graph: {fileID: 0}
-  _blackboard: {fileID: 0}
 --- !u!1 &1254458686
 GameObject:
   m_ObjectHideFlags: 0
@@ -7664,6 +7646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: 0
 --- !u!1001 &1796274098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9729,8 +9712,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2046859423}
-  - component: {fileID: 2046859424}
   - component: {fileID: 2046859425}
+  - component: {fileID: 2046859426}
   m_Layer: 0
   m_Name: CameraRig
   m_TagString: Untagged
@@ -9754,25 +9737,6 @@ Transform:
   - {fileID: 2032669726}
   m_Father: {fileID: 134348560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2046859424
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046859422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7373b8b6f4142b543af95674f9a0d78e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkingBobbingSpeed: 14
-  walkingBobbingAmount: 0.05
-  walkingHorizontalBobbingAmount: 0.03
-  breathingSpeed: 2
-  breathingAmount: 0.02
-  smoothTransitionSpeed: 6
-  playerController: {fileID: 134348568}
 --- !u!114 &2046859425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9791,6 +9755,25 @@ MonoBehaviour:
   landTiltAmount: 3
   recoverySpeed: 10
   controller: {fileID: 134348568}
+--- !u!114 &2046859426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046859422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7373b8b6f4142b543af95674f9a0d78e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingBobbingSpeed: 14
+  walkingBobbingAmount: 0.05
+  walkingHorizontalBobbingAmount: 0.03
+  breathingSpeed: 2
+  breathingAmount: 0.02
+  smoothTransitionSpeed: 6
+  playerController: {fileID: 134348568}
 --- !u!1001 &3981891675153081239
 PrefabInstance:
   m_ObjectHideFlags: 0

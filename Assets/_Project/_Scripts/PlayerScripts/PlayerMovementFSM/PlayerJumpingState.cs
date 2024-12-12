@@ -23,12 +23,13 @@ namespace _Project._Scripts.PlayerScripts
 
         public override void ExitState()
         {
+            controller.lastJumpTime = Time.time;
         }
 
         public override void UpdateState()
         {
-            controller.Move();
-            controller.ApplyGravity(0/*controller.gravity*/);
+            controller.Move(1.2f);
+            controller.ApplyGravity(controller.gravity * 0.2f);
         }
 
         public override PlayerController.PlayerState GetNextState()
