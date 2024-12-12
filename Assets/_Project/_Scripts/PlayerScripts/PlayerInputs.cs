@@ -143,6 +143,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Camera"",
+                    ""type"": ""Button"",
+                    ""id"": ""1b2bb44c-2683-420d-9af8-8920290e0abe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -431,6 +440,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""PutWeaponDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2c36272-fa0a-4a72-b573-c6a9aa421015"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -458,6 +478,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerControls__1 = m_PlayerControls.FindAction("1", throwIfNotFound: true);
         m_PlayerControls_OpenInventoryMenu = m_PlayerControls.FindAction("OpenInventoryMenu", throwIfNotFound: true);
         m_PlayerControls_PutWeaponDown = m_PlayerControls.FindAction("PutWeaponDown", throwIfNotFound: true);
+        m_PlayerControls_Camera = m_PlayerControls.FindAction("Camera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -532,6 +553,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls__1;
     private readonly InputAction m_PlayerControls_OpenInventoryMenu;
     private readonly InputAction m_PlayerControls_PutWeaponDown;
+    private readonly InputAction m_PlayerControls_Camera;
     public struct PlayerControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -549,6 +571,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @_1 => m_Wrapper.m_PlayerControls__1;
         public InputAction @OpenInventoryMenu => m_Wrapper.m_PlayerControls_OpenInventoryMenu;
         public InputAction @PutWeaponDown => m_Wrapper.m_PlayerControls_PutWeaponDown;
+        public InputAction @Camera => m_Wrapper.m_PlayerControls_Camera;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -597,6 +620,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @PutWeaponDown.started += instance.OnPutWeaponDown;
             @PutWeaponDown.performed += instance.OnPutWeaponDown;
             @PutWeaponDown.canceled += instance.OnPutWeaponDown;
+            @Camera.started += instance.OnCamera;
+            @Camera.performed += instance.OnCamera;
+            @Camera.canceled += instance.OnCamera;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -640,6 +666,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @PutWeaponDown.started -= instance.OnPutWeaponDown;
             @PutWeaponDown.performed -= instance.OnPutWeaponDown;
             @PutWeaponDown.canceled -= instance.OnPutWeaponDown;
+            @Camera.started -= instance.OnCamera;
+            @Camera.performed -= instance.OnCamera;
+            @Camera.canceled -= instance.OnCamera;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -681,5 +710,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void On_1(InputAction.CallbackContext context);
         void OnOpenInventoryMenu(InputAction.CallbackContext context);
         void OnPutWeaponDown(InputAction.CallbackContext context);
+        void OnCamera(InputAction.CallbackContext context);
     }
 }

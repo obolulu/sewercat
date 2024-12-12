@@ -7,12 +7,18 @@ public class CinemachineCameraController : MonoBehaviour
     public float mouseSensitivity = 100f;
     
     [Header("Tilt Settings")]
-    [SerializeField] private float tiltAngle = 10f;
-    [SerializeField] private float tiltSpeed = 5f;
+    [SerializeField] private float tiltAngle = 5f;
+    [SerializeField] private float tiltSpeed = 1f;
+        
+    [Header("Jump/Land Effects")]
+    [SerializeField] private float jumpTiltAmount = 3f;
+    [SerializeField] private float                    landTiltAmount = 2f;
+    [SerializeField] private float                    recoverySpeed  = 10f;
     
-    private CinemachineVirtualCamera virtualCamera;
-    private CinemachinePOV povExtension;
-    private Transform cameraTransform;
+    
+    private                  CinemachineVirtualCamera virtualCamera;
+    private                  CinemachinePOV           povExtension;
+    private                  Transform                cameraTransform;
     
     void Start()
     {

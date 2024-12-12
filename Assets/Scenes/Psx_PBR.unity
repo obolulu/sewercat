@@ -648,15 +648,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 070b225e3dd041d3abd4c46a80b5beef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlayerState: 0
   moveSpeed: 6
   rotationSpeed: 0
   jumpForce: 5
   gravity: -9.81
   groundedGravity: -0.5
   maxFallSpeed: -20
-  minJumpTime: 0.3
-  maxJumpTime: 1
+  minJumpTime: 0.1
+  maxJumpTime: 0.7
   groundCheckDistance: 1
   minimumMoveSpeed: 0.1
   groundMask:
@@ -664,7 +663,10 @@ MonoBehaviour:
     m_Bits: 64
   characterController: {fileID: 134348567}
   cameraTransform: {fileID: 963194228}
-  virtualCamera: {fileID: 0}
+  cameraHolder: {fileID: 2046859422}
+  headbobEnabled: 1
+  headbobAmplitude: 0.0022
+  headbobfrequency: 16.27
   inputManager: {fileID: 134348561}
   moveVelocity: {x: 0, y: 0, z: 0}
   verticalVelocity: {x: 0, y: 0, z: 0}
@@ -1347,6 +1349,8 @@ GameObject:
   m_Component:
   - component: {fileID: 387283577}
   - component: {fileID: 387283576}
+  - component: {fileID: 387283579}
+  - component: {fileID: 387283580}
   - component: {fileID: 387283578}
   m_Layer: 0
   m_Name: Virtual Camera
@@ -1354,7 +1358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &387283576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1402,8 +1406,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387283575}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000029802322, y: 0.0000000123445325, z: 8.881784e-16,
-    w: 1}
+  m_LocalRotation: {x: -0.26448974, y: -0.69818974, z: 0.5858507, w: -0.31520662}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1418,14 +1421,57 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 387283575}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 985cf06dec1b4a0fb3fdd55ef66940bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 250
+  mouseSensitivity: 500
   tiltAngle: 0
-  tiltSpeed: 0
+  tiltSpeed: 5
+  jumpTiltAmount: 3
+  landTiltAmount: 2
+  recoverySpeed: 10
+--- !u!114 &387283579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387283575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b98868d401728f4e8c8963a834171dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clampAngle: 80
+  verticalSensitivity: 10
+  horizontalSensitivity: 10
+  tiltAngle: 1.54
+  tiltSpeed: 3.67
+  jumpTiltAmount: 2.54
+  landTiltAmount: 2
+  recoverySpeed: 5.8
+  controller: {fileID: 134348568}
+--- !u!114 &387283580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387283575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7373b8b6f4142b543af95674f9a0d78e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingBobbingSpeed: 14
+  walkingBobbingAmount: 0.05
+  walkingHorizontalBobbingAmount: 0.03
+  breathingSpeed: 2
+  breathingAmount: 0.02
+  smoothTransitionSpeed: 6
+  playerController: {fileID: 134348568}
 --- !u!1 &417935276
 GameObject:
   m_ObjectHideFlags: 0
@@ -2376,7 +2422,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointID: 0
 --- !u!65 &655741906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3816,8 +3861,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000029802322, y: 0.0000000123445325, z: 3.6789574e-16,
-    w: 1}
+  m_LocalRotation: {x: -0.26448974, y: -0.69818974, z: 0.5858507, w: -0.31520662}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4733,7 +4777,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1174743120}
   - component: {fileID: 1174743123}
-  - component: {fileID: 1174743124}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -4768,68 +4811,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1174743124
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1174743119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c9beda531928fc40968802117a5d256, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RecenterTarget: 0
-  m_VerticalAxis:
-    Value: 0
-    m_SpeedMode: 0
-    m_MaxSpeed: 250
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
-    m_InputAxisName: Mouse Y
-    m_InputAxisValue: 0
-    m_InvertInput: 1
-    m_MinValue: -90
-    m_MaxValue: 90
-    m_Wrap: 0
-    m_Recentering:
-      m_enabled: 0
-      m_WaitTime: 1
-      m_RecenteringTime: 2
-      m_LegacyHeadingDefinition: -1
-      m_LegacyVelocityFilterStrength: -1
-  m_VerticalRecentering:
-    m_enabled: 0
-    m_WaitTime: 1
-    m_RecenteringTime: 2
-    m_LegacyHeadingDefinition: -1
-    m_LegacyVelocityFilterStrength: -1
-  m_HorizontalAxis:
-    Value: 0
-    m_SpeedMode: 0
-    m_MaxSpeed: 250
-    m_AccelTime: 0.1
-    m_DecelTime: 0.1
-    m_InputAxisName: Mouse X
-    m_InputAxisValue: 0
-    m_InvertInput: 0
-    m_MinValue: -180
-    m_MaxValue: 180
-    m_Wrap: 1
-    m_Recentering:
-      m_enabled: 0
-      m_WaitTime: 1
-      m_RecenteringTime: 2
-      m_LegacyHeadingDefinition: -1
-      m_LegacyVelocityFilterStrength: -1
-  m_HorizontalRecentering:
-    m_enabled: 0
-    m_WaitTime: 1
-    m_RecenteringTime: 2
-    m_LegacyHeadingDefinition: -1
-    m_LegacyVelocityFilterStrength: -1
-  m_ApplyBeforeBody: 0
 --- !u!224 &1200957570 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7084386685998634907, guid: 7f29e5f7ffdea4a6793cefb278b61f0c,
@@ -4992,6 +4973,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b98a6db0b653f764eac834f85857a9dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _parentBlackboard: {fileID: 0}
+  _serializedBlackboard: '{"_variables":{}}'
+  _objectReferences: []
+  _serializedVariables: []
 --- !u!114 &1240474681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5004,6 +4989,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad115aca74ce3c4891b3f6de0b4aae8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _serializedExposedParameters: []
+  _boundGraphSerialization: 
+  _boundGraphObjectReferences: []
+  _boundGraphSource:
+    _version: 0
+    _category: 
+    _comments: 
+    _translation: {x: 0, y: 0}
+    _zoomFactor: 1
+  _firstActivation: 0
+  _enableAction: 0
+  _disableAction: 0
+  _lockBoundGraphPrefabOverrides: 1
+  _preInitializeSubGraphs: 0
+  _updateMode: 0
+  _graph: {fileID: 0}
+  _blackboard: {fileID: 0}
 --- !u!1 &1254458686
 GameObject:
   m_ObjectHideFlags: 0
@@ -7662,7 +7664,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkpointID: 0
 --- !u!1001 &1796274098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9728,6 +9729,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2046859423}
+  - component: {fileID: 2046859424}
+  - component: {fileID: 2046859425}
   m_Layer: 0
   m_Name: CameraRig
   m_TagString: Untagged
@@ -9751,6 +9754,43 @@ Transform:
   - {fileID: 2032669726}
   m_Father: {fileID: 134348560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2046859424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046859422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7373b8b6f4142b543af95674f9a0d78e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkingBobbingSpeed: 14
+  walkingBobbingAmount: 0.05
+  walkingHorizontalBobbingAmount: 0.03
+  breathingSpeed: 2
+  breathingAmount: 0.02
+  smoothTransitionSpeed: 6
+  playerController: {fileID: 134348568}
+--- !u!114 &2046859425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2046859422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ccfab1663f5b64da17e7d315eca672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTiltAngle: 3
+  tiltSpeed: 8
+  jumpTiltAmount: 5
+  landTiltAmount: 3
+  recoverySpeed: 10
+  controller: {fileID: 134348568}
 --- !u!1001 &3981891675153081239
 PrefabInstance:
   m_ObjectHideFlags: 0
