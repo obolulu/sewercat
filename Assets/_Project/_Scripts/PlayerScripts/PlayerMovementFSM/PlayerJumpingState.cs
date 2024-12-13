@@ -37,7 +37,9 @@ namespace _Project._Scripts.PlayerScripts
             elapsedTime = Time.time - jumpStartTime;
             if (controller.IsGrounded() && elapsedTime > controller.minJumpTime)
                 return PlayerController.PlayerState.Idle;
-            if (elapsedTime > controller.maxJumpTime || (elapsedTime > controller.minJumpTime && !InputManager.StartJump))
+            if (elapsedTime > controller.maxJumpTime 
+                || (elapsedTime > controller.minJumpTime && !InputManager.StartJump)
+                || controller.verticalVelocity.y < 0)
                 return PlayerController.PlayerState.Falling;
             return StateKey;
         }
