@@ -12,26 +12,34 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Menu inventoryUI;
     [SerializeField] private Menu pauseMenuUI;
     
+    private List<Menu> allMenus = new List<Menu>();
+    private Menu currentOpenMenu;
 
+
+    public static event Action<bool> OnMenuToggle;
+
+    public bool IsAnyMenuOpen => currentOpenMenu != null;
+    
+    
     private void Awake()
     {
-        SetupListeners();
         SaveSystem.OnLoad += SetupUIs;
+        SetupListeners();
     }
 
 
     private void SetupListeners()
     {
-        InputManager.OpenInventoryMenu += () => inventoryUI.ToggleMenu();
-        InputManager.OpenPauseMenu += () => pauseMenuUI.ToggleMenu();
-        InputManager.OpenInventoryEvent += () => weaponWheelUI.ToggleMenu();
+        InputManager.OpenInventoryMenu += HandleOpenInventoryMenu;
+        InputManager.OpenPauseMenu += HandleOpenPauseMenu;
+        InputManager.OpenInventoryEvent += HandleOpenWeaponWheel;
     }
 
     private void OnDestroy()
     {
-        InputManager.OpenInventoryMenu  -= () => inventoryUI.ToggleMenu();
-        InputManager.OpenPauseMenu      -= () => pauseMenuUI.ToggleMenu();
-        InputManager.OpenInventoryEvent += () => weaponWheelUI.ToggleMenu();
+        InputManager.OpenInventoryMenu -= HandleOpenInventoryMenu;
+        InputManager.OpenPauseMenu -= HandleOpenPauseMenu;
+        InputManager.OpenInventoryEvent -= HandleOpenWeaponWheel;
 
         SaveSystem.OnLoad -= SetupUIs;
     }
@@ -43,5 +51,52 @@ public class UIManager : MonoBehaviour
         weaponWheelUI.SetupMenu();
         inventoryUI.SetupMenu();
         pauseMenuUI.SetupMenu();
+        
+        allMenus.Add(weaponWheelUI);
+        allMenus.Add(inventoryUI);
+        allMenus.Add(pauseMenuUI);
+        
     }
+    
+    private void HandleOpenWeaponWheel()
+    {
+        ToggleMenu(weaponWheelUI);
+    }
+
+    private void HandleOpenInventoryMenu()
+    {
+        ToggleMenu(inventoryUI);
+    }
+
+    private void HandleOpenPauseMenu()
+    {
+        ToggleMenu(pauseMenuUI);
+    }
+
+    private void ToggleMenu(Menu menu)
+    {
+        if(menu == null) return;
+        if (currentOpenMenu != null && !currentOpenMenu.isActiveAndEnabled)
+            currentOpenMenu = null;
+    
+        // If it is already open, close
+        if (currentOpenMenu == menu)
+        {
+            currentOpenMenu.ToggleMenu();
+            currentOpenMenu = null;
+            OnMenuToggle?.Invoke(false);
+            return;
+        }
+
+        // If another menu is already open close the previous one
+        if (currentOpenMenu != null && currentOpenMenu != menu)
+        {
+            currentOpenMenu.ToggleMenu();
+        }
+
+        menu.ToggleMenu();
+        currentOpenMenu = menu;
+        OnMenuToggle?.Invoke(true);
+    }
+    
 }
