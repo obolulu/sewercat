@@ -125,7 +125,7 @@ public class WeaponWheelUI : Menu
         currentWeaponIndex = index;
         //text.text = weapon.name;
         weaponHandler.EquipWeapon(weapon.weaponData);
-        
+        UIManager.Instance.CloseCurrentMenu();
     }
     
     

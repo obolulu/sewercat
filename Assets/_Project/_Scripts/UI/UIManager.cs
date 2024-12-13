@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public static UIManager Instance { get; private set; }
+
     [SerializeField] private Menu weaponWheelUI;
     [SerializeField] private Menu inventoryUI;
     [SerializeField] private Menu pauseMenuUI;
@@ -23,6 +25,16 @@ public class UIManager : MonoBehaviour
     
     private void Awake()
     {
+        
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else 
+            {
+                Destroy(gameObject);
+            }
+        
         SaveSystem.OnLoad += SetupUIs;
         SetupListeners();
     }
@@ -37,6 +49,11 @@ public class UIManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+        
         InputManager.OpenInventoryMenu -= HandleOpenInventoryMenu;
         InputManager.OpenPauseMenu -= HandleOpenPauseMenu;
         InputManager.OpenInventoryEvent -= HandleOpenWeaponWheel;
@@ -73,7 +90,25 @@ public class UIManager : MonoBehaviour
         ToggleMenu(pauseMenuUI);
     }
 
-    private void ToggleMenu(Menu menu)
+    public void SetMenuOpened(Menu menu)
+    {
+        currentOpenMenu = menu;
+        Time.timeScale = 0;
+        Cursor.lockState = CursorLockMode.None;
+        OnMenuToggle?.Invoke(true);
+    }
+    public void SetMenuClosed(Menu menu)
+    {
+        currentOpenMenu = null;
+        if (!currentOpenMenu/*_openMenus.Count == 0*/)
+        {
+            Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
+            OnMenuToggle?.Invoke(false);
+        }
+    }
+
+    public void ToggleMenu(Menu menu)
     {
         if(menu == null) return;
         if (currentOpenMenu != null && !currentOpenMenu.isActiveAndEnabled)
@@ -93,10 +128,20 @@ public class UIManager : MonoBehaviour
         {
             currentOpenMenu.ToggleMenu();
         }
-
+        
         menu.ToggleMenu();
         currentOpenMenu = menu;
         OnMenuToggle?.Invoke(true);
+    }
+    
+    public void CloseCurrentMenu()
+    {
+        if (currentOpenMenu != null)
+        {
+            currentOpenMenu.ToggleMenu();
+            currentOpenMenu = null;
+            OnMenuToggle?.Invoke(false);
+        }
     }
     
 }

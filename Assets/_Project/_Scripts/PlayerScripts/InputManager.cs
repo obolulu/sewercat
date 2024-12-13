@@ -146,7 +146,28 @@ public class InputManager : MonoBehaviour
             OpenPauseMenu?.Invoke();
         }
     }
-    
+
+    private void HandleMenuToggle(bool menuOpen)
+    {
+        if (menuOpen)
+        {
+            _inputManager.PlayerControls.Disable();
+            _inputManager.UI.Enable();
+        }
+        else
+        {
+            _inputManager.PlayerControls.Enable();
+            _inputManager.UI.Disable();        
+        }
+    }
+    private void OnCloseMenu(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            UIManager.Instance.CloseCurrentMenu();
+        }
+    }
+
     
     private void OnEnable()
     {
@@ -164,6 +185,12 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.Load.performed          += OnLoadGame;
         _inputManager.PlayerControls.OpenPauseMenu.performed += OnopenMenu;
         _inputManager.PlayerControls.OpenInventoryMenu.performed += OnOpenInventoryMenu;
+
+
+        _inputManager.UI.CloseMenu.performed += OnCloseMenu;
+        
+        UIManager.OnMenuToggle += HandleMenuToggle;
+
     }
 
     private void OnDisable()
@@ -182,6 +209,9 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.Load.performed              -= OnLoadGame;
         _inputManager.PlayerControls.OpenPauseMenu.performed     -= OnopenMenu;
         _inputManager.PlayerControls.OpenInventoryMenu.performed -= OnOpenInventoryMenu;
+        
+        _inputManager.UI.CloseMenu.performed -= OnCloseMenu;
 
+        UIManager.OnMenuToggle -= HandleMenuToggle;
     }
 }

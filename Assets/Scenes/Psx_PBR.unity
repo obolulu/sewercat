@@ -754,7 +754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 6
-  acceleration: 20
+  acceleration: 40
   deceleration: 30
   rotationSpeed: 0
   jumpForce: 6
@@ -1219,6 +1219,7 @@ MonoBehaviour:
   resumeButton: {fileID: 177641268}
   settingsButton: {fileID: 853700242}
   quitButton: {fileID: 899355314}
+  uiManager: {fileID: 945148763}
 --- !u!1 &280041015
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,17 +8,16 @@ public class PauseMenuUI : Menu
     [SerializeField] private Button         resumeButton;
     [SerializeField] private Button         settingsButton;
     [SerializeField] private Button         quitButton;
-    
-    private bool _isPaused;
 
     public override void SetupMenu()
     {
         //InputManager.OpenPauseMenu += ToggleMenu;
-        resumeButton.onClick.AddListener(ToggleMenu);
+        resumeButton.onClick.AddListener(CloseMenu);
         settingsButton.onClick.AddListener(() => Debug.Log("Settings"));
         quitButton.onClick.AddListener(() => Debug.Log("Quit"));
     }
 
+    /*
     public override void ToggleMenu()
     {
         _isPaused = !_isPaused;
@@ -35,9 +34,31 @@ public class PauseMenuUI : Menu
         }
     }
     
+    uiManager.ToggleMenu(this);
+    */
     
+    public override void ToggleMenu()
+    {
+        if (gameObject.activeSelf)
+        {
+            CloseMenu();
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            UIManager.Instance.SetMenuOpened(this);
+        }
+    }
+
+    public void CloseMenu()
+    {
+        gameObject.SetActive(false);
+        UIManager.Instance.SetMenuClosed(this);
+    }
     private void OnDestroy()
     {
-        //InputManager.OpenPauseMenu -= ToggleMenu;
+        resumeButton.onClick.RemoveListener(CloseMenu);
+        settingsButton.onClick.RemoveAllListeners();
+        quitButton.onClick.RemoveAllListeners();
     }
 }
