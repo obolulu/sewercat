@@ -7,8 +7,7 @@ namespace _Project._Scripts.PlayerScripts.Stats
     public class PlayerStats
     {
         public PlayerStats()
-        {
-        }
+        { }
         [ReadOnly] public float Health { get; set; }
         [ReadOnly] public float Mana { get; set; }
 

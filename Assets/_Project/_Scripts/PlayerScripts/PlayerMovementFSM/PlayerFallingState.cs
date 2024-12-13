@@ -30,8 +30,11 @@ namespace _Project._Scripts.PlayerScripts
         public override PlayerController.PlayerState GetNextState()
         {
             if (controller.IsGrounded())
+            {
+                if (InputManager.StartJump) 
+                    return PlayerController.PlayerState.Jumping;
                 return controller.HasMovementInput() ? PlayerController.PlayerState.Walking : PlayerController.PlayerState.Idle;
-            
+            }
             return StateKey;
         }
 

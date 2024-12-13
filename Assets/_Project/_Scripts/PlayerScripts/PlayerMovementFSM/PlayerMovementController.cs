@@ -176,14 +176,16 @@ namespace _Project._Scripts.PlayerScripts
         }
         public void LockPlayer()
         {
-            isLocked = true;
+            isLocked         = true;
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible   = true;
             input    = Vector2.zero;
         }
     
         public void UnlockPlayer()
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible   = false;
             isLocked = false;
         }
     }

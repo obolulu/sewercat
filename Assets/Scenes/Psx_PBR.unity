@@ -1452,10 +1452,10 @@ MonoBehaviour:
   tiltAngle: -3
   tiltSpeed: 2.5
   isJumpTiltEnabled: 1
-  jumpTiltAmount: 3.55
-  landTiltAmount: 1.36
-  recoverySpeed: 10
-  groundCheckDelay: 0.53
+  jumpTiltAmount: 3.72
+  landTiltAmount: 0.82
+  recoverySpeed: 8.54
+  groundCheckDelay: 0.31
   controller: {fileID: 134348568}
 --- !u!114 &387283580
 MonoBehaviour:
@@ -3657,10 +3657,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46be717994588449bf29a17ba5d4b24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _uiList:
-  - {fileID: 254136230}
-  - {fileID: 1826222435}
-  - {fileID: 96554816}
+  weaponWheelUI: {fileID: 1826222440}
+  inventoryUI: {fileID: 96554818}
+  pauseMenuUI: {fileID: 254136232}
 --- !u!1 &962041339
 GameObject:
   m_ObjectHideFlags: 0
@@ -5849,7 +5848,7 @@ PrefabInstance:
     - target: {fileID: 890470497812667819, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1520
+      value: 1520.0001
       objectReference: {fileID: 0}
     - target: {fileID: 890470497812667819, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}
@@ -5859,7 +5858,7 @@ PrefabInstance:
     - target: {fileID: 890470497812667819, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 760
+      value: 760.00006
       objectReference: {fileID: 0}
     - target: {fileID: 890470497812667819, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}
@@ -5879,7 +5878,7 @@ PrefabInstance:
     - target: {fileID: 890470498378095860, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1520
+      value: 1520.0001
       objectReference: {fileID: 0}
     - target: {fileID: 890470498378095860, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}
@@ -5889,7 +5888,7 @@ PrefabInstance:
     - target: {fileID: 890470498378095860, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 760
+      value: 760.00006
       objectReference: {fileID: 0}
     - target: {fileID: 890470498378095860, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}

@@ -15,8 +15,14 @@ namespace _Project._Scripts.PlayerScripts.Stats
         public static PlayerInventory playerInventory;
         public static PlayerStats playerStats;
         public static PlayerStatsHandler Instance;
-        
+
+        public static Action OnStatsInitialize;
         private void Awake()
+        {
+            SaveDirectory.SaveSystem.OnStartup += Initialize;
+        }
+
+        private void Initialize()
         {
             Instance        = this;
             playerStats     = new PlayerStats();
@@ -30,7 +36,12 @@ namespace _Project._Scripts.PlayerScripts.Stats
             {
                 Debug.LogError("SaveSystem instance is not initialized.");
             }
-            //dialogueRunner.AddFunction("playerHasItem", (string item) => PlayerHasItem(item));
+            OnStatsInitialize?.Invoke();;
+        }
+
+        private void OnDestroy()
+        {
+            SaveDirectory.SaveSystem.OnStartup -= Initialize;
         }
 
         public event Action OnHealthChanged;

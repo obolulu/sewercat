@@ -4,9 +4,6 @@ using System.Linq;
 using _Project._Scripts.Items;
 using _Project._Scripts.PlayerScripts.SaveSystem;
 using _Project._Scripts.PlayerScripts.Stats;
-using Sirenix.OdinInspector;
-using UnityEditor.Experimental.RestService;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
 public class PlayerInventory
@@ -14,10 +11,6 @@ public class PlayerInventory
 {
 
     //[ShowInInspector] private List<Item> items = new List<Item>();
-    
-    
-    private List<List<ItemData>>             inventory      = new List<List<ItemData>>();
-    
     private Dictionary<Type, List<ItemData>> _inventoryCategories;
     
     private int            inventoryCount = 4;

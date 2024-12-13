@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using _Project._Scripts.ScriptBases;
+using _Project._Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenuUI : MonoBehaviour, IToggleMenu
+public class PauseMenuUI : Menu
 {
     [SerializeField] private GameObject     pauseMenuUI;
     [SerializeField] private Button         resumeButton;
@@ -14,15 +11,15 @@ public class PauseMenuUI : MonoBehaviour, IToggleMenu
     
     private bool _isPaused;
 
-    public void SetupMenu()
+    public override void SetupMenu()
     {
-        InputManager.OpenPauseMenu += ToggleMenu;
+        //InputManager.OpenPauseMenu += ToggleMenu;
         resumeButton.onClick.AddListener(ToggleMenu);
         settingsButton.onClick.AddListener(() => Debug.Log("Settings"));
         quitButton.onClick.AddListener(() => Debug.Log("Quit"));
     }
 
-    public void ToggleMenu()
+    public override void ToggleMenu()
     {
         _isPaused = !_isPaused;
         pauseMenuUI.SetActive(_isPaused);
@@ -41,6 +38,6 @@ public class PauseMenuUI : MonoBehaviour, IToggleMenu
     
     private void OnDestroy()
     {
-        InputManager.OpenPauseMenu -= ToggleMenu;
+        //InputManager.OpenPauseMenu -= ToggleMenu;
     }
 }

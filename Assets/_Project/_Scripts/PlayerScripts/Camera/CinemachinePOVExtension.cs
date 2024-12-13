@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _Project._Scripts.PlayerScripts;
 using Cinemachine;
+using Scripts.Player_Scripts.Player_States;
 using UnityEngine;
 
 public class CinemachinePOVExtension : CinemachineExtension
@@ -46,6 +47,7 @@ public class CinemachinePOVExtension : CinemachineExtension
     {
         if (!Application.isPlaying) return; // TODO: find better fix
         if (!vcam.Follow) return;
+        if(Cursor.lockState == CursorLockMode.None) return;
         if (stage == CinemachineCore.Stage.Aim)
         {
             Vector2 deltaInput = InputManager.GetMouseDelta();

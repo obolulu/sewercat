@@ -15,15 +15,15 @@ namespace _Project._Scripts
         {
         
             // Store original materials
-            originalMaterials = meshRenderer.materials;
+            //originalMaterials = meshRenderer.materials;
         
             // Create array for materials with outline
-            materialsWithOutline = new Material[originalMaterials.Length + 1];
-            originalMaterials.CopyTo(materialsWithOutline, 0);
-            materialsWithOutline[^1] = outlineShader;
+            //materialsWithOutline = new Material[originalMaterials.Length + 1];
+            //originalMaterials.CopyTo(materialsWithOutline, 0);
+            //materialsWithOutline[^1] = outlineShader;
         
             // Start with outline disabled
-            DisableOutline();
+            //DisableOutline();
         }
 
         public void EnableOutline()
@@ -61,12 +61,13 @@ namespace _Project._Scripts
 
         public void Highlight()
         {
-            EnableOutline();
+            //EnableOutline();
         }
 
         public void EndHighlight()
         {
-            DisableOutline();        }
+            //DisableOutline();
+        }
 
         private void Test()
         {

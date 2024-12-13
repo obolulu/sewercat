@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/Psx_PBR.unity
+    guid: 7d009cd99cb21d44d89ee3334d83a4cd
   m_configObjects: {}

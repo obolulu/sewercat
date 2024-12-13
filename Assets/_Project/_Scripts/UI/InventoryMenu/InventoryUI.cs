@@ -5,9 +5,10 @@ using System;
 using _Project._Scripts.Items;
 using _Project._Scripts.PlayerScripts.Stats;
 using _Project._Scripts.ScriptBases;
+using _Project._Scripts.UI;
 using UnityEngine.UI;
 
-public class InventoryUI : MonoBehaviour, IToggleMenu
+public class InventoryUI : Menu
 {
     [Header("UI References")]
     [SerializeField] private GameObject inventoryPanel;
@@ -36,12 +37,28 @@ public class InventoryUI : MonoBehaviour, IToggleMenu
     private List<ItemSlot>  itemSlots = new List<ItemSlot>();
     private Type            currentCategory;
     private bool            _isActive;
-    public void SetupMenu()
+    
+    /*
+    private void Awake()
     {
-        inventory = PlayerStatsHandler.playerInventory;
+        DontDestroyOnLoad(gameObject);
+    }
+    */
+    public override void SetupMenu()
+    {
+        CleanupSubscriptions();
         SetupButtons();
         HideDetailsPanel();
-        LoadAllItems(); // Default view
+        //LoadAllItems(); // Default view
+        //PlayerStatsHandler.OnStatsInitialize += LoadAllItems;
+    }
+    private void CleanupSubscriptions()
+    {
+        closeButton.onClick.RemoveAllListeners();
+        weaponsButton.onClick.RemoveAllListeners();
+        questItemsButton.onClick.RemoveAllListeners();
+        clothingButton.onClick.RemoveAllListeners();
+        InputManager.OpenInventoryMenu -= ToggleMenu;
     }
 
     private void SetupButtons()
@@ -51,15 +68,16 @@ public class InventoryUI : MonoBehaviour, IToggleMenu
         weaponsButton.onClick.AddListener(() => LoadCategory(typeof(WeaponData)));
         questItemsButton.onClick.AddListener(() => LoadCategory(typeof(QuestItemData)));
         clothingButton.onClick.AddListener(() => LoadCategory(typeof(ClothingData)));
-        InputManager.OpenInventoryMenu += ToggleMenu;
+        //InputManager.OpenInventoryMenu += ToggleMenu;
     }
 
     private void OnDestroy()
     {
-        InputManager.OpenInventoryMenu -= ToggleMenu;
+        //InputManager.OpenInventoryMenu       -= ToggleMenu;
+        //PlayerStatsHandler.OnStatsInitialize -= LoadAllItems;
     }
 
-    public void ToggleMenu()
+    public override void ToggleMenu()
     {
         _isActive = !_isActive;
         if (_isActive)
@@ -79,10 +97,12 @@ public class InventoryUI : MonoBehaviour, IToggleMenu
     {
         gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void LoadCategory(Type categoryType)
     {
+        inventory = PlayerStatsHandler.playerInventory;
         currentCategory = categoryType;
         ClearItems();
         
@@ -95,6 +115,7 @@ public class InventoryUI : MonoBehaviour, IToggleMenu
 
     private void LoadAllItems()
     {
+        inventory = PlayerStatsHandler.playerInventory;
         currentCategory = null;
         ClearItems();
         
@@ -133,7 +154,8 @@ public class InventoryUI : MonoBehaviour, IToggleMenu
     {
         foreach (var slot in itemSlots)
         {
-            Destroy(slot.gameObject);
+            //Destroy(slot.gameObject);
+            slot.gameObject.SetActive(false); // Set the slot to not show, but not destroy
         }
         itemSlots.Clear();
         HideDetailsPanel();

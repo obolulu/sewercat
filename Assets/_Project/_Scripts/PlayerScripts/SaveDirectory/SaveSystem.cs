@@ -28,6 +28,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
         private       StatsBase[] stats;
         private       PlayerStats playerStats;
 
+        public static Action OnStartup;
         public static Action OnSave;
         public static Action OnLoad;
 
@@ -35,9 +36,15 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
         {
             _savePath = Application.persistentDataPath + "/saveData.json";
             Instance              =  this;
-            playerStats           =  playerStatsHandler.GetStats() as PlayerStats;
             InputManager.SaveGame += SaveGame;
             InputManager.LoadGame += LoadGame;
+        }
+
+        private void Start()
+        {
+            
+            OnStartup?.Invoke();
+            LoadGame();
         }
 
         private void OnDestroy()
@@ -55,7 +62,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
 
         public SaveData LoadData()
         {
-            if (File.Exists(_savePath))
+            if (System.IO.File.Exists(_savePath))
             {
                 string json = System.IO.File.ReadAllText(_savePath);
                 return JsonUtility.FromJson<SaveData>(json);
@@ -118,6 +125,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
     
         public void LoadGame()
         {
+            playerStats           =  playerStatsHandler.GetStats();
             var data = LoadData();
             player.transform.position =
                 new UnityEngine.Vector3(data.playerLocation.x, data.playerLocation.y, data.playerLocation.z);

@@ -3,13 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _Project._Scripts.Items;
-using _Project._Scripts.PlayerScripts.SaveDirectory;
 using _Project._Scripts.PlayerScripts.Stats;
-using _Project._Scripts.ScriptBases;
+using _Project._Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-public class WeaponWheelUI : MonoBehaviour, IToggleMenu
+public class WeaponWheelUI : Menu
 {
     [System.Serializable]
     public class WeaponChoice
@@ -43,7 +41,7 @@ public class WeaponWheelUI : MonoBehaviour, IToggleMenu
     
     private List<ItemData> weaponItems = new List<ItemData>();
     
-    public void SetupMenu()
+    public override void SetupMenu()
     {
         wheelUI.SetActive(false);
         
@@ -51,15 +49,22 @@ public class WeaponWheelUI : MonoBehaviour, IToggleMenu
         {
             EquipWeapon(0);
         }
-        InputManager.OpenInventoryEvent += ToggleWheelOn;
-        InputManager.CloseInventoryEvent += ToggleWheelOff;
-        SaveSystem.OnLoad += InstantiateWeapons;
-        InstantiateWeapons();
+        //InputManager.OpenInventoryEvent += ToggleWheelOn;
+        //InputManager.CloseInventoryEvent += ToggleWheelOff;
+        PlayerStatsHandler.OnStatsInitialize += InstantiateWeapons;
+        //InstantiateWeapons();
     }
 
-    public void ToggleMenu()
+    public override void ToggleMenu()
     {
-        
+        if (isWheelActive)
+        {
+            ToggleWheelOff();
+        }
+        else
+        {
+            ToggleWheelOn();
+        }
     }
 
     private void Update()
