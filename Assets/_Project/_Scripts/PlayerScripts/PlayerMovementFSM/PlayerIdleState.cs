@@ -19,6 +19,7 @@ namespace _Project._Scripts.PlayerScripts
     
         public override void UpdateState()
         {
+            controller.Move();
             controller.ApplyGravity(controller.groundedGravity);
         }
     

@@ -18,8 +18,11 @@ namespace _Project._Scripts.PlayerScripts
         
         [Header("Movement Settings")]
         public float moveSpeed = 6f;
-        public float rotationSpeed   = 15f;
-
+        public float acceleration = 20f; // New: Acceleration value
+        public float deceleration = 30f;
+        public float rotationSpeed = 15f;
+        private Vector3 _targetMoveVelocity;
+        private Vector3 _currentMoveVelocity;
         
         [Header("Jump Settings")]
         public float jumpForce       = 5f;
@@ -120,7 +123,7 @@ namespace _Project._Scripts.PlayerScripts
                 Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
                 transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             }
-            moveVelocity = moveDirection * (moveSpeed * speed);
+            _targetMoveVelocity = moveDirection * (moveSpeed * speed);
         }
         
         private void ApplyVerticalMovement()
@@ -141,7 +144,10 @@ namespace _Project._Scripts.PlayerScripts
 
         private void ApplyFinalMovement()
         {
-            Vector3 finalVelocity = moveVelocity + verticalVelocity;
+            float currentAcceleration = HasMovementInput() ? acceleration : deceleration;
+            _currentMoveVelocity = Vector3.MoveTowards(_currentMoveVelocity, _targetMoveVelocity,
+                currentAcceleration * Time.deltaTime);
+            Vector3 finalVelocity = _currentMoveVelocity + verticalVelocity;
             characterController.Move(finalVelocity * Time.deltaTime);
         }
 
