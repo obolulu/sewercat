@@ -5,6 +5,8 @@ namespace _Project._Scripts.PlayerScripts
     public class PlayerFallingState: BaseState<PlayerController.PlayerState>
     {
         private readonly PlayerController controller;
+        
+        private float _fallGravityMultiplier = 1.5f;
         public PlayerFallingState(PlayerController.PlayerState key, PlayerController controller) : base(key)
         {
             this.controller = controller;
@@ -18,39 +20,28 @@ namespace _Project._Scripts.PlayerScripts
 
         public override void ExitState()
         {
-            //controller.ResetVerticalVelocity();
+            controller.ResetJump();
         }
 
         public override void UpdateState()
         {
             controller.Move(0.8f);
-            controller.ApplyGravity(controller.gravity);
+            controller.ApplyGravity(controller.gravity *_fallGravityMultiplier);
         }
     
         public override PlayerController.PlayerState GetNextState()
         {
             if (controller.IsGrounded())
             {
-                if (InputManager.StartJump) 
+                controller.ResetJump();
+
+                if (controller.CheckJump()) 
                     return PlayerController.PlayerState.Jumping;
-                return controller.HasMovementInput() ? PlayerController.PlayerState.Walking : PlayerController.PlayerState.Idle;
+                return controller.HasMovementInput()
+                    ? PlayerController.PlayerState.Walking 
+                    : PlayerController.PlayerState.Idle;
             }
             return StateKey;
-        }
-
-        public override void OnTriggerEnter(Collider other)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void OnTriggerStay(Collider other)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void OnTriggerExit(Collider other)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

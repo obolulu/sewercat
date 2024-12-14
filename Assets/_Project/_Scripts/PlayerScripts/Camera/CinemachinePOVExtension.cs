@@ -4,6 +4,7 @@ using _Project._Scripts.PlayerScripts;
 using Cinemachine;
 using Scripts.Player_Scripts.Player_States;
 using UnityEngine;
+using Debug = FMOD.Debug;
 
 public class CinemachinePOVExtension : CinemachineExtension
 {
@@ -18,7 +19,8 @@ public class CinemachinePOVExtension : CinemachineExtension
 
     [Header("Jump/Land Effects")] 
     [SerializeField] private bool isJumpTiltEnabled;
-    [SerializeField] private float jumpTiltAmount   = 3f;
+    [SerializeField] private float jumpTiltAmount = 3f;
+    [SerializeField] private float fallTiltAmount = 0f;
     [SerializeField] private float landTiltAmount   = 2f;
     [SerializeField] private float recoverySpeed    = 10f;  
     [SerializeField] private float groundCheckDelay = 0.1f; // seconds
@@ -80,7 +82,13 @@ public class CinemachinePOVExtension : CinemachineExtension
             targetVerticalTilt = -jumpTiltAmount;
         }
         
-        if (!wasGrounded && controller.IsGrounded() && timeSinceJump >= groundCheckDelay)
+        
+        else if (controller.CurrentState.StateKey == PlayerController.PlayerState.Falling)
+        {
+            targetVerticalTilt = -fallTiltAmount;
+        }
+        
+        else //if (!wasGrounded && controller.IsGrounded() && timeSinceJump >= groundCheckDelay)
         {
             targetVerticalTilt = -landTiltAmount;
         }

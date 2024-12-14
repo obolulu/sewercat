@@ -1,4 +1,6 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts
@@ -9,6 +11,7 @@ namespace _Project._Scripts.PlayerScripts
         {
             Idle,
             Walking,
+            Crouching,
             Falling,
             Jumping,
             Locked
@@ -16,27 +19,46 @@ namespace _Project._Scripts.PlayerScripts
         
         public BaseState<PlayerState> currentPlayerState => CurrentState; 
         
+        [TitleGroup("Movement Settings")]
         [Header("Movement Settings")]
         public float moveSpeed = 6f;
-        public float acceleration = 20f; // New: Acceleration value
-        public float deceleration = 30f;
-        public float rotationSpeed = 15f;
+        public  float   acceleration  = 20f; // New: Acceleration value
+        public  float   deceleration  = 30f;
+        public  float   rotationSpeed = 15f;
         private Vector3 _targetMoveVelocity;
         private Vector3 _currentMoveVelocity;
+        private float   _targetSpeedMultiplier;
+
+        [Header("Crouch Settings")] 
+        [SerializeField] private float crouchHeight = 0.5f;
+        [SerializeField] private float crouchSpeedMultiplier = 0.6f;
+        private float _standingHeight;
+
+
+        [TitleGroup("Jump Settings")] [Header("Jump Settings")]
+        public float jumpForce;
+        [SerializeField] private float maxJumpHeight   = 2f;   // Maximum height in meters/units
+        [SerializeField] private float minJumpHeight   = 0.5f; // Minimum height when button is tapped
+        [SerializeField] private float timeToApex      = 0.4f; // Time to reach the peak of the jump
+        public                   float gravity         = -9.81f;
+        public                   float groundedGravity = -0.5f;
+        public                   float maxFallSpeed    = -20f;
+        public                   float minJumpTime     = 0.2f;
+        public                   float maxJumpTime     = 1f;
+        [SerializeField] private float jumpCooldown    = 0.5f;
+        [SerializeField] private float smoothTime      = 0.1f;
+        [SerializeField] private float _coyoteTime     = 0.1f;
+        private                  float _coyoteTimer;
+        [SerializeField] private float _jumpBufferTime = 0.1f;
+        private                  float _jumpBufferTimer;
+        private                  float _timeSinceLastJump;
+        [SerializeField] private float _initialJumpVelocityMultiplier = 1.2f;
         
-        [Header("Jump Settings")]
-        public float jumpForce       = 5f;
-        public float gravity         = -9.81f;
-        public float groundedGravity = -0.5f;
-        public float maxFallSpeed    = -20f;
-        public float minJumpTime = 0.2f;
-        public float maxJumpTime     = 1f;
-        [SerializeField] private float jumpCooldown = 0.5f;
-        [SerializeField] private float smoothTime = 0.1f;
         private float _smoothVelocity;
-        public float lastJumpTime;
+        public  float lastJumpTime;
+        private bool  _hasJumped = false;
         
-        
+        [TitleGroup("Extras")]
         [Header("Ground Settings")]
         [SerializeField] private float groundCheckDistance = 0.2f;
         [SerializeField] private float     minimumMoveSpeed = 0.1f;
@@ -46,23 +68,28 @@ namespace _Project._Scripts.PlayerScripts
         [SerializeField] private CharacterController characterController;
         [SerializeField] private Transform    cameraTransform;
         [SerializeField] private GameObject cameraHolder;
-
+        
+        [TitleGroup("Toggles")]
         [Header("Headbob")] 
         [SerializeField] private bool  headbobEnabled;
-
+        
+        [TitleGroup("extra extras")]
         public Transform CameraTransform => cameraTransform;
-        
         public bool  HeadbobEnabled   => headbobEnabled;
-        
+        public Vector3 CurrentMoveVelocity => _currentMoveVelocity;
+        public float CrouchHeight => crouchHeight;
+        public float CrouchSpeedMultiplier => crouchSpeedMultiplier;
         
         public InputManager inputManager;
-
+        private bool isCrouching;
         
         public Vector3   moveVelocity;
         public Vector3 verticalVelocity;
         private Vector2   input;
         private bool     isLocked;
         
+        private Action _crouchAction;
+
         void Awake()
         {
             States[PlayerState.Idle]    = new PlayerIdleState
@@ -79,59 +106,113 @@ namespace _Project._Scripts.PlayerScripts
             
             States[PlayerState.Locked]  = new PlayerLockedState
                 (PlayerState.Locked, this);
+            States[PlayerState.Crouching]  = new PlayerCrouchingState
+                (PlayerState.Crouching, this);
+                
             
-            CurrentState                                   = States[PlayerController.PlayerState.Idle];
+            CurrentState               =  States[PlayerController.PlayerState.Idle];
+            _standingHeight            =  characterController.height;
+            _targetSpeedMultiplier     =  1f;
+            _crouchAction              =  () => SetCrouching(true);
+            InputManager.CrouchPressed += _crouchAction;
+            
+            CalculateJumpParameters();
         }
+        
+        private void CalculateJumpParameters()
+        {
+            // Using physics equations:
+            // h = v0*t + (1/2)*a*t^2
+            // At apex: v = v0 + a*t = 0
+            // Therefore: v0 = -a*t
+        
+            // Calculate gravity needed for desired apex time
+            gravity = (-2f * maxJumpHeight) / (timeToApex * timeToApex);
+        
+            // Calculate initial jump velocity needed
+            jumpForce = -gravity * timeToApex;
+        
+            // Calculate minimum jump velocity (for tap jumps)
+            float minJumpVelocity = Mathf.Sqrt(-2f * gravity * minJumpHeight);
+            maxFallSpeed = -jumpForce; // Terminal velocity = max jump speed
+        }
+        private void OnDestroy()
+        {
+            InputManager.CrouchPressed -= _crouchAction;
+
+        }
+
         private void Update()
         {
             input = InputManager.moveDirection.normalized;
+            if(InputManager.StartJump) _jumpBufferTimer = _jumpBufferTime;
+            _jumpBufferTimer -= Time.deltaTime;
+            
+            if (!IsGrounded(out _))
+            {
+                _coyoteTimer -= Time.deltaTime;
+            }
         }
     
+        /*
         public bool IsGrounded()
         {
             return Physics.CheckSphere(transform.position + Vector3.down * groundCheckDistance, 0.5f, groundMask)
                    || characterController.isGrounded; // ||Physics.Raycast(Vector3.down,
             return characterController.isGrounded;
         }
-
-        public void MoveCamera(Vector3 offset)
+        */
+        public bool IsGrounded(out Vector3 groundNormal)
         {
-            cameraHolder.transform.localPosition += offset;
+            groundNormal = Vector3.up;
+            if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, groundCheckDistance * 1.5f, groundMask))
+            {
+                groundNormal = hit.normal;
+                _coyoteTimer = _coyoteTime;
+                return true;
+            }
+            _coyoteTimer -= Time.deltaTime;
+
+            return _coyoteTimer > 0 || characterController.isGrounded;
         }
-    
+
+        public bool IsGrounded()
+        {
+            return IsGrounded(out _);
+        }
+        public bool HasMovementInput()
+        {
+            return input.magnitude > minimumMoveSpeed;
+        }
+        
+        #region Movement
         public void Move(float speed =1f)
         {
             ApplyHorizontalMovement(speed);
             ApplyVerticalMovement();
             ApplyFinalMovement();
-            //ApplyCameraTilt();
         }
-        /*
-        private void ApplyCameraTilt()
-        {
-            float targetTilt = input.x * tiltAngle;
-            float currentTilt = Mathf.LerpAngle(cameraTransform.localEulerAngles.z, targetTilt, tiltSpeed * Time.deltaTime);
-            cameraTransform.localEulerAngles = new Vector3(cameraTransform.localEulerAngles.x, cameraTransform.localEulerAngles.y, currentTilt);
-        }
-        */
+
         private void ApplyHorizontalMovement(float speed = 1f)
         {
             Vector3 moveDirection = new Vector3(input.x, 0, input.y);
             if (moveDirection != Vector3.zero)
             {
                 moveDirection = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0) * moveDirection;
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                if (_currentMoveVelocity.magnitude > 0.1f)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
             }
-            _targetMoveVelocity = moveDirection * (moveSpeed * speed);
+            _targetMoveVelocity = GetMovementDirection(out _) * (moveSpeed * speed * _targetSpeedMultiplier);
         }
         
-        private void ApplyVerticalMovement()
+  private void ApplyVerticalMovement()
         {
             if (IsGrounded())
             {
-                if (verticalVelocity.y < 0f)
-                    verticalVelocity.y = Mathf.SmoothDamp(verticalVelocity.y, groundedGravity, ref _smoothVelocity, smoothTime);
+                verticalVelocity.y = Mathf.SmoothDamp(verticalVelocity.y, groundedGravity, ref _smoothVelocity, smoothTime);
             }
             else
             {
@@ -145,54 +226,117 @@ namespace _Project._Scripts.PlayerScripts
         private void ApplyFinalMovement()
         {
             float currentAcceleration = HasMovementInput() ? acceleration : deceleration;
+            Vector3 velocityChange = (_targetMoveVelocity - _currentMoveVelocity).normalized * 
+                                     currentAcceleration * Time.deltaTime;
             _currentMoveVelocity = Vector3.MoveTowards(_currentMoveVelocity, _targetMoveVelocity,
                 currentAcceleration * Time.deltaTime);
+            if (velocityChange.magnitude > (_targetMoveVelocity - _currentMoveVelocity).magnitude)
+            {
+                _currentMoveVelocity = _targetMoveVelocity;
+            }
+            else
+            {
+                _currentMoveVelocity += velocityChange;
+            }
             Vector3 finalVelocity = _currentMoveVelocity + verticalVelocity;
             characterController.Move(finalVelocity * Time.deltaTime);
         }
+        
+        private Vector3 GetMovementDirection(out Vector3 groundNormal)
+        {
+            groundNormal = Vector3.up;
+            Vector3 moveDirection = new Vector3(input.x, 0, input.y);
+            if (moveDirection != Vector3.zero)
+            {
+                moveDirection = Quaternion.Euler(0, cameraTransform.eulerAngles.y, 0) * moveDirection;
+                if (IsGrounded(out groundNormal))
+                    moveDirection = Vector3.ProjectOnPlane(moveDirection, groundNormal);
 
-    
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            }
+            return moveDirection;
+        }
+
+        #endregion
+
+        #region physics
         public void ApplyGravity(float gravityValue)
         {
             verticalVelocity.y += gravityValue * Time.deltaTime;
-            //characterController.Move(verticalVelocity * Time.deltaTime);
         }
-        
-        public bool HasMovementInput()
-        {
-            return input.magnitude > minimumMoveSpeed;
-        }
-
-        public void Jump()
-        {
-            verticalVelocity.y = jumpForce;
-        }
-
-        public bool CheckJump()
-        {
-            var condition = (Time.time > lastJumpTime + jumpCooldown)
-                             && IsGrounded();
-            condition = condition && InputManager.StartJump;
-            return condition;
-        }
-    
         public void ResetVerticalVelocity()
         {
             verticalVelocity.y = 0f;
         }
+
+        #endregion
+        
+        #region Jump
+
+        public void Jump()
+        {
+            verticalVelocity.y = jumpForce *_initialJumpVelocityMultiplier;
+            lastJumpTime       = Time.time;
+            _timeSinceLastJump = 0;
+        }
+
+        public bool CheckJump()
+        {
+            //var condition = (Time.time > lastJumpTime + jumpCooldown)
+            //                 && IsGrounded();
+            if(_jumpBufferTimer > 0 && _coyoteTimer > 0 && !_hasJumped)
+            {
+                _hasJumped       = true;
+                _jumpBufferTimer = 0;
+                _coyoteTimer     = 0;
+                return true;
+            }
+            return false;
+        }
+        public void ResetJump()
+        {
+            _hasJumped = false;
+        }
+
+
+        #endregion
+
+        #region Crouch
+
+        public void Crouch()
+        {
+            characterController.height = crouchHeight;
+            characterController.center = new Vector3(0, crouchHeight / 2, 0);
+        }
+        private void SetCrouching(bool boolean)
+        {
+            isCrouching = boolean;
+        }
+        public bool CheckCrouch()
+        {
+            return isCrouching;
+        }
+        #endregion
+        
+        #region Player lock
+
         public void LockPlayer()
         {
             isLocked         = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible   = true;
-            input    = Vector2.zero;
+            input            = Vector2.zero;
         }
     
         public void UnlockPlayer()
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible   = false;
-            isLocked = false;
+            isLocked         = false;
         }
+
+        #endregion
+       
     }
 }

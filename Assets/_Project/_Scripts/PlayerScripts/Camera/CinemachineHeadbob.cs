@@ -41,7 +41,7 @@ public class CameraHeadbob : MonoBehaviour
 
     private void HandleHeadbob()
     {
-        float speedPercent = playerController.moveVelocity.magnitude / playerController.moveSpeed; // for crouch later
+        float speedPercent = playerController.CurrentMoveVelocity.magnitude / playerController.moveSpeed; // for crouch later
 
         if (playerController.HasMovementInput() && playerController.IsGrounded())
         {

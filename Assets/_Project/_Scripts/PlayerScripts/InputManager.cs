@@ -34,6 +34,8 @@ public class InputManager : MonoBehaviour
     public static event Action OpenPauseMenu;
 
     public static event Action OpenInventoryMenu;
+
+    public static event Action CrouchPressed;
     
     private bool _castPressed;
     private bool _jumpPressed;
@@ -167,24 +169,30 @@ public class InputManager : MonoBehaviour
             UIManager.Instance.CloseCurrentMenu();
         }
     }
-
+    private void OnCrouch(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            CrouchPressed?.Invoke();
+    }
     
     private void OnEnable()
     {
         _inputManager.Enable();
-        _inputManager.PlayerControls.Jump.performed          += OnJump;
-        _inputManager.PlayerControls.Jump.canceled           += OnJump;
-        _inputManager.PlayerControls.Move.performed          += OnMove;
-        _inputManager.PlayerControls.Move.canceled           += OnMove;
-        _inputManager.PlayerControls.CastSpell.performed     += OnLeftMouseDown;
-        _inputManager.PlayerControls.CastSpell.canceled      += OnLeftMouseDown;
-        _inputManager.PlayerControls.Interact.performed      += OnInteract;
-        _inputManager.PlayerControls.ChangeSpell.performed   += OnChangeSpell;
-        _inputManager.PlayerControls.OpenInventory.performed += OnOpenInventory;
-        _inputManager.PlayerControls.Save.performed          += OnSaveGame;
-        _inputManager.PlayerControls.Load.performed          += OnLoadGame;
-        _inputManager.PlayerControls.OpenPauseMenu.performed += OnopenMenu;
+        _inputManager.PlayerControls.Jump.performed              += OnJump;
+        _inputManager.PlayerControls.Jump.canceled               += OnJump;
+        _inputManager.PlayerControls.Move.performed              += OnMove;
+        _inputManager.PlayerControls.Move.canceled               += OnMove;
+        _inputManager.PlayerControls.CastSpell.performed         += OnLeftMouseDown;
+        _inputManager.PlayerControls.CastSpell.canceled          += OnLeftMouseDown;
+        _inputManager.PlayerControls.Interact.performed          += OnInteract;
+        _inputManager.PlayerControls.ChangeSpell.performed       += OnChangeSpell;
+        _inputManager.PlayerControls.OpenInventory.performed     += OnOpenInventory;
+        _inputManager.PlayerControls.Save.performed              += OnSaveGame;
+        _inputManager.PlayerControls.Load.performed              += OnLoadGame;
+        _inputManager.PlayerControls.OpenPauseMenu.performed     += OnopenMenu;
         _inputManager.PlayerControls.OpenInventoryMenu.performed += OnOpenInventoryMenu;
+        _inputManager.PlayerControls.Crouch.performed            += OnCrouch;
+
 
 
         _inputManager.UI.CloseMenu.performed += OnCloseMenu;
@@ -209,7 +217,8 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.Load.performed              -= OnLoadGame;
         _inputManager.PlayerControls.OpenPauseMenu.performed     -= OnopenMenu;
         _inputManager.PlayerControls.OpenInventoryMenu.performed -= OnOpenInventoryMenu;
-        
+        _inputManager.PlayerControls.Crouch.performed            -= OnCrouch;
+
         _inputManager.UI.CloseMenu.performed -= OnCloseMenu;
 
         UIManager.OnMenuToggle -= HandleMenuToggle;

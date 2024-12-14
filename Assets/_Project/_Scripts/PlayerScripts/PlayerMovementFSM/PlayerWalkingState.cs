@@ -39,7 +39,6 @@ namespace _Project._Scripts.PlayerScripts
         {
             controller.Move();
             controller.ApplyGravity(controller.groundedGravity);
-            //Headbob();
         }
 
         public override PlayerController.PlayerState GetNextState()
