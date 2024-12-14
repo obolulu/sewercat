@@ -44,7 +44,7 @@ namespace _Project._Scripts.PlayerScripts
         public override PlayerController.PlayerState GetNextState()
         {
             elapsedTime = Time.time - jumpStartTime;
-            if (controller.verticalVelocity.y > 0 && !InputManager.StartJump)
+            if (controller.verticalVelocity.y > 0 && InputManager.StartJump)
             {
                 _jumpReleaseTimer += Time.deltaTime;
                 if (_jumpReleaseTimer < _jumpReleaseDelay) return StateKey;

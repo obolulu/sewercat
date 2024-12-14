@@ -90,6 +90,20 @@ namespace _Project._Scripts.PlayerScripts
         
         private Action _crouchAction;
 
+        private void Update()
+        {
+            input = InputManager.moveDirection.normalized;
+            if(InputManager.StartJump) _jumpBufferTimer = _jumpBufferTime;
+            _jumpBufferTimer -= Time.deltaTime;
+            
+            if (!IsGrounded(out _))
+            {
+                _coyoteTimer -= Time.deltaTime;
+            }
+        }
+        
+        #region Setup
+
         void Awake()
         {
             States[PlayerState.Idle]    = new PlayerIdleState
@@ -110,9 +124,14 @@ namespace _Project._Scripts.PlayerScripts
                 (PlayerState.Crouching, this);
                 
             
-            CurrentState               =  States[PlayerController.PlayerState.Idle];
-            _standingHeight            =  characterController.height;
-            _targetSpeedMultiplier     =  1f;
+            CurrentState           = States[PlayerController.PlayerState.Idle];
+            _standingHeight        = characterController.height;
+            _targetSpeedMultiplier = 1f;
+            _standingHeight        = characterController.height;
+            _coyoteTimer           = _coyoteTime;
+            _jumpBufferTimer       = _jumpBufferTime;
+            _timeSinceLastJump     = 0;
+            _hasJumped             = false;
             _crouchAction              =  () => SetCrouching(true);
             InputManager.CrouchPressed += _crouchAction;
             
@@ -142,26 +161,10 @@ namespace _Project._Scripts.PlayerScripts
 
         }
 
-        private void Update()
-        {
-            input = InputManager.moveDirection.normalized;
-            if(InputManager.StartJump) _jumpBufferTimer = _jumpBufferTime;
-            _jumpBufferTimer -= Time.deltaTime;
-            
-            if (!IsGrounded(out _))
-            {
-                _coyoteTimer -= Time.deltaTime;
-            }
-        }
-    
-        /*
-        public bool IsGrounded()
-        {
-            return Physics.CheckSphere(transform.position + Vector3.down * groundCheckDistance, 0.5f, groundMask)
-                   || characterController.isGrounded; // ||Physics.Raycast(Vector3.down,
-            return characterController.isGrounded;
-        }
-        */
+        #endregion
+        
+        #region Grounded Checks
+
         public bool IsGrounded(out Vector3 groundNormal)
         {
             groundNormal = Vector3.up;
@@ -184,6 +187,8 @@ namespace _Project._Scripts.PlayerScripts
         {
             return input.magnitude > minimumMoveSpeed;
         }
+
+        #endregion
         
         #region Movement
         public void Move(float speed =1f)
@@ -309,17 +314,31 @@ namespace _Project._Scripts.PlayerScripts
             characterController.height = crouchHeight;
             characterController.center = new Vector3(0, crouchHeight / 2, 0);
         }
+        public void UnCrouch()
+        {
+            characterController.height = _standingHeight;
+            characterController.center = new Vector3(0, _standingHeight / 2, 0);
+        }
+        
         private void SetCrouching(bool boolean)
         {
-            isCrouching = boolean;
+            if (isCrouching != boolean)
+            {
+                isCrouching = boolean;
+                if (isCrouching)
+                    Crouch();
+                else
+                    UnCrouch();
+            }
         }
+
         public bool CheckCrouch()
         {
             return isCrouching;
         }
         #endregion
         
-        #region Player lock
+        #region Player Lock
 
         public void LockPlayer()
         {

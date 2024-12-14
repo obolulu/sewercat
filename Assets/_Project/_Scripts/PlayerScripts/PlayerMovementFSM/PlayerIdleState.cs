@@ -13,6 +13,7 @@ namespace _Project._Scripts.PlayerScripts
         public override void EnterState()
         {
             //controller.ResetVerticalVelocity();
+            controller.ResetJump();
         }
     
         public override void ExitState() { }
@@ -30,7 +31,7 @@ namespace _Project._Scripts.PlayerScripts
             
             if (controller.CheckCrouch())
             {
-                
+                return PlayerController.PlayerState.Crouching;
             }
             if (controller.CheckJump())
             {

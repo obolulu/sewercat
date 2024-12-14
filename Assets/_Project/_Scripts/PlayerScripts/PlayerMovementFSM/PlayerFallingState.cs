@@ -37,6 +37,10 @@ namespace _Project._Scripts.PlayerScripts
 
                 if (controller.CheckJump()) 
                     return PlayerController.PlayerState.Jumping;
+                
+                if (controller.CheckCrouch())
+                    return PlayerController.PlayerState.Crouching;
+                
                 return controller.HasMovementInput()
                     ? PlayerController.PlayerState.Walking 
                     : PlayerController.PlayerState.Idle;

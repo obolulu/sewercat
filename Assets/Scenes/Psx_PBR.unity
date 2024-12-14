@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 4846060}
   - component: {fileID: 4846059}
   - component: {fileID: 4846058}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,6 +772,7 @@ MonoBehaviour:
   smoothTime: 0.2
   _coyoteTime: 0.1
   _jumpBufferTime: 0.1
+  _initialJumpVelocityMultiplier: 1.2
   lastJumpTime: 0
   groundCheckDistance: 1
   minimumMoveSpeed: 0.1
