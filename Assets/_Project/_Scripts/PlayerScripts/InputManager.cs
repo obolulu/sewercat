@@ -36,11 +36,15 @@ public class InputManager : MonoBehaviour
     public static event Action OpenInventoryMenu;
 
     public static event Action CrouchPressed;
+
+
+    public static event Action PutWeaponDown;
     
-    private bool _castPressed;
-    private bool _jumpPressed;
-    private bool _leftClickDown;
-    private bool _leftClickUp;
+    
+    private bool               _castPressed;
+    private bool               _jumpPressed;
+    private bool               _leftClickDown;
+    private bool               _leftClickUp;
 
     public static Vector2 GetMouseDelta()
     {
@@ -174,6 +178,14 @@ public class InputManager : MonoBehaviour
         if (context.performed)
             CrouchPressed?.Invoke();
     }
+
+    private void OnPutWeaponDown(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            PutWeaponDown?.Invoke();
+        }
+    }
     
     private void OnEnable()
     {
@@ -192,6 +204,7 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.OpenPauseMenu.performed     += OnopenMenu;
         _inputManager.PlayerControls.OpenInventoryMenu.performed += OnOpenInventoryMenu;
         _inputManager.PlayerControls.Crouch.performed            += OnCrouch;
+        _inputManager.PlayerControls.PutWeaponDown.performed     += OnPutWeaponDown;
 
 
 
@@ -218,6 +231,7 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.OpenPauseMenu.performed     -= OnopenMenu;
         _inputManager.PlayerControls.OpenInventoryMenu.performed -= OnOpenInventoryMenu;
         _inputManager.PlayerControls.Crouch.performed            -= OnCrouch;
+        _inputManager.PlayerControls.PutWeaponDown.performed     -= OnPutWeaponDown;
 
         _inputManager.UI.CloseMenu.performed -= OnCloseMenu;
 

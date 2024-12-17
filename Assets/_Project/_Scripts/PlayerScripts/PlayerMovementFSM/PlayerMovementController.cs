@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Cinemachine;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -88,7 +89,10 @@ namespace _Project._Scripts.PlayerScripts
         private Vector2   input;
         private bool     isLocked;
         
-        private Action _crouchAction;
+        private Action    _crouchAction;
+        
+        private Coroutine crouchCoroutine;
+        private Vector3   initialCameraHolderPosition;
 
         private void Update()
         {
@@ -124,16 +128,17 @@ namespace _Project._Scripts.PlayerScripts
                 (PlayerState.Crouching, this);
                 
             
-            CurrentState           = States[PlayerController.PlayerState.Idle];
-            _standingHeight        = characterController.height;
-            _targetSpeedMultiplier = 1f;
-            _standingHeight        = characterController.height;
-            _coyoteTimer           = _coyoteTime;
-            _jumpBufferTimer       = _jumpBufferTime;
-            _timeSinceLastJump     = 0;
-            _hasJumped             = false;
-            _crouchAction              =  () => SetCrouching(true);
-            InputManager.CrouchPressed += _crouchAction;
+            CurrentState                =  States[PlayerController.PlayerState.Idle];
+            _targetSpeedMultiplier      =  1f;
+            _standingHeight             =  characterController.height;
+            _coyoteTimer                =  _coyoteTime;
+            _jumpBufferTimer            =  _jumpBufferTime;
+            _timeSinceLastJump          =  0;
+            _hasJumped                  =  false;
+            _crouchAction               =  () => SetCrouching(!isCrouching);
+            InputManager.CrouchPressed  += _crouchAction;
+            initialCameraHolderPosition =  cameraHolder.transform.localPosition;
+
             
             CalculateJumpParameters();
         }
@@ -311,13 +316,23 @@ namespace _Project._Scripts.PlayerScripts
 
         public void Crouch()
         {
-            characterController.height = crouchHeight;
-            characterController.center = new Vector3(0, crouchHeight / 2, 0);
+            //characterController.height = crouchHeight;
+            //characterController.center = new Vector3(0, crouchHeight / 2, 0);
+            if (crouchCoroutine != null)
+            {
+                StopCoroutine(crouchCoroutine);
+            }
+            crouchCoroutine = StartCoroutine(ChangeHeight(crouchHeight));
         }
         public void UnCrouch()
         {
-            characterController.height = _standingHeight;
-            characterController.center = new Vector3(0, _standingHeight / 2, 0);
+            //characterController.height = _standingHeight;
+            //characterController.center = new Vector3(0, _standingHeight / 2, 0);
+            if (crouchCoroutine != null)
+            {
+                StopCoroutine(crouchCoroutine);
+            }
+            crouchCoroutine = StartCoroutine(ChangeHeight(_standingHeight));
         }
         
         private void SetCrouching(bool boolean)
@@ -335,6 +350,31 @@ namespace _Project._Scripts.PlayerScripts
         public bool CheckCrouch()
         {
             return isCrouching;
+        }
+        
+        private IEnumerator ChangeHeight(float targetHeight)
+        {
+            //TODO:: fix this garbage
+            float   initialHeight = characterController.height;
+            Vector3 initialCenter = characterController.center;
+            Vector3 targetCenter  = new Vector3(0, targetHeight / 2, 0);
+            float   duration      = 0.2f; // Duration of the transition
+            float   elapsed       = 0f;
+            Vector3 targetCameraHolderPosition = initialCameraHolderPosition + new Vector3(0, targetHeight - _standingHeight, 0);
+
+            while (elapsed < duration)
+            {
+                elapsed                    += Time.deltaTime;
+                characterController.height =  Mathf.Lerp(initialHeight, targetHeight, elapsed   / duration);
+                characterController.center =  Vector3.Lerp(initialCenter, targetCenter, elapsed / duration);
+                cameraHolder.transform.localPosition = Vector3.Lerp(initialCameraHolderPosition, targetCameraHolderPosition, elapsed / duration);
+
+                yield return null;
+            }
+
+            characterController.height           = targetHeight;
+            characterController.center           = targetCenter;
+            cameraHolder.transform.localPosition = targetCameraHolderPosition;
         }
         #endregion
         

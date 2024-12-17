@@ -686,7 +686,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1973526819}
-  - {fileID: 2046859423}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &134348561
@@ -1672,10 +1671,10 @@ MonoBehaviour:
   tiltAngle: -3
   tiltSpeed: 2.5
   isJumpTiltEnabled: 1
-  jumpTiltAmount: 4
-  fallTiltAmount: 2
-  landTiltAmount: 1.53
-  recoverySpeed: 2.03
+  jumpTiltAmount: 3
+  fallTiltAmount: 1
+  landTiltAmount: 2
+  recoverySpeed: 4
   groundCheckDelay: 0.1
   controller: {fileID: 134348568}
 --- !u!114 &387283580
@@ -9249,7 +9248,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2046859423}
   m_Father: {fileID: 134348560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1973526821
@@ -10294,13 +10294,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2046859422}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2032669726}
-  m_Father: {fileID: 134348560}
+  m_Father: {fileID: 1973526819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2046859425
 MonoBehaviour:

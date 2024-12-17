@@ -20,11 +20,13 @@ public class WeaponHandler : MonoBehaviour
     private void Awake()
     {
         InputManager.LeftClickDown += Attack;
+        InputManager.PutWeaponDown += UnequipWeapon;
     } 
     
     private void OnDestroy()
     {
         InputManager.LeftClickDown -= Attack;
+        InputManager.PutWeaponDown -= UnequipWeapon;
     }
 
 
@@ -42,26 +44,42 @@ public class WeaponHandler : MonoBehaviour
                      .OnComplete(() =>
                      {
                          Destroy(currentWeapon.gameObject);
-                         currentWeapon = Instantiate(weapon.weaponPrefab, transform)
-                             .GetComponent<WeaponBase>();
-                         currentWeapon.transform.localPosition = hiddenPosition;
-                         currentWeapon.transform.DOLocalMove(visiblePosition, animationDuration)
-                                  .SetEase(Ease.OutSine);
+                         equipWeapon(weapon);
                      });
         }
         else
         {
-            currentWeapon = Instantiate(weapon.weaponPrefab, transform).GetComponent<WeaponBase>();
-            currentWeapon.transform.localPosition = hiddenPosition;
-            currentWeapon.transform.DOLocalMove(visiblePosition, animationDuration)
-                         .SetEase(Ease.OutSine);
+            equipWeapon(weapon);
         }
+    }
+    
+    private void UnequipWeapon()
+    {
+        if (currentWeapon)
+        {
+            currentWeapon.transform.DOLocalMove(hiddenPosition, animationDuration)
+                     .SetEase(Ease.InBack)
+                     .OnComplete(() =>
+                     {
+                         Destroy(currentWeapon.gameObject);
+                         currentWeapon     = null;
+                         currentWeaponData = null;
+                     });
+        }
+    }
+    
+    private void equipWeapon(WeaponData weapon)
+    {
+        currentWeapon = Instantiate(weapon.weaponPrefab, transform)
+            .GetComponent<WeaponBase>();
+        currentWeapon.transform.localPosition = hiddenPosition;
+        currentWeapon.transform.DOLocalMove(visiblePosition, animationDuration)
+                     .SetEase(Ease.OutSine);
     }
     
     
     private void Attack()
     {
         currentWeapon?.TryAttack();
-        //TODO: Implement attack logic
     }
 }

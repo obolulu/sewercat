@@ -35,7 +35,8 @@ public class ClawsWeapon : WeaponBase
     [SerializeField] private FMODEventSO clawAttackSound;
     
     private Collider collider;
-    private float lastAttackTime;
+    private float    lastAttackTime;
+    private Camera     camera;
     
     private void Awake()
     {
@@ -44,6 +45,7 @@ public class ClawsWeapon : WeaponBase
             animator = GetComponent<Animator>();
         }
         lastAttackTime = -attackCooldown;
+        camera = Camera.main;
     }
 
     public override void Attack()
@@ -78,13 +80,26 @@ public class ClawsWeapon : WeaponBase
         foreach (Collider hit in hitColliders)
         {
             IDamageable enemy = hit.GetComponent<IDamageable>();
-            if (enemy != null)
+            if (IsLineOfSight(hit))
             {
-                Vector3 hitDirection = (hit.transform.position - transform.position).normalized;
-                hitFeedbacks?.PlayFeedbacks();
-                enemy.TakeDamage(attackDamage, hitDirection);
+                if (enemy != null)
+                {
+                    Vector3 hitDirection = (hit.transform.position - transform.position).normalized;
+                    hitFeedbacks?.PlayFeedbacks();
+                    enemy.TakeDamage(attackDamage, hitDirection);
+                }
             }
         }    
+    }
+
+    private bool IsLineOfSight(Collider enemy)
+    {
+        Vector3 direction = enemy.transform.position - camera.transform.position;
+        if(Physics.Raycast(camera.transform.position, direction, out RaycastHit hit, attackRange))
+        {
+            return hit.collider == enemy;
+        }
+        return false;
     }
     
     private void OnDrawGizmosSelected()
