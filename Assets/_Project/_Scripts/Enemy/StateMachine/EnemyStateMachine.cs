@@ -11,7 +11,7 @@ public class EnemyStateMachine : StateManager<EnemyStateMachine.EnemyState>
     
     [SerializeField] private Transform    _playerTransform;
     [SerializeField] private NavMeshAgent _navMeshAgent;
-    
+    [SerializeField] private LayerMask   _playerLayer;
     public enum EnemyState
     {
         Chase,
@@ -20,12 +20,16 @@ public class EnemyStateMachine : StateManager<EnemyStateMachine.EnemyState>
     }
     private void Awake()
     {
-        States[EnemyState.Attack] = new EnemyAttackState(EnemyState.Attack, _playerTransform, transform);
+        States[EnemyState.Attack] = new EnemyAttackState(EnemyState.Attack, _playerTransform, transform, _playerLayer);
         States[EnemyState.Chase]  = new EnemyChaseState(EnemyState.Chase, _playerTransform, _navMeshAgent);
         States[EnemyState.Idle]  = new EnemyIdleState(EnemyState.Idle, _navMeshAgent, _playerTransform, transform);
         CurrentState = States[EnemyState.Chase];
     }
-    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(this.transform.position, 5);
+    }
     /*
     void FixedUpdate()
     {

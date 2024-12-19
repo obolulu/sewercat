@@ -71,6 +71,7 @@ public class ClawsWeapon : WeaponBase
             yield return new WaitForEndOfFrame();
         }
         HitDetect();
+        //animator.ResetTrigger(attackTriggerName);
     }
 
     private void HitDetect()

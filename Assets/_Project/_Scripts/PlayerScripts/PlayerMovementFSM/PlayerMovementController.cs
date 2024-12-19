@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections;
+using _Project._Scripts.PlayerScripts.Stats;
+using _Project._Scripts.ScriptBases;
 using Cinemachine;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts
 {
-    public class PlayerController : StateManager<PlayerController.PlayerState>
+    public class PlayerController : StateManager<PlayerController.PlayerState>, IDamageable
     {
         public enum PlayerState
         {
@@ -63,12 +65,14 @@ namespace _Project._Scripts.PlayerScripts
         [Header("Ground Settings")]
         [SerializeField] private float groundCheckDistance = 0.2f;
         [SerializeField] private float     minimumMoveSpeed = 0.1f;
-        [SerializeField] private LayerMask groundMask;
-        
-        [Header("References")]
-        [SerializeField] private CharacterController characterController;
+        [SerializeField] public LayerMask groundMask;
+
+        [Header("References")] 
+        [SerializeField] private PlayerStatsHandler playerStatsHandler;
+        [SerializeField] public CharacterController characterController;
         [SerializeField] private Transform    cameraTransform;
         [SerializeField] private GameObject cameraHolder;
+        [SerializeField] private Animator    animator; // hand animator -- for walking with weapon
         
         [TitleGroup("Toggles")]
         [Header("Headbob")] 
@@ -104,6 +108,13 @@ namespace _Project._Scripts.PlayerScripts
             {
                 _coyoteTimer -= Time.deltaTime;
             }
+            UpdateAnimatorMovement();
+        }
+
+        public void TakeDamage(float damage, Vector3 hitDirection)
+        {
+            playerStatsHandler.TakeDamage(damage);
+            //throw new NotImplementedException();
         }
         
         #region Setup
@@ -314,38 +325,47 @@ namespace _Project._Scripts.PlayerScripts
 
         #region Crouch
 
-        public void Crouch()
+        public bool Crouch()
+{
+    if (crouchCoroutine != null)
+    {
+        StopCoroutine(crouchCoroutine);
+    }
+    crouchCoroutine = StartCoroutine(ChangeHeight(crouchHeight));
+    return true;
+}
+
+public bool UnCrouch()
+{
+    if (crouchCoroutine != null)
+    {
+        StopCoroutine(crouchCoroutine);
+    }
+    crouchCoroutine = StartCoroutine(ChangeHeight(_standingHeight));
+    return true;
+}
+
+// Modify your SetCrouching method to handle failed attempts
+private void SetCrouching(bool boolean)
+{
+    if (isCrouching == boolean) return;
+    
+    isCrouching = boolean;
+    if (isCrouching)
+    {
+        if (!Crouch())
         {
-            //characterController.height = crouchHeight;
-            //characterController.center = new Vector3(0, crouchHeight / 2, 0);
-            if (crouchCoroutine != null)
-            {
-                StopCoroutine(crouchCoroutine);
-            }
-            crouchCoroutine = StartCoroutine(ChangeHeight(crouchHeight));
+            isCrouching = false;
         }
-        public void UnCrouch()
+    }
+    else
+    {
+        if (!UnCrouch())
         {
-            //characterController.height = _standingHeight;
-            //characterController.center = new Vector3(0, _standingHeight / 2, 0);
-            if (crouchCoroutine != null)
-            {
-                StopCoroutine(crouchCoroutine);
-            }
-            crouchCoroutine = StartCoroutine(ChangeHeight(_standingHeight));
+            isCrouching = true;
         }
-        
-        private void SetCrouching(bool boolean)
-        {
-            if (isCrouching != boolean)
-            {
-                isCrouching = boolean;
-                if (isCrouching)
-                    Crouch();
-                else
-                    UnCrouch();
-            }
-        }
+    }
+}
 
         public bool CheckCrouch()
         {
@@ -396,6 +416,18 @@ namespace _Project._Scripts.PlayerScripts
         }
 
         #endregion
-       
+        
+        #region Animation
+
+        private void UpdateAnimatorMovement()
+        {
+            // Pass the normalized movement speed (magnitude) to the animator as a "Speed" float parameter
+            if (animator == null) return;
+            animator.SetFloat("Speed", _currentMoveVelocity.magnitude/moveSpeed);
+        }
+
+        #endregion
+
+
     }
 }

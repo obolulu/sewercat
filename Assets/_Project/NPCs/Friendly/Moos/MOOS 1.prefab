@@ -462,6 +462,7 @@ MonoBehaviour:
   enemyStateMachine: {fileID: 295640229472971820}
   dialogue: {fileID: 0}
   enemySaveData:
+    id: 
     position: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0, w: 0}
     health: 0
@@ -482,6 +483,9 @@ MonoBehaviour:
   currentEnemyState: 0
   _playerTransform: {fileID: 0}
   _navMeshAgent: {fileID: 7452034015692522833}
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!195 &7452034015692522833
 NavMeshAgent:
   m_ObjectHideFlags: 0

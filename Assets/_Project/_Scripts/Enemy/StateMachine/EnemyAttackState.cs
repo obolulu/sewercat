@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _Project._Scripts.ScriptBases;
+using UnityEngine;
 using UnityEngine.AI;
 
 namespace _Project._Scripts.EnemyDir.StateMachine
@@ -7,15 +8,19 @@ namespace _Project._Scripts.EnemyDir.StateMachine
     {
         private readonly Transform playerTransform;
         private readonly Transform enemyTransform;
-        private readonly float     attackRange    = 4f;
-        private readonly float     attackCooldown = 2.0f;
+        private readonly float     attackRange    = 5f;
+        private readonly float     attackCooldown = 4.0f;
         private          float     lastAttackTime;
-
+        private          LayerMask playerLayer;
+        
+        private float damage = 10;
+        
         public EnemyAttackState(EnemyStateMachine.EnemyState key, Transform playerTransform, 
-                                Transform                    enemyTransform) : base(key)
+                                Transform                    enemyTransform, LayerMask playerLayer) : base(key)
         {
             this.playerTransform = playerTransform;
             this.enemyTransform  = enemyTransform;
+            this.playerLayer     = playerLayer;
         }
 
         public override void EnterState()
@@ -26,24 +31,44 @@ namespace _Project._Scripts.EnemyDir.StateMachine
 
         public override void ExitState()
         {
-            Debug.Log("Exiting attack state");
         }
 
         public override void UpdateState()
         {
             if (playerTransform != null && Time.time >= lastAttackTime + attackCooldown)
             {
-                AttackPlayer();
-                lastAttackTime += Time.time;
+                StartAttack();
+                lastAttackTime = Time.time;
             }
+        }
+        private void StartAttack()
+        {
+            // Play attack animation
+            AttackPlayer();
         }
 
         private void AttackPlayer()
         {
-            Debug.Log("Attacking the player");
-            // Implement actual attack logic here
+            Collider[] hitColliders = Physics.OverlapSphere(enemyTransform.position, attackRange, playerLayer);
+            foreach (Collider hit in hitColliders)
+            {
+                if(!IsLineOfSight(hit)) continue;
+                IDamageable target = hit.GetComponent<IDamageable>();
+                Vector3 hitDirection = (hit.transform.position - enemyTransform.position).normalized;
+                target.TakeDamage(damage, hitDirection);    
+                Debug.Log("Player hit for " + damage + " damage.");
+            }
         }
 
+        private bool IsLineOfSight(Collider target)
+        {
+            Vector3 direction = target.transform.position - enemyTransform.transform.position;
+            if(Physics.Raycast(enemyTransform.transform.position, direction, out RaycastHit hit, attackRange))
+            {
+                return hit.collider == target;
+            }
+            return false;
+        }
         public override EnemyStateMachine.EnemyState GetNextState()
         {
             if (playerTransform == null) return StateKey;
