@@ -695,7 +695,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  animator: {fileID: 0}
+  animator: {fileID: 9142478415287183383}
   attackTriggerName: AttackTrigger
   attackSpeedParameter: AttackSpeed
   framesUntilAttack: 5

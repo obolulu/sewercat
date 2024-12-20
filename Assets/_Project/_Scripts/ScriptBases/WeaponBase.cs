@@ -8,9 +8,10 @@ namespace _Project._Scripts.ScriptBases
     public class WeaponBase : MonoBehaviour
     {
         [SerializeField] private WeaponData weaponData;
-        public virtual           void       TryAttack(){}
-        public virtual void Attack(){}
-
+        public virtual           void       TryAttack()        {}
+        public virtual           void       Attack()           {}
+        public virtual           void       OnRightClickDown() {throw new NotImplementedException();}
+        public virtual           void       OnRightClickUp()   {throw new NotImplementedException();}
         public void OnEquip(Vector3 visiblePosition, float animationDuration)
         {
             transform.DOLocalMove(visiblePosition, animationDuration)
@@ -23,5 +24,6 @@ namespace _Project._Scripts.ScriptBases
                       .SetEase(Ease.InBack);
             
         }
+        
     }
 }

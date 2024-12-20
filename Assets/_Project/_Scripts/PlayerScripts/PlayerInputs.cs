@@ -73,6 +73,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""RightClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""effb8e2b-136f-48da-914c-0b65c622551f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""3b19bf39-5532-4149-a592-7f22b0e9db3a"",
@@ -451,6 +460,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fbc772b4-2d17-46ee-ab25-4517a6ffa7d5"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -529,6 +549,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerControls_Crouch = m_PlayerControls.FindAction("Crouch", throwIfNotFound: true);
         m_PlayerControls_ChangeSpell = m_PlayerControls.FindAction("Change Spell", throwIfNotFound: true);
         m_PlayerControls_CastSpell = m_PlayerControls.FindAction("Cast Spell", throwIfNotFound: true);
+        m_PlayerControls_RightClick = m_PlayerControls.FindAction("RightClick", throwIfNotFound: true);
         m_PlayerControls_Interact = m_PlayerControls.FindAction("Interact", throwIfNotFound: true);
         m_PlayerControls_OpenInventory = m_PlayerControls.FindAction("OpenInventory", throwIfNotFound: true);
         m_PlayerControls_Save = m_PlayerControls.FindAction("Save", throwIfNotFound: true);
@@ -608,6 +629,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Crouch;
     private readonly InputAction m_PlayerControls_ChangeSpell;
     private readonly InputAction m_PlayerControls_CastSpell;
+    private readonly InputAction m_PlayerControls_RightClick;
     private readonly InputAction m_PlayerControls_Interact;
     private readonly InputAction m_PlayerControls_OpenInventory;
     private readonly InputAction m_PlayerControls_Save;
@@ -626,6 +648,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_PlayerControls_Crouch;
         public InputAction @ChangeSpell => m_Wrapper.m_PlayerControls_ChangeSpell;
         public InputAction @CastSpell => m_Wrapper.m_PlayerControls_CastSpell;
+        public InputAction @RightClick => m_Wrapper.m_PlayerControls_RightClick;
         public InputAction @Interact => m_Wrapper.m_PlayerControls_Interact;
         public InputAction @OpenInventory => m_Wrapper.m_PlayerControls_OpenInventory;
         public InputAction @Save => m_Wrapper.m_PlayerControls_Save;
@@ -659,6 +682,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @CastSpell.started += instance.OnCastSpell;
             @CastSpell.performed += instance.OnCastSpell;
             @CastSpell.canceled += instance.OnCastSpell;
+            @RightClick.started += instance.OnRightClick;
+            @RightClick.performed += instance.OnRightClick;
+            @RightClick.canceled += instance.OnRightClick;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -705,6 +731,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @CastSpell.started -= instance.OnCastSpell;
             @CastSpell.performed -= instance.OnCastSpell;
             @CastSpell.canceled -= instance.OnCastSpell;
+            @RightClick.started -= instance.OnRightClick;
+            @RightClick.performed -= instance.OnRightClick;
+            @RightClick.canceled -= instance.OnRightClick;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
@@ -819,6 +848,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnChangeSpell(InputAction.CallbackContext context);
         void OnCastSpell(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnOpenInventory(InputAction.CallbackContext context);
         void OnSave(InputAction.CallbackContext context);

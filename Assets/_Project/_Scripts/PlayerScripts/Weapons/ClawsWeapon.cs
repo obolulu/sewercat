@@ -37,15 +37,20 @@ public class ClawsWeapon : WeaponBase
     private Collider collider;
     private float    lastAttackTime;
     private Camera     camera;
+    private bool isBlocking;
     
     private void Awake()
     {
-        if(!animator)
-        {
-            animator = GetComponent<Animator>();
-        }
         lastAttackTime = -attackCooldown;
         camera = Camera.main;
+        //InputManager.RightClickDown += StartBlocking;
+        //InputManager.RightClickUp += EndBlocking;
+    }
+
+    private void OnDestroy()
+    {
+        //InputManager.RightClickDown -= StartBlocking;
+        //InputManager.RightClickUp -= EndBlocking;
     }
 
     public override void Attack()
@@ -117,4 +122,36 @@ public class ClawsWeapon : WeaponBase
             lastAttackTime = Time.time;
         }
     }
+
+    #region blocking/parrying (right click)
+
+    public override void OnRightClickDown()
+    {
+       StartBlocking();
+    }
+    public override void OnRightClickUp()
+    {
+        EndBlocking();
+    }
+    
+
+    private void StartBlocking()
+    {
+        Debug.Log("Blocking");
+        isBlocking = true;
+    }
+
+    private void EndBlocking()
+    {
+        Debug.Log("Not Blocking");
+        isBlocking = false;
+    }
+
+    private bool IsBlocking()
+    {
+        return isBlocking;
+    }
+
+    #endregion
+
 }

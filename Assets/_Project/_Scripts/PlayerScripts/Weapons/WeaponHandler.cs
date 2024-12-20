@@ -19,17 +19,35 @@ public class WeaponHandler : MonoBehaviour
     
     private void Awake()
     {
-        InputManager.LeftClickDown += Attack;
-        InputManager.PutWeaponDown += UnequipWeapon;
+        InputManager.LeftClickDown  += Attack;
+        InputManager.RightClickDown += OnRightClickDown;
+        InputManager.RightClickUp   += OnRightClickUp;
+        InputManager.PutWeaponDown  += UnequipWeapon;
     } 
     
     private void OnDestroy()
     {
-        InputManager.LeftClickDown -= Attack;
-        InputManager.PutWeaponDown -= UnequipWeapon;
+        InputManager.LeftClickDown  -= Attack;
+        InputManager.PutWeaponDown  -= UnequipWeapon;
+        InputManager.RightClickDown -= OnRightClickDown;
+        InputManager.RightClickUp   -= OnRightClickUp;
     }
 
+    #region  Right Click
 
+    private void OnRightClickDown()
+    {
+        currentWeapon?.OnRightClickDown();
+    }
+    
+    private void OnRightClickUp()
+    {
+        currentWeapon?.OnRightClickUp();
+    }
+
+    #endregion
+
+    #region Weapon Equip
     public void EquipWeapon(WeaponData weapon)
     {
         if(currentWeaponData == weapon)
@@ -76,7 +94,7 @@ public class WeaponHandler : MonoBehaviour
         currentWeapon.transform.DOLocalMove(visiblePosition, animationDuration)
                      .SetEase(Ease.OutSine);
     }
-    
+    #endregion
     
     private void Attack()
     {

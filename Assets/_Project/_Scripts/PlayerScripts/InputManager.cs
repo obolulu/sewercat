@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
     public static event Action CloseInventoryEvent;
     
     public static event Action LeftClickDown;
-    public  static  event  Action LeftClickUp;
+    public  static event Action LeftClickUp;
     
     public static event Action RightClickDown;
     public static event Action RightClickUp;
@@ -84,6 +84,18 @@ public class InputManager : MonoBehaviour
         else if (context.canceled)
         {
             LeftClickUp?.Invoke();
+        }
+    }
+        private void OnRightMouseDown(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            RightClickDown?.Invoke();
+        }
+        
+        else if (context.canceled)
+        {
+            RightClickUp?.Invoke();
         }
     }
 
@@ -196,6 +208,8 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.Move.canceled               += OnMove;
         _inputManager.PlayerControls.CastSpell.performed         += OnLeftMouseDown;
         _inputManager.PlayerControls.CastSpell.canceled          += OnLeftMouseDown;
+        _inputManager.PlayerControls.RightClick.performed        += OnRightMouseDown;
+        _inputManager.PlayerControls.RightClick.canceled         += OnRightMouseDown;
         _inputManager.PlayerControls.Interact.performed          += OnInteract;
         _inputManager.PlayerControls.ChangeSpell.performed       += OnChangeSpell;
         _inputManager.PlayerControls.OpenInventory.performed     += OnOpenInventory;
@@ -223,6 +237,8 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.Move.canceled               -= OnMove;
         _inputManager.PlayerControls.CastSpell.performed         -= OnLeftMouseDown;
         _inputManager.PlayerControls.CastSpell.canceled          -= OnLeftMouseDown;
+        _inputManager.PlayerControls.RightClick.performed        -= OnRightMouseDown;
+        _inputManager.PlayerControls.RightClick.canceled         -= OnRightMouseDown;
         _inputManager.PlayerControls.Interact.performed          -= OnInteract;
         _inputManager.PlayerControls.ChangeSpell.performed       -= OnChangeSpell;
         _inputManager.PlayerControls.OpenInventory.performed     -= OnOpenInventory;

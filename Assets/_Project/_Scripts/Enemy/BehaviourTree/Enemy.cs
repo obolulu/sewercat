@@ -130,6 +130,15 @@ private void SetupBehaviourTree()
         _currentHealth = data.health;
         _isDisengaged = data.isDisengaged;
         _isInActiveCombat = data.isInActiveCombat;
+        //Debug.Log("health:" + _currentHealth);
+        if(_currentHealth <= 0)
+        {
+            HandleDeath();
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
     }
 
 
@@ -162,10 +171,11 @@ private void SetupBehaviourTree()
         private void HandleDying()
         {
             Debug.Log("Handling death");
+            HandleDeath();
         }
         private void HandleDeath()
         {
-            
+            gameObject.SetActive(false);
         }
         private void HandleAttack()
         {
