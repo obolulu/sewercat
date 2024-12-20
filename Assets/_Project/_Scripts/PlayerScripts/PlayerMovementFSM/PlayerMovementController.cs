@@ -98,6 +98,14 @@ namespace _Project._Scripts.PlayerScripts
         private Coroutine crouchCoroutine;
         private Vector3   initialCameraHolderPosition;
 
+
+        public bool IsBlocking { get; private set; }
+
+        public void SetBlocking(bool isBlocking)
+        {
+            IsBlocking = isBlocking;
+        }
+
         private void Update()
         {
             input = InputManager.moveDirection.normalized;
@@ -113,8 +121,15 @@ namespace _Project._Scripts.PlayerScripts
 
         public void TakeDamage(float damage, Vector3 hitDirection)
         {
-            playerStatsHandler.TakeDamage(damage);
-            //throw new NotImplementedException();
+            if (!IsBlocking)
+            {
+                playerStatsHandler.TakeDamage(damage);
+            }
+            else
+            {
+                
+            }
+        //throw new NotImplementedException();
         }
         
         #region Setup

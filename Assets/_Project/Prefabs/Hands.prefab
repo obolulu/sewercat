@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &805747797982621709
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4560693222351232122}
+  m_Layer: 0
+  m_Name: ParryEffects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4560693222351232122
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 805747797982621709}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7652652691876225241}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6034377110471006015
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,6 +684,7 @@ Transform:
   m_Children:
   - {fileID: 3666220562961274448}
   - {fileID: 6787376698794128885}
+  - {fileID: 4560693222351232122}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &9142478415287183383
@@ -699,8 +731,11 @@ MonoBehaviour:
   attackTriggerName: AttackTrigger
   attackSpeedParameter: AttackSpeed
   framesUntilAttack: 5
+  parryWindowDuration: 0.2
+  parryStunDuration: 1
+  parrySuccessFeedback: {fileID: 0}
+  parryVFX: {fileID: 0}
   slashEffect: {fileID: 0}
-  attackEffects: {fileID: 2448113347648841540}
   attackFeedbacks: {fileID: 814761742620678526}
   hitFeedbacks: {fileID: 5845962622817715206}
   clawAttackSound: {fileID: 11400000, guid: 6c4af108689a91b42870bf7630550473, type: 2}

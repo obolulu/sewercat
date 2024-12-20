@@ -29,17 +29,55 @@ public class Enemy : MonoBehaviour, IDamageable
         [SerializeField] private EnemyStateMachine enemyStateMachine;
         [SerializeField] private FloatingText dialogue;
         
-        
+
         BehaviourTree                    _tree;
         private float _currentHealth;
         private          bool            _isDamaged;
         private bool _isInActiveCombat = true;
         private bool _isDisengaged = true;
-        
         public EnemySaveData enemySaveData;
-        //Animator _animator;
+        private bool isStunned = false;
+        private float stunTimer = 0f;
         
-private void SetupBehaviourTree()
+    
+    #region Save/Load
+    public EnemySaveData GetSaveData()
+    {
+        enemySaveData = new EnemySaveData
+        {
+            id = enemyId,
+            position = transform.position,
+            rotation = transform.rotation,
+            health = _currentHealth,
+            isDisengaged = _isDisengaged,
+            isInActiveCombat = _isInActiveCombat,
+        };
+        return enemySaveData;    
+    }
+
+    public void LoadSaveData(EnemySaveData data)
+    {
+        transform.position = data.position;
+        transform.rotation = data.rotation;
+        _currentHealth = data.health;
+        _isDisengaged = data.isDisengaged;
+        _isInActiveCombat = data.isInActiveCombat;
+        //Debug.Log("health:" + _currentHealth);
+        if(_currentHealth <= 0)
+        {
+            HandleDeath();
+        }
+        else
+        {
+            gameObject.SetActive(true);
+        }
+    }
+    #endregion
+    
+    #region setup
+
+    private void SetupBehaviourTree()
+    
 {
     _tree = new BehaviourTree("Enemy");
 
@@ -108,42 +146,8 @@ private void SetupBehaviourTree()
 
     _tree.AddChild(prioritySelector);
 }
-
-    public EnemySaveData GetSaveData()
-    {
-        enemySaveData = new EnemySaveData
-        {
-            id = enemyId,
-            position = transform.position,
-            rotation = transform.rotation,
-            health = _currentHealth,
-            isDisengaged = _isDisengaged,
-            isInActiveCombat = _isInActiveCombat,
-        };
-        return enemySaveData;    
-    }
-
-    public void LoadSaveData(EnemySaveData data)
-    {
-        transform.position = data.position;
-        transform.rotation = data.rotation;
-        _currentHealth = data.health;
-        _isDisengaged = data.isDisengaged;
-        _isInActiveCombat = data.isInActiveCombat;
-        //Debug.Log("health:" + _currentHealth);
-        if(_currentHealth <= 0)
-        {
-            HandleDeath();
-        }
-        else
-        {
-            gameObject.SetActive(true);
-        }
-    }
-
-
-        
-        private void Awake()
+    private void Awake()
+    
         {
             if (string.IsNullOrEmpty(enemyId))
             {
@@ -154,6 +158,21 @@ private void SetupBehaviourTree()
             SetupBehaviourTree();
         }
 
+    #endregion
+        
+    #region stun
+    public void GetStunned(float duration)
+    {
+        isStunned = true;
+        stunTimer = duration;
+    }
+    
+    public void CancelAttack()
+    {
+        // Reset attack state
+        enemyStateMachine.TransitionToState(EnemyStateMachine.EnemyState.Idle);
+    }
+    #endregion
         private void Update()
         {
             //_animator.SetSpeed(_agent.velocity.magnitude);

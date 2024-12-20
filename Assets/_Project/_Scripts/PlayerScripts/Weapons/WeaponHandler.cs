@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Project._Scripts.Items;
+using _Project._Scripts.PlayerScripts;
 using _Project._Scripts.ScriptBases;
 using DG.Tweening;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class WeaponHandler : MonoBehaviour
 {
     [SerializeField] private WeaponData currentWeaponData;
     [SerializeField] private WeaponBase currentWeapon;
+    [SerializeField] private PlayerController playerController;
     
     [Header("animation settings")]
     [SerializeField] private Vector3 hiddenPosition    = new Vector3(0, -0.5f, 0); // Off-screen position
@@ -90,6 +92,7 @@ public class WeaponHandler : MonoBehaviour
     {
         currentWeapon = Instantiate(weapon.weaponPrefab, transform)
             .GetComponent<WeaponBase>();
+        currentWeapon.SetWeapon(playerController);
         currentWeapon.transform.localPosition = hiddenPosition;
         currentWeapon.transform.DOLocalMove(visiblePosition, animationDuration)
                      .SetEase(Ease.OutSine);

@@ -4,6 +4,7 @@ using _Project._Scripts.ScriptBases;
 using UnityEngine;
 using FMODUnity;
 using MoreMountains.Feedbacks;
+using Sirenix.OdinInspector;
 
 public class ClawsWeapon : WeaponBase
 {
@@ -20,13 +21,19 @@ public class ClawsWeapon : WeaponBase
     [SerializeField] private string attackSpeedParameter = "AttackSpeed";
     [SerializeField] private int framesUntilAttack = 4;
     
-    
+    [Title("Parry")]
+    [Header("Parry Settings")]
+    [SerializeField] protected float parryWindowDuration = 0.2f;
+    [SerializeField] protected float parryStunDuration = 1f;
+    [Header("Parry Feedback")]
+    [SerializeField] private MMFeedbacks parrySuccessFeedback;
+    [SerializeField] private ParticleSystem parryVFX;
+
     [Header("Effects")]
     [SerializeField] private ParticleSystem slashEffect;
     
     [Header("Camera Effects")]
-    [SerializeField] private EffectChainData attackEffects;
-
+    //[SerializeField] private EffectChainData attackEffects;
     [SerializeField] private MMFeedbacks attackFeedbacks;
     [SerializeField] private MMFeedbacks hitFeedbacks;
     
@@ -37,22 +44,19 @@ public class ClawsWeapon : WeaponBase
     private Collider collider;
     private float    lastAttackTime;
     private Camera     camera;
-    private bool isBlocking;
     
     private void Awake()
     {
         lastAttackTime = -attackCooldown;
         camera = Camera.main;
-        //InputManager.RightClickDown += StartBlocking;
-        //InputManager.RightClickUp += EndBlocking;
     }
 
+/*
     private void OnDestroy()
     {
-        //InputManager.RightClickDown -= StartBlocking;
-        //InputManager.RightClickUp -= EndBlocking;
-    }
 
+    }
+*/
     public override void Attack()
     {
         animator?.SetTrigger(attackTriggerName);
@@ -137,19 +141,19 @@ public class ClawsWeapon : WeaponBase
 
     private void StartBlocking()
     {
+        PlayerController.SetBlocking(true);
         Debug.Log("Blocking");
-        isBlocking = true;
     }
 
     private void EndBlocking()
     {
+        PlayerController.SetBlocking(false);
         Debug.Log("Not Blocking");
-        isBlocking = false;
     }
 
     private bool IsBlocking()
     {
-        return isBlocking;
+        return PlayerController.IsBlocking;
     }
 
     #endregion

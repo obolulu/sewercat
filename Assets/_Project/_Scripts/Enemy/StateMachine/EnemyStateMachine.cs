@@ -35,22 +35,7 @@ public class EnemyStateMachine : StateManager<EnemyStateMachine.EnemyState>
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(this.transform.position, 5);
     }
-    /*
-    void FixedUpdate()
-    {
-        EnemyState nextStateKey = CurrentState.GetNextState();
-        CheckPriorityStates();
-        
-        if (!IsTransitioningState&&nextStateKey.Equals(CurrentState.StateKey))
-        {
-            CurrentState.UpdateState();
-        }
-        else if (!IsTransitioningState)
-        {
-            TransitionToState(nextStateKey);
-        }
-    }
-    */
+
     public void CustomUpdate()
     {
         EnemyState nextStateKey = CurrentState.GetNextState();
@@ -63,4 +48,20 @@ public class EnemyStateMachine : StateManager<EnemyStateMachine.EnemyState>
             TransitionToState(nextStateKey);
         }
     }
+    /*
+void FixedUpdate()
+{
+    EnemyState nextStateKey = CurrentState.GetNextState();
+    CheckPriorityStates();
+
+    if (!IsTransitioningState&&nextStateKey.Equals(CurrentState.StateKey))
+    {
+        CurrentState.UpdateState();
+    }
+    else if (!IsTransitioningState)
+    {
+        TransitionToState(nextStateKey);
+    }
+}
+*/
 }

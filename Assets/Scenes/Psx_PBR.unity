@@ -6319,7 +6319,7 @@ PrefabInstance:
     - target: {fileID: 890470497812667819, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -847.93896
+      value: -935.579
       objectReference: {fileID: 0}
     - target: {fileID: 890470498378095860, guid: 5803e1d7bdc0b42d88017d33800d2635,
         type: 3}
@@ -10184,6 +10184,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentWeaponData: {fileID: 0}
   currentWeapon: {fileID: 0}
+  playerController: {fileID: 134348568}
   hiddenPosition: {x: 0, y: -1, z: 0}
   visiblePosition: {x: 0, y: 0, z: 0}
   animationDuration: 0.2
