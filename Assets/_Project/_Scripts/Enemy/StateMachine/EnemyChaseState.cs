@@ -43,7 +43,7 @@ namespace _Project._Scripts.EnemyDir.StateMachine
             // If close enough, transition to attack state
             if (distanceToPlayer <= attackRange)
             {
-                return EnemyStateMachine.EnemyState.Attack;
+                return EnemyStateMachine.EnemyState.Idle;
             }
         
             // Otherwise keep chasing

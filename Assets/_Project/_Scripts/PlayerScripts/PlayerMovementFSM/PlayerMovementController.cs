@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections;
+using _Project._Scripts.PlayerScripts.Stats;
+using _Project._Scripts.ScriptBases;
 using Cinemachine;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts
 {
-    public class PlayerController : StateManager<PlayerController.PlayerState>
+    public class PlayerController : StateManager<PlayerController.PlayerState>, IDamageable
     {
         public enum PlayerState
         {
@@ -62,12 +65,14 @@ namespace _Project._Scripts.PlayerScripts
         [Header("Ground Settings")]
         [SerializeField] private float groundCheckDistance = 0.2f;
         [SerializeField] private float     minimumMoveSpeed = 0.1f;
-        [SerializeField] private LayerMask groundMask;
-        
-        [Header("References")]
-        [SerializeField] private CharacterController characterController;
+        [SerializeField] public LayerMask groundMask;
+
+        [Header("References")] 
+        [SerializeField] private PlayerStatsHandler playerStatsHandler;
+        [SerializeField] public CharacterController characterController;
         [SerializeField] private Transform    cameraTransform;
         [SerializeField] private GameObject cameraHolder;
+        [SerializeField] private Animator    animator; // hand animator -- for walking with weapon
         
         [TitleGroup("Toggles")]
         [Header("Headbob")] 
@@ -88,7 +93,18 @@ namespace _Project._Scripts.PlayerScripts
         private Vector2   input;
         private bool     isLocked;
         
-        private Action _crouchAction;
+        private Action    _crouchAction;
+        
+        private Coroutine crouchCoroutine;
+        private Vector3   initialCameraHolderPosition;
+
+
+        public bool IsBlocking { get; private set; }
+
+        public void SetBlocking(bool isBlocking)
+        {
+            IsBlocking = isBlocking;
+        }
 
         private void Update()
         {
@@ -100,6 +116,20 @@ namespace _Project._Scripts.PlayerScripts
             {
                 _coyoteTimer -= Time.deltaTime;
             }
+            UpdateAnimatorMovement();
+        }
+
+        public void TakeDamage(float damage, Vector3 hitDirection)
+        {
+            if (!IsBlocking)
+            {
+                playerStatsHandler.TakeDamage(damage);
+            }
+            else
+            {
+                
+            }
+        //throw new NotImplementedException();
         }
         
         #region Setup
@@ -124,16 +154,17 @@ namespace _Project._Scripts.PlayerScripts
                 (PlayerState.Crouching, this);
                 
             
-            CurrentState           = States[PlayerController.PlayerState.Idle];
-            _standingHeight        = characterController.height;
-            _targetSpeedMultiplier = 1f;
-            _standingHeight        = characterController.height;
-            _coyoteTimer           = _coyoteTime;
-            _jumpBufferTimer       = _jumpBufferTime;
-            _timeSinceLastJump     = 0;
-            _hasJumped             = false;
-            _crouchAction              =  () => SetCrouching(true);
-            InputManager.CrouchPressed += _crouchAction;
+            CurrentState                =  States[PlayerController.PlayerState.Idle];
+            _targetSpeedMultiplier      =  1f;
+            _standingHeight             =  characterController.height;
+            _coyoteTimer                =  _coyoteTime;
+            _jumpBufferTimer            =  _jumpBufferTime;
+            _timeSinceLastJump          =  0;
+            _hasJumped                  =  false;
+            _crouchAction               =  () => SetCrouching(!isCrouching);
+            InputManager.CrouchPressed  += _crouchAction;
+            initialCameraHolderPosition =  cameraHolder.transform.localPosition;
+
             
             CalculateJumpParameters();
         }
@@ -309,32 +340,76 @@ namespace _Project._Scripts.PlayerScripts
 
         #region Crouch
 
-        public void Crouch()
+        public bool Crouch()
+{
+    if (crouchCoroutine != null)
+    {
+        StopCoroutine(crouchCoroutine);
+    }
+    crouchCoroutine = StartCoroutine(ChangeHeight(crouchHeight));
+    return true;
+}
+
+public bool UnCrouch()
+{
+    if (crouchCoroutine != null)
+    {
+        StopCoroutine(crouchCoroutine);
+    }
+    crouchCoroutine = StartCoroutine(ChangeHeight(_standingHeight));
+    return true;
+}
+
+// Modify your SetCrouching method to handle failed attempts
+private void SetCrouching(bool boolean)
+{
+    if (isCrouching == boolean) return;
+    
+    isCrouching = boolean;
+    if (isCrouching)
+    {
+        if (!Crouch())
         {
-            characterController.height = crouchHeight;
-            characterController.center = new Vector3(0, crouchHeight / 2, 0);
+            isCrouching = false;
         }
-        public void UnCrouch()
+    }
+    else
+    {
+        if (!UnCrouch())
         {
-            characterController.height = _standingHeight;
-            characterController.center = new Vector3(0, _standingHeight / 2, 0);
+            isCrouching = true;
         }
-        
-        private void SetCrouching(bool boolean)
-        {
-            if (isCrouching != boolean)
-            {
-                isCrouching = boolean;
-                if (isCrouching)
-                    Crouch();
-                else
-                    UnCrouch();
-            }
-        }
+    }
+}
 
         public bool CheckCrouch()
         {
             return isCrouching;
+        }
+        
+        private IEnumerator ChangeHeight(float targetHeight)
+        {
+            //TODO:: fix this garbage
+            float   initialHeight = characterController.height;
+            Vector3 initialCenter = characterController.center;
+            Vector3 targetCenter  = new Vector3(0, targetHeight / 2, 0);
+            float   duration      = 0.2f; // Duration of the transition
+            float   elapsed       = 0f;
+            Vector3 targetCameraHolderPosition = initialCameraHolderPosition + new Vector3(0, targetHeight - _standingHeight, 0);
+
+            while (elapsed < duration)
+            {
+                elapsed                    += Time.deltaTime;
+                characterController.height =  Mathf.Lerp(initialHeight, targetHeight, elapsed   / duration);
+                characterController.center =  Vector3.Lerp(initialCenter, targetCenter, elapsed / duration);
+                cameraHolder.transform.localPosition = Vector3.Lerp(initialCameraHolderPosition, targetCameraHolderPosition, elapsed / duration);
+
+                yield return null;
+            }
+
+            characterController.height           = targetHeight;
+            characterController.center           = targetCenter;
+            cameraHolder.transform.localPosition = targetCameraHolderPosition;
         }
         #endregion
         
@@ -356,6 +431,18 @@ namespace _Project._Scripts.PlayerScripts
         }
 
         #endregion
-       
+        
+        #region Animation
+
+        private void UpdateAnimatorMovement()
+        {
+            // Pass the normalized movement speed (magnitude) to the animator as a "Speed" float parameter
+            if (animator == null) return;
+            animator.SetFloat("Speed", _currentMoveVelocity.magnitude/moveSpeed);
+        }
+
+        #endregion
+
+
     }
 }

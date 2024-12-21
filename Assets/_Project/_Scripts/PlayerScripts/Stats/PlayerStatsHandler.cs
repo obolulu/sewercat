@@ -15,8 +15,8 @@ namespace _Project._Scripts.PlayerScripts.Stats
         public static PlayerInventory playerInventory;
         public static PlayerStats playerStats;
         public static PlayerStatsHandler Instance;
-
         public static Action OnStatsInitialize;
+
         private void Awake()
         {
             SaveDirectory.SaveSystem.OnStartup += Initialize;
@@ -57,6 +57,18 @@ namespace _Project._Scripts.PlayerScripts.Stats
                 //Die();
             }
         }
+        
+        /*
+        public void Die()
+        {
+            dialogueRunner.StartDialogue("Death");
+        }
+        */
+        public void Blocking()
+        {
+            
+        }
+        
         
         public void Heal(float amount)
         {

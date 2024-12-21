@@ -4,6 +4,7 @@ using _Project._Scripts.ScriptBases;
 using UnityEngine;
 using FMODUnity;
 using MoreMountains.Feedbacks;
+using Sirenix.OdinInspector;
 
 public class ClawsWeapon : WeaponBase
 {
@@ -20,13 +21,19 @@ public class ClawsWeapon : WeaponBase
     [SerializeField] private string attackSpeedParameter = "AttackSpeed";
     [SerializeField] private int framesUntilAttack = 4;
     
-    
+    [Title("Parry")]
+    [Header("Parry Settings")]
+    [SerializeField] protected float parryWindowDuration = 0.2f;
+    [SerializeField] protected float parryStunDuration = 1f;
+    [Header("Parry Feedback")]
+    [SerializeField] private MMFeedbacks parrySuccessFeedback;
+    [SerializeField] private ParticleSystem parryVFX;
+
     [Header("Effects")]
     [SerializeField] private ParticleSystem slashEffect;
     
     [Header("Camera Effects")]
-    [SerializeField] private EffectChainData attackEffects;
-
+    //[SerializeField] private EffectChainData attackEffects;
     [SerializeField] private MMFeedbacks attackFeedbacks;
     [SerializeField] private MMFeedbacks hitFeedbacks;
     
@@ -35,17 +42,21 @@ public class ClawsWeapon : WeaponBase
     [SerializeField] private FMODEventSO clawAttackSound;
     
     private Collider collider;
-    private float lastAttackTime;
+    private float    lastAttackTime;
+    private Camera     camera;
     
     private void Awake()
     {
-        if(!animator)
-        {
-            animator = GetComponent<Animator>();
-        }
         lastAttackTime = -attackCooldown;
+        camera = Camera.main;
     }
 
+/*
+    private void OnDestroy()
+    {
+
+    }
+*/
     public override void Attack()
     {
         animator?.SetTrigger(attackTriggerName);
@@ -69,6 +80,7 @@ public class ClawsWeapon : WeaponBase
             yield return new WaitForEndOfFrame();
         }
         HitDetect();
+        //animator.ResetTrigger(attackTriggerName);
     }
 
     private void HitDetect()
@@ -78,13 +90,26 @@ public class ClawsWeapon : WeaponBase
         foreach (Collider hit in hitColliders)
         {
             IDamageable enemy = hit.GetComponent<IDamageable>();
-            if (enemy != null)
+            if (IsLineOfSight(hit))
             {
-                Vector3 hitDirection = (hit.transform.position - transform.position).normalized;
-                hitFeedbacks?.PlayFeedbacks();
-                enemy.TakeDamage(attackDamage, hitDirection);
+                if (enemy != null)
+                {
+                    Vector3 hitDirection = (hit.transform.position - transform.position).normalized;
+                    hitFeedbacks?.PlayFeedbacks();
+                    enemy.TakeDamage(attackDamage, hitDirection);
+                }
             }
         }    
+    }
+
+    private bool IsLineOfSight(Collider enemy)
+    {
+        Vector3 direction = enemy.transform.position - camera.transform.position;
+        if(Physics.Raycast(camera.transform.position, direction, out RaycastHit hit, attackRange))
+        {
+            return hit.collider == enemy;
+        }
+        return false;
     }
     
     private void OnDrawGizmosSelected()
@@ -101,4 +126,36 @@ public class ClawsWeapon : WeaponBase
             lastAttackTime = Time.time;
         }
     }
+
+    #region blocking/parrying (right click)
+
+    public override void OnRightClickDown()
+    {
+       StartBlocking();
+    }
+    public override void OnRightClickUp()
+    {
+        EndBlocking();
+    }
+    
+
+    private void StartBlocking()
+    {
+        PlayerController.SetBlocking(true);
+        Debug.Log("Blocking");
+    }
+
+    private void EndBlocking()
+    {
+        PlayerController.SetBlocking(false);
+        Debug.Log("Not Blocking");
+    }
+
+    private bool IsBlocking()
+    {
+        return PlayerController.IsBlocking;
+    }
+
+    #endregion
+
 }
