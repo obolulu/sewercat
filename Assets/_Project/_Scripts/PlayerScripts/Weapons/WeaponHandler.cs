@@ -24,6 +24,7 @@ public class WeaponHandler : MonoBehaviour
         InputManager.LeftClickDown  += Attack;
         InputManager.RightClickDown += OnRightClickDown;
         InputManager.RightClickUp   += OnRightClickUp;
+        InputManager.SpecialPressed += Special;
         InputManager.PutWeaponDown  += UnequipWeapon;
     } 
     
@@ -33,6 +34,7 @@ public class WeaponHandler : MonoBehaviour
         InputManager.PutWeaponDown  -= UnequipWeapon;
         InputManager.RightClickDown -= OnRightClickDown;
         InputManager.RightClickUp   -= OnRightClickUp;
+        InputManager.SpecialPressed -= Special;
     }
 
     #region  Right Click
@@ -99,6 +101,10 @@ public class WeaponHandler : MonoBehaviour
     }
     #endregion
     
+    private void Special()
+    {
+        currentWeapon?.Special();
+    }
     private void Attack()
     {
         currentWeapon?.TryAttack();

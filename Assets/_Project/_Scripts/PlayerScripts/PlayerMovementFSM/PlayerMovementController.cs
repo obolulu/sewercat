@@ -84,6 +84,8 @@ namespace _Project._Scripts.PlayerScripts
         public Vector3 CurrentMoveVelocity => _currentMoveVelocity;
         public float CrouchHeight => crouchHeight;
         public float CrouchSpeedMultiplier => crouchSpeedMultiplier;
+
+        public Vector3 PlayerPosition => transform.position;
         
         public InputManager inputManager;
         private bool isCrouching;

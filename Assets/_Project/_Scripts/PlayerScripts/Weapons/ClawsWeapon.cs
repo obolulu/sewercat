@@ -44,7 +44,7 @@ public class ClawsWeapon : WeaponBase
     private Collider collider;
     private float    lastAttackTime;
     private Camera     camera;
-    
+    private bool isFocused;
     private void Awake()
     {
         lastAttackTime = -attackCooldown;
@@ -70,6 +70,8 @@ public class ClawsWeapon : WeaponBase
         Debug.Log("waiting for: " + attackCooldown);
         StartCoroutine(DelayedHitDetect());
     }
+    
+
 
     private IEnumerator DelayedHitDetect()
     {
@@ -127,6 +129,34 @@ public class ClawsWeapon : WeaponBase
         }
     }
 
+    #region special / focus 
+    public override void Special()
+    {
+        if (isFocused)
+        {
+            EndFocus();
+        }
+        else
+        {
+            StartFocus();
+        }
+    }
+    
+    private void StartFocus()
+    {
+        isFocused = true;
+        //PlayerController.SetFocus(true);
+        Debug.Log("Focused");
+    }
+    
+    private void EndFocus()
+    {
+        isFocused = false;
+        //PlayerController.SetFocus(false);
+        Debug.Log("Not Focused");
+    }
+    
+    #endregion
     #region blocking/parrying (right click)
 
     public override void OnRightClickDown()

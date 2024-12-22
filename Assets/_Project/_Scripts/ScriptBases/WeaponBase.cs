@@ -13,6 +13,7 @@ namespace _Project._Scripts.ScriptBases
         
         public virtual           void             TryAttack()        {}
         public virtual           void             Attack()           {}
+        public virtual void Special(){}
         public virtual           void             OnRightClickDown() {throw new NotImplementedException();}
         public virtual           void             OnRightClickUp()   {throw new NotImplementedException();}
         

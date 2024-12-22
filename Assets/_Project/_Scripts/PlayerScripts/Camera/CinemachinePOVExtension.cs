@@ -4,7 +4,6 @@ using _Project._Scripts.PlayerScripts;
 using Cinemachine;
 using Scripts.Player_Scripts.Player_States;
 using UnityEngine;
-using Debug = FMOD.Debug;
 
 public class CinemachinePOVExtension : CinemachineExtension
 {

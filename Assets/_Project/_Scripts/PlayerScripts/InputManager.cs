@@ -39,6 +39,8 @@ public class InputManager : MonoBehaviour
 
 
     public static event Action PutWeaponDown;
+
+    public static event Action SpecialPressed;
     
     
     private bool               _castPressed;
@@ -198,6 +200,11 @@ public class InputManager : MonoBehaviour
             PutWeaponDown?.Invoke();
         }
     }
+
+    private void OnSpecialPressed(InputAction.CallbackContext context)
+    {
+        if(context.performed) SpecialPressed?.Invoke();
+    }
     
     private void OnEnable()
     {
@@ -219,6 +226,7 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.OpenInventoryMenu.performed += OnOpenInventoryMenu;
         _inputManager.PlayerControls.Crouch.performed            += OnCrouch;
         _inputManager.PlayerControls.PutWeaponDown.performed     += OnPutWeaponDown;
+        _inputManager.PlayerControls.Special.performed           += OnSpecialPressed;
 
 
 
@@ -248,6 +256,7 @@ public class InputManager : MonoBehaviour
         _inputManager.PlayerControls.OpenInventoryMenu.performed -= OnOpenInventoryMenu;
         _inputManager.PlayerControls.Crouch.performed            -= OnCrouch;
         _inputManager.PlayerControls.PutWeaponDown.performed     -= OnPutWeaponDown;
+        _inputManager.PlayerControls.Special.performed           -= OnSpecialPressed;
 
         _inputManager.UI.CloseMenu.performed -= OnCloseMenu;
 
