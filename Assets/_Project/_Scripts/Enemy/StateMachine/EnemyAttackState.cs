@@ -17,19 +17,22 @@ namespace _Project._Scripts.EnemyDir.StateMachine
         private AnimancerComponent animancer;
         private AnimationClip      attackClip;
 
+        private EnemyStateMachine esm; //enemy state machine
+
         private float damage = 10;
         private bool isParryable;
         private bool hasHitPlayer;
 
         public EnemyAttackState(EnemyStateMachine.EnemyState key,            Transform playerTransform,
                                 Transform                    enemyTransform, LayerMask playerLayer,
-                                AnimancerComponent animancer, AnimationClip attackClip) : base(key)
+                                AnimancerComponent animancer, AnimationClip attackClip, EnemyStateMachine esm) : base(key)
         {
             this.playerTransform = playerTransform;
             this.enemyTransform  = enemyTransform;
             this.playerLayer     = playerLayer;
             this.animancer       = animancer;
             this.attackClip      = attackClip;
+            this.esm = esm;
         }
 
         public override void EnterState()
@@ -58,15 +61,24 @@ namespace _Project._Scripts.EnemyDir.StateMachine
 
         private void PlayAttackAnimation()
         {
-            if (animancer != null /*&& attackClip != null*/)
+            if (animancer != null && attackClip != null)
             {
                 hasHitPlayer = false;
                 var state = animancer.Play(attackClip);
                 state.Events(this).OnEnd = OnAttackAnimationEnd;
+                state.Events(this).Add(0.2f, () => 
+                {
+                    SetParryable(true);
+                    esm.AttackFeedbacks.PlayFeedbacks();  // Open parry window at 20% of the animation
+                });
+                state.Events(this).Add(0.5f, () =>
+                {
+                    AttackPlayer();
+                    SetParryable(false);
+                    hasHitPlayer = true;
+                }); // Close parry window at 50% of the animation
+       
 
-                state.Events(this).Add(0.2f, () => SetParryable(true));  // Open parry window at 20% of the animation
-                state.Events(this).Add(0.5f, () => SetParryable(false)); // Close parry window at 50% of the animation
-                state.Events(this).Add(0.5f, AttackPlayer); // Trigger attack at 50% of the animation
 
             }
         }
@@ -77,7 +89,8 @@ namespace _Project._Scripts.EnemyDir.StateMachine
 
         private void OnAttackAnimationEnd()
         {
-            //AttackPlayer();
+            esm.AttackFeedbacks.StopFeedbacks();
+            animancer.Stop(); // Stop the animation        
         }
 
         private void AttackPlayer()

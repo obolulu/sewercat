@@ -439,8 +439,8 @@ private void SetCrouching(bool boolean)
         private void UpdateAnimatorMovement()
         {
             // Pass the normalized movement speed (magnitude) to the animator as a "Speed" float parameter
-            if (animator == null) return;
-            animator.SetFloat("Speed", _currentMoveVelocity.magnitude/moveSpeed);
+            //if (animator == null) return;
+            //animator.SetFloat("Speed", _currentMoveVelocity.magnitude/moveSpeed);
         }
 
         #endregion
