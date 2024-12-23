@@ -1,77 +1,115 @@
 ﻿using _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas;
 using _Project._Scripts.ScriptBases;
+using Animancer;
 using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 {
-public class AttackClawState : BaseState<ClawsWeaponFSM.ClawsWeaponState>
-{
-    private readonly ClawsWeaponFSM _weaponFSM;
-    private          float          attackDamage   = 25f;
-    private          float          attackRange    = 2f;
-    private          float          attackCooldown = 0.5f;
-    private          float          lastAttackTime;
-    private          LayerMask      enemyLayer;
-    private          bool           isAttacking;
-    private          StateData      data;
-
-    public AttackClawState(ClawsWeaponFSM.ClawsWeaponState key, ClawsWeaponFSM weaponFSM, StateData data) : base(key)
+    public class AttackClawState : BaseState<ClawsWeaponFSM.ClawsWeaponState>
     {
-        _weaponFSM = weaponFSM;
-        this.data = data;
-        lastAttackTime = -attackCooldown;
-    }
+        private readonly ClawsWeaponFSM  _weaponFSM;
+        private          float           attackCooldown = 0.5f;
+        private          float           lastAttackTime;
+        private          LayerMask       enemyLayer;
+        private          bool            isAttacking;
+        private          AttackStateData data;
+        private AnimancerState currentState;
+        private bool eventsAdded;
 
-    public override void EnterState()
-    {
-        if (Time.time >= lastAttackTime + attackCooldown)
+        public AttackClawState(ClawsWeaponFSM.ClawsWeaponState key, ClawsWeaponFSM weaponFSM, AttackStateData data) :
+            base(key)
         {
-            StartAttack();
+            _weaponFSM     = weaponFSM;
+            this.data      = data;
+            lastAttackTime = -attackCooldown;
         }
-    }
 
-    private void StartAttack()
-    {
-        isAttacking = true;
-        lastAttackTime = Time.time;
-        //_weaponFSM.WeaponAnimator?.SetTrigger("Attack");
-        _weaponFSM.Animancer?.Play(_weaponFSM.AttackAnimation);
-        _weaponFSM.SlashEffect?.Play();
-        _weaponFSM.AttackFeedbacks?.PlayFeedbacks();
-        HitDetect();
-    }
-
-    private void HitDetect()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(_weaponFSM.transform.position, attackRange, enemyLayer);
-        
-        foreach (Collider hit in hitColliders)
+        public override void EnterState()
         {
-            if (hit.TryGetComponent<IDamageable>(out var enemy))
+            if (Time.time >= lastAttackTime + attackCooldown)
             {
-                Vector3 hitDirection = (hit.transform.position - _weaponFSM.transform.position).normalized;
-                _weaponFSM.HitFeedbacks?.PlayFeedbacks();
-                enemy.TakeDamage(attackDamage, hitDirection);
+                StartAttack();
             }
         }
-    }
 
-    public override void UpdateState()
-    {
-        if (!isAttacking)
+        private void StartAttack()
         {
-            _weaponFSM.TransitionToState(ClawsWeaponFSM.ClawsWeaponState.Default);
+            isAttacking    = true;
+            lastAttackTime = Time.time;
+            AttackRoutine();
+        }
+
+        private void AttackRoutine()
+        {
+            currentState = _weaponFSM.Animancer?.Play(data.attackAnimation);
+            //state.Events(this).Add(data.attackAnimation.length, EndAttack);
+
+            if (!eventsAdded)
+            {
+                currentState.Events(this).OnEnd = EndAttack;
+                currentState.Events(this).Add(0.2f, () => { _weaponFSM.AttackFeedbacks?.PlayFeedbacks(); });
+
+                currentState.Events(this).Add(0.5f, () =>
+                {
+                    //_weaponFSM.HitFeedbacks?.PlayFeedbacks();
+                    HitDetect();
+                });
+
+            }
+        }
+
+        private void EndAttack()
+        {
+            isAttacking = false;
+            _weaponFSM.AttackFeedbacks.StopFeedbacks();
+            _weaponFSM.HitFeedbacks.StopFeedbacks();
+            _weaponFSM.Animancer.Stop(); // Stop the animation   
+            //_weaponFSM.TransitionToState(ClawsWeaponFSM.ClawsWeaponState.Default);
+        }
+
+        private void HitDetect()
+        {
+            Collider[] hitColliders =
+                Physics.OverlapSphere(_weaponFSM.transform.position, data.attackRange, enemyLayer);
+
+            foreach (Collider hit in hitColliders)
+            {
+                if (hit.TryGetComponent<IDamageable>(out var enemy))
+                {
+                    Vector3 hitDirection = (hit.transform.position - _weaponFSM.transform.position).normalized;
+                    data.hitFeedbacks?.PlayFeedbacks();
+                    enemy.TakeDamage(data.attackDamage, hitDirection);
+                }
+            }
+        }
+
+        public override void UpdateState()
+        {
+            if (!isAttacking)
+            {
+                _weaponFSM.TransitionToState(ClawsWeaponFSM.ClawsWeaponState.Default);
+            }
+        }
+
+        public override void ExitState()
+        {
+            if (currentState != null)
+            {
+                currentState.Events(this).Clear();
+                currentState = null;
+            }
+            eventsAdded = false;
+            isAttacking = false;
+        }
+
+        public override ClawsWeaponFSM.ClawsWeaponState GetNextState()
+        {
+            if (!isAttacking || (_weaponFSM.Animancer?.IsPlaying(data.attackAnimation) == false))
+            {
+                return (ClawsWeaponFSM.ClawsWeaponState.Default);
+            }
+
+            return StateKey;
         }
     }
-
-    public override void ExitState()
-    {
-        isAttacking = false;
-    }
-
-    public override ClawsWeaponFSM.ClawsWeaponState GetNextState()
-    {
-        return StateKey;
-    }
-}
 }

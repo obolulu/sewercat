@@ -8,7 +8,7 @@ namespace _Project._Scripts.ScriptBases
 {
     public class WeaponBase : MonoBehaviour
     {
-        [SerializeField] private WeaponData       weaponData;
+        //[SerializeField] private WeaponData       weaponData;
         protected PlayerController PlayerController;
         
         public virtual           void             TryAttack()        {}
@@ -17,7 +17,7 @@ namespace _Project._Scripts.ScriptBases
         public virtual           void             OnRightClickDown() {throw new NotImplementedException();}
         public virtual           void             OnRightClickUp()   {throw new NotImplementedException();}
         
-        public void SetWeapon(PlayerController playerController)
+        public virtual void SetWeapon(PlayerController playerController)
         {
             PlayerController = playerController;
         }

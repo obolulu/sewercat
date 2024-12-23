@@ -7,28 +7,30 @@ public class DefaultClawState : BaseState<ClawsWeaponFSM.ClawsWeaponState>
 {
     private readonly ClawsWeaponFSM                  _weaponFSM;
     private          ClawsWeaponFSM.ClawsWeaponState nextState;
+    
+    private System.Action rightClickDownHandler;
+    private System.Action leftClickDownHandler;
+
 
     public DefaultClawState(ClawsWeaponFSM.ClawsWeaponState key, ClawsWeaponFSM weaponFSM) : base(key)
     {
-        _weaponFSM = weaponFSM;
-        nextState = ClawsWeaponFSM.ClawsWeaponState.Default;
+        _weaponFSM            = weaponFSM;
+        nextState             = ClawsWeaponFSM.ClawsWeaponState.Default;
+        rightClickDownHandler = () => SetNextState(ClawsWeaponFSM.ClawsWeaponState.Blocking);
+        leftClickDownHandler  = () => SetNextState(ClawsWeaponFSM.ClawsWeaponState.Attacking);
     }
 
     public override void EnterState()
     {
-        nextState = ClawsWeaponFSM.ClawsWeaponState.Default;
-        InputManager.RightClickDown += () =>
-            _weaponFSM.TransitionToState(ClawsWeaponFSM.ClawsWeaponState.Blocking);
-        InputManager.LeftClickDown += () =>
-            _weaponFSM.TransitionToState(ClawsWeaponFSM.ClawsWeaponState.Attacking);
+        nextState                   =  ClawsWeaponFSM.ClawsWeaponState.Default;
+        InputManager.RightClickDown += () => rightClickDownHandler();
+        InputManager.LeftClickDown  += () => leftClickDownHandler();
     }
 
     public override void ExitState()
     {
-        InputManager.RightClickDown -= () =>
-            _weaponFSM.TransitionToState(ClawsWeaponFSM.ClawsWeaponState.Blocking);
-        InputManager.LeftClickDown -= () =>
-            _weaponFSM.TransitionToState(ClawsWeaponFSM.ClawsWeaponState.Attacking);
+        InputManager.RightClickDown -= rightClickDownHandler;
+        InputManager.LeftClickDown  -= leftClickDownHandler;
     }
 
     public override void UpdateState()

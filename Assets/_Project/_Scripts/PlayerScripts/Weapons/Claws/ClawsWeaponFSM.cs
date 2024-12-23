@@ -6,7 +6,7 @@ using MoreMountains.Feedbacks;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws
 {
-public class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponState>
+public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponState> //, IWeapon
 {
     public enum ClawsWeaponState
     {
@@ -16,31 +16,27 @@ public class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponState>
         Focused,
         Leaping
     }
-
-    [Header("Attack Properties")]
-    //[SerializeField] private float attackDamage = 25f;
-    //[SerializeField] private float attackRange = 2f;
-    //[SerializeField] private float attackCooldown = 0.5f;
-    [SerializeField] private LayerMask enemyLayer;
     
     [Header("Animation")]
     [SerializeField] private AnimancerComponent animator;
-    [SerializeField] private AnimationClip attackAnimation;
+
+    [Header("Stats")] 
+    [SerializeField] private AttackStateData attackStateData;
     
-    [Header("Effects")]
-    [SerializeField] private ParticleSystem slashEffect;
+    [Header("Feedbacks")]
     [SerializeField] private MMFeedbacks attackFeedbacks;
     [SerializeField] private MMFeedbacks hitFeedbacks;
     
-    [Header("Audio")]
-    [SerializeField] private FMODEventSO clawAttackSound;
-
-    [Header("Stats")] 
-    [SerializeField] private StateData attackStateData;
-    
+    private ClawsWeaponState nextState;
     private Camera mainCamera;
     private float lastAttackTime;
 
+    
+    public MMFeedbacks AttackFeedbacks => attackFeedbacks;
+    public MMFeedbacks HitFeedbacks    => hitFeedbacks;
+    public AnimancerComponent Animancer      => animator;
+    public Camera             MainCamera     => mainCamera;
+    public float              LastAttackTime { get; set; }
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -48,24 +44,12 @@ public class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponState>
         States[ClawsWeaponState.Default] = new DefaultClawState
             (ClawsWeaponState.Default, this);
         States[ClawsWeaponState.Attacking] = new AttackClawState
-            (ClawsWeaponState.Attacking, this,attackStateData);
+            (ClawsWeaponState.Attacking, this, attackStateData);
         //States[ClawsWeaponState.Blocking] = new BlockingClawState(ClawsWeaponState.Blocking, this);
         //States[ClawsWeaponState.Focused] = new FocusedClawState(ClawsWeaponState.Focused, this);
         //States[ClawsWeaponState.Leaping] = new LeapingClawState(ClawsWeaponState.Leaping, this);
         
         CurrentState = States[ClawsWeaponState.Default];
     }
-
-    //public float AttackDamage => attackDamage;
-    //public float AttackRange => attackRange;
-    //public float AttackCooldown => attackCooldown;
-    public LayerMask EnemyLayer => enemyLayer;
-    public AnimancerComponent Animancer => animator;
-    public AnimationClip AttackAnimation => attackAnimation;
-    public ParticleSystem SlashEffect => slashEffect;
-    public MMFeedbacks AttackFeedbacks => attackFeedbacks;
-    public MMFeedbacks HitFeedbacks => hitFeedbacks;
-    public Camera MainCamera => mainCamera;
-    public float LastAttackTime { get; set; }
 }
 }

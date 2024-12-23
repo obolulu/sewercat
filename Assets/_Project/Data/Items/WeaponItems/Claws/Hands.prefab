@@ -170,7 +170,7 @@ MonoBehaviour:
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
-  PlayCount: 7
+  PlayCount: 2031
   references:
     version: 2
     RefIds:
@@ -195,7 +195,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 7
+          PlayCount: 2024
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -271,7 +271,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 7
+          PlayCount: 2024
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -353,7 +353,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 28
+          PlayCount: 0
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -591,7 +591,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 0
+          PlayCount: 2024
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -659,9 +659,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7652652691876225241}
   - component: {fileID: 9142478415287183383}
-  - component: {fileID: 5166506623490055826}
   - component: {fileID: 2448113347648841540}
   - component: {fileID: 814761742620678526}
+  - component: {fileID: 5412496187586451897}
+  - component: {fileID: 1298381256390592013}
+  - component: {fileID: 7006754146277235009}
   m_Layer: 0
   m_Name: Hands
   m_TagString: Untagged
@@ -708,37 +710,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5166506623490055826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8020709604545090256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13f349095930ddc46afd1d0a8aac00a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponData: {fileID: 11400000, guid: 8fc9d6e4e4a520c49802b985ede51d35, type: 2}
-  attackDamage: 25
-  attackRange: 5
-  attackCooldown: 0.5
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  animator: {fileID: 9142478415287183383}
-  attackTriggerName: AttackTrigger
-  attackSpeedParameter: AttackSpeed
-  framesUntilAttack: 5
-  parryWindowDuration: 0.2
-  parryStunDuration: 1
-  parrySuccessFeedback: {fileID: 0}
-  parryVFX: {fileID: 0}
-  slashEffect: {fileID: 0}
-  attackFeedbacks: {fileID: 814761742620678526}
-  hitFeedbacks: {fileID: 5845962622817715206}
-  clawAttackSound: {fileID: 11400000, guid: 6c4af108689a91b42870bf7630550473, type: 2}
 --- !u!114 &2448113347648841540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,7 +833,7 @@ MonoBehaviour:
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
-  PlayCount: 0
+  PlayCount: 2068
   references:
     version: 2
     RefIds:
@@ -887,7 +858,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 4
+          PlayCount: 2068
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -969,7 +940,7 @@ MonoBehaviour:
           NumberOfRepeats: 0
           RepeatForever: 0
           DelayBetweenRepeats: 1
-          PlayCount: 0
+          PlayCount: 2068
           LimitPlayCount: 0
           MaxPlayCount: 3
           SetPlayCountToZeroOnReset: 0
@@ -1055,6 +1026,50 @@ MonoBehaviour:
             m_PostInfinity: 2
             m_RotationOrder: 4
           Initialized: 0
+--- !u!114 &5412496187586451897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020709604545090256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 286e8444a41341cb9a118a42ada42cae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1298381256390592013}
+  attackStateData: {fileID: 11400000, guid: c0f6d8a0a64e46f4e97cb697605eeb26, type: 2}
+  attackFeedbacks: {fileID: 814761742620678526}
+  hitFeedbacks: {fileID: 5845962622817715206}
+--- !u!114 &1298381256390592013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020709604545090256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad50f81b1d25c441943c37a89ba23f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Animator: {fileID: 9142478415287183383}
+  _Transitions: {fileID: 0}
+  _ActionOnDisable: 0
+--- !u!114 &7006754146277235009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020709604545090256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d753c1fdee5e43bb91e9a3c5234a64af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateManager: {fileID: 5412496187586451897}
 --- !u!1001 &3849365263895458235
 PrefabInstance:
   m_ObjectHideFlags: 0

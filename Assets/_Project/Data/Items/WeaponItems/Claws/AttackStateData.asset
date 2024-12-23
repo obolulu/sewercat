@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: AttackStateData
   m_EditorClassIdentifier: 
   attackDamage: 25
-  attackRange: 3
-  attackRadius: 5
+  attackRange: 15
+  attackRadius: 1
   whatIsDamageable:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
   attackAnimation: {fileID: 4781951162920444690, guid: 2de19fabf4341da4ca95bef7a1592284,
     type: 3}
   attackFeedbacks: {fileID: 0}
