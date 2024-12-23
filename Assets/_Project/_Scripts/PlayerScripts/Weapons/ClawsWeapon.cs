@@ -8,6 +8,13 @@ using Sirenix.OdinInspector;
 
 public class ClawsWeapon : WeaponBase
 {
+    private enum State
+    {
+        Default,
+        Blocking,
+        Focusing,
+        Leaping
+    }
     [Header("Attack Properties")]
     [SerializeField] private float attackDamage = 25f;
     [SerializeField]             private float attackRange    = 2f;
@@ -45,10 +52,12 @@ public class ClawsWeapon : WeaponBase
     private float    lastAttackTime;
     private Camera     camera;
     private bool isFocused;
+    private State _currentState;
     private void Awake()
     {
         lastAttackTime = -attackCooldown;
         camera = Camera.main;
+        
     }
 
 /*
@@ -122,7 +131,9 @@ public class ClawsWeapon : WeaponBase
 
     public override void TryAttack()
     {
-        if (Time.time >= lastAttackTime + attackCooldown)
+        
+        if (_currentState == State.Default 
+            && Time.time >= lastAttackTime + attackCooldown)
         {
             Attack();
             lastAttackTime = Time.time;
@@ -132,53 +143,56 @@ public class ClawsWeapon : WeaponBase
     #region special / focus 
     public override void Special()
     {
-        if (isFocused)
-        {
-            EndFocus();
-        }
-        else
+        if (_currentState == State.Default)
         {
             StartFocus();
+        }
+        else if (_currentState == State.Focusing)
+        {
+            EndFocus();
         }
     }
     
     private void StartFocus()
     {
-        isFocused = true;
-        //PlayerController.SetFocus(true);
+        _currentState = State.Focusing;
         Debug.Log("Focused");
     }
     
     private void EndFocus()
     {
-        isFocused = false;
-        //PlayerController.SetFocus(false);
+        _currentState = State.Default;
         Debug.Log("Not Focused");
     }
     
     #endregion
+    
     #region blocking/parrying (right click)
 
     public override void OnRightClickDown()
     {
-       StartBlocking();
+        if(_currentState == State.Default)
+            StartBlocking();
     }
     public override void OnRightClickUp()
     {
+        if(_currentState == State.Blocking)
         EndBlocking();
     }
     
 
     private void StartBlocking()
     {
+        _currentState = State.Blocking;
         PlayerController.SetBlocking(true);
-        Debug.Log("Blocking");
+        Debug.Log(_currentState);
     }
 
     private void EndBlocking()
     {
+        _currentState = State.Default;
         PlayerController.SetBlocking(false);
-        Debug.Log("Not Blocking");
+        Debug.Log(_currentState);
     }
 
     private bool IsBlocking()
