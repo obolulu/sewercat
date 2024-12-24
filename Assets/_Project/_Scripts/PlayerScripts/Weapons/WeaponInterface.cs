@@ -2,6 +2,9 @@
 {
     public interface IWeapon
     {
-        
+        public void TryAttack();
+        public void Special();
+        public void OnRightClickDown();
+        public void OnRightClickUp();
     }
 }

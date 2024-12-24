@@ -16,7 +16,10 @@ public class DefaultClawState : BaseState<ClawsWeaponFSM.ClawsWeaponState>
     {
         _weaponFSM            = weaponFSM;
         nextState             = ClawsWeaponFSM.ClawsWeaponState.Default;
-        rightClickDownHandler = () => SetNextState(ClawsWeaponFSM.ClawsWeaponState.Blocking);
+        rightClickDownHandler = () =>
+        {
+            SetNextState(ClawsWeaponFSM.ClawsWeaponState.Blocking);
+        };
         leftClickDownHandler  = () => SetNextState(ClawsWeaponFSM.ClawsWeaponState.Attacking);
     }
 

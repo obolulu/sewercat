@@ -20,5 +20,3 @@ MonoBehaviour:
     m_Bits: 128
   attackAnimation: {fileID: 4781951162920444690, guid: 2de19fabf4341da4ca95bef7a1592284,
     type: 3}
-  attackFeedbacks: {fileID: 0}
-  hitFeedbacks: {fileID: 0}

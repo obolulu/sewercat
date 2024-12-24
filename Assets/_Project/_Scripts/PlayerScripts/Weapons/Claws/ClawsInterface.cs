@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws
 {
-    public sealed class ClawsInterface : WeaponBase
+    public sealed class WeaponInterface : WeaponBase
     {
         [SerializeField] private ClawsWeaponFSM stateManager;
         
@@ -15,11 +15,15 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws
 
         public void OnDestroy()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
-        public override void TryAttack()        { }
+
+        public override void TryAttack()
+        {
+            
+        }
         public override void Special()          { }
-        public override  void OnRightClickDown() {throw new NotImplementedException();}
-        public override  void OnRightClickUp()   {throw new NotImplementedException();}
+        public override  void OnRightClickDown() { }
+        public override  void OnRightClickUp()   { }
     }
 }

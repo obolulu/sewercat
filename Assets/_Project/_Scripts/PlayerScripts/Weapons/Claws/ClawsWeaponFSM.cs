@@ -6,7 +6,7 @@ using MoreMountains.Feedbacks;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws
 {
-public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponState> //, IWeapon
+public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponState>, IWeapon
 {
     public enum ClawsWeaponState
     {
@@ -27,16 +27,24 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     [SerializeField] private MMFeedbacks attackFeedbacks;
     [SerializeField] private MMFeedbacks hitFeedbacks;
     
+    [SerializeField] private PlayerController playerController;
     private ClawsWeaponState nextState;
     private Camera mainCamera;
     private float lastAttackTime;
 
-    
+    public ClawsWeaponState NextState => nextState; // not checked if possible yet
+    public PlayerController PlayerController => playerController;
+    public AnimancerComponent Animancer       => animator;
+    public Camera      MainCamera      => mainCamera;
+    public float       LastAttackTime  { get; set; }
+
+    #region feedbacks
+
     public MMFeedbacks AttackFeedbacks => attackFeedbacks;
     public MMFeedbacks HitFeedbacks    => hitFeedbacks;
-    public AnimancerComponent Animancer      => animator;
-    public Camera             MainCamera     => mainCamera;
-    public float              LastAttackTime { get; set; }
+
+    #endregion
+
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -45,11 +53,31 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
             (ClawsWeaponState.Default, this);
         States[ClawsWeaponState.Attacking] = new AttackClawState
             (ClawsWeaponState.Attacking, this, attackStateData);
-        //States[ClawsWeaponState.Blocking] = new BlockingClawState(ClawsWeaponState.Blocking, this);
+        States[ClawsWeaponState.Blocking] = new BlockingClawState(ClawsWeaponState.Blocking, this);
         //States[ClawsWeaponState.Focused] = new FocusedClawState(ClawsWeaponState.Focused, this);
         //States[ClawsWeaponState.Leaping] = new LeapingClawState(ClawsWeaponState.Leaping, this);
         
         CurrentState = States[ClawsWeaponState.Default];
+    }
+
+    public void TryAttack()
+    {
+        nextState = ClawsWeaponState.Attacking;
+    }
+
+    public void Special()
+    {
+        nextState = ClawsWeaponState.Focused;
+    }
+
+    public void OnRightClickDown()
+    {
+        nextState = ClawsWeaponState.Blocking;
+    }
+
+    public void OnRightClickUp()
+    {
+        nextState = ClawsWeaponState.Default;
     }
 }
 }
