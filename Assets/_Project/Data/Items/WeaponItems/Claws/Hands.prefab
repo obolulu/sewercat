@@ -422,8 +422,8 @@ GameObject:
   - component: {fileID: 2448113347648841540}
   - component: {fileID: 814761742620678526}
   - component: {fileID: 5412496187586451897}
-  - component: {fileID: 1298381256390592013}
   - component: {fileID: 7006754146277235009}
+  - component: {fileID: 1298381256390592013}
   m_Layer: 0
   m_Name: Hands
   m_TagString: Untagged
@@ -804,6 +804,19 @@ MonoBehaviour:
   hitFeedbacks: {fileID: 5845962622817715206}
   playerController: {fileID: 1820416602112025041, guid: bc815fe6f2270114db0483b9cda35595,
     type: 3}
+--- !u!114 &7006754146277235009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020709604545090256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d753c1fdee5e43bb91e9a3c5234a64af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stateManager: {fileID: 5412496187586451897}
 --- !u!114 &1298381256390592013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,19 +832,6 @@ MonoBehaviour:
   _Animator: {fileID: 9142478415287183383}
   _Transitions: {fileID: 0}
   _ActionOnDisable: 0
---- !u!114 &7006754146277235009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8020709604545090256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d753c1fdee5e43bb91e9a3c5234a64af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stateManager: {fileID: 5412496187586451897}
 --- !u!1001 &3849365263895458235
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -32,7 +32,7 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     private Camera mainCamera;
     private float lastAttackTime;
 
-    public ClawsWeaponState NextState => nextState; // not checked if possible yet
+    public ClawsWeaponState StateRequest => nextState; // request from the player controller for the next state
     public PlayerController PlayerController => playerController;
     public AnimancerComponent Animancer       => animator;
     public Camera      MainCamera      => mainCamera;
@@ -48,6 +48,7 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     private void Awake()
     {
         mainCamera = Camera.main;
+        playerController = GetComponentInParent<PlayerController>();
 
         States[ClawsWeaponState.Default] = new DefaultClawState
             (ClawsWeaponState.Default, this);
@@ -60,6 +61,10 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
         CurrentState = States[ClawsWeaponState.Default];
     }
 
+    public void ResetState()
+    {
+        nextState = ClawsWeaponState.Default;
+    }
     public void TryAttack()
     {
         nextState = ClawsWeaponState.Attacking;

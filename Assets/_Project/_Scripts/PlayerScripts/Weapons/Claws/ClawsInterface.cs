@@ -17,13 +17,25 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws
         {
             //throw new NotImplementedException();
         }
-
+        
         public override void TryAttack()
         {
-            
+            stateManager.TryAttack();
         }
-        public override void Special()          { }
-        public override  void OnRightClickDown() { }
-        public override  void OnRightClickUp()   { }
+
+        public override void Special()
+        {
+            stateManager.Special();
+        }
+
+        public override void OnRightClickDown()
+        {
+            stateManager.OnRightClickDown();
+        }
+
+        public override void OnRightClickUp()
+        {
+            stateManager.OnRightClickUp();
+        }
     }
 }

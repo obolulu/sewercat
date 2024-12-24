@@ -27,6 +27,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 
         public override void EnterState()
         {
+            _weaponFSM.ResetState();
             if (Time.time >= lastAttackTime + attackCooldown)
             {
                 StartAttack();
@@ -62,8 +63,8 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private void EndAttack()
         {
             isAttacking = false;
-            //_weaponFSM.AttackFeedbacks.StopFeedbacks();
-            //_weaponFSM.HitFeedbacks.StopFeedbacks();
+            _weaponFSM.AttackFeedbacks.StopFeedbacks();
+            _weaponFSM.HitFeedbacks.StopFeedbacks();
             _weaponFSM.Animancer.Stop(); // Stop the animation   
             //_weaponFSM.TransitionToState(ClawsWeaponFSM.ClawsWeaponState.Default);
         }
