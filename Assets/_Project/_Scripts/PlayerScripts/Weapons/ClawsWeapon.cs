@@ -60,12 +60,12 @@ public class ClawsWeapon : WeaponBase
         
     }
 
-/*
+
     private void OnDestroy()
     {
-
+        
     }
-*/
+
     public override void Attack()
     {
         animator?.SetTrigger(attackTriggerName);

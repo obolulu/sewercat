@@ -22,6 +22,7 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
 
     [Header("Stats")] 
     [SerializeField] private AttackStateData attackStateData;
+    [SerializeField] private ClawLeapStateData leapStateData;
     
     [Header("Feedbacks")]
     [SerializeField] private MMFeedbacks attackFeedbacks;
@@ -55,12 +56,14 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
         States[ClawsWeaponState.Attacking] = new AttackClawState
             (ClawsWeaponState.Attacking, this, attackStateData);
         States[ClawsWeaponState.Blocking] = new BlockingClawState(ClawsWeaponState.Blocking, this);
-        //States[ClawsWeaponState.Focused] = new FocusedClawState(ClawsWeaponState.Focused, this);
-        //States[ClawsWeaponState.Leaping] = new LeapingClawState(ClawsWeaponState.Leaping, this);
+        States[ClawsWeaponState.Focused] = new FocusedClawState(ClawsWeaponState.Focused, this);
+        States[ClawsWeaponState.Leaping] = new LeapingClawState
+            (ClawsWeaponState.Leaping, this, leapStateData);
         
         CurrentState = States[ClawsWeaponState.Default];
     }
-
+    
+    
     public void ResetState()
     {
         nextState = ClawsWeaponState.Default;
@@ -83,6 +86,11 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     public void OnRightClickUp()
     {
         nextState = ClawsWeaponState.Default;
+    }
+    
+    public void ResetWeapon()
+    {
+        TransitionToState(ClawsWeaponState.Default);
     }
 }
 }

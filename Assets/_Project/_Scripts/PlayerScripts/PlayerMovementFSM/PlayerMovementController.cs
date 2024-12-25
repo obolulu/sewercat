@@ -17,7 +17,9 @@ namespace _Project._Scripts.PlayerScripts
             Crouching,
             Falling,
             Jumping,
-            Locked
+            Locked,
+            Focused,
+            Leaping
         }
         
         public BaseState<PlayerState> currentPlayerState => CurrentState; 
@@ -133,6 +135,11 @@ namespace _Project._Scripts.PlayerScripts
             }
         //throw new NotImplementedException();
         }
+
+        public void ForceState(PlayerState state)
+        {
+            TransitionToState(state);
+        }
         
         #region Setup
 
@@ -154,6 +161,8 @@ namespace _Project._Scripts.PlayerScripts
                 (PlayerState.Locked, this);
             States[PlayerState.Crouching]  = new PlayerCrouchingState
                 (PlayerState.Crouching, this);
+            States[PlayerState.Leaping] = new PlayerLeapingState
+                (PlayerState.Leaping, this);
                 
             
             CurrentState                =  States[PlayerController.PlayerState.Idle];

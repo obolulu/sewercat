@@ -5,15 +5,18 @@ using UnityEngine;
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States{
 public class DefaultClawState : BaseState<ClawsWeaponFSM.ClawsWeaponState>
 {
-    private readonly ClawsWeaponFSM                  _weaponFSM;
+    private readonly ClawsWeaponFSM _weaponFSM;
 
 
     public DefaultClawState(ClawsWeaponFSM.ClawsWeaponState key, ClawsWeaponFSM weaponFSM) : base(key)
     {
-        _weaponFSM            = weaponFSM;
+        _weaponFSM = weaponFSM;
     }
 
-    public override void EnterState() { }
+    public override void EnterState()
+    {
+        _weaponFSM.ResetState();
+    }
 
     public override void ExitState() { }
 

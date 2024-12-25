@@ -37,5 +37,10 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws
         {
             stateManager.OnRightClickUp();
         }
+        
+        public override void ResetWeapon()
+        {
+            stateManager.ResetWeapon();
+        } 
     }
 }

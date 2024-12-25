@@ -17,6 +17,8 @@ namespace _Project._Scripts.ScriptBases
         public virtual           void             OnRightClickDown() {}
         public virtual           void             OnRightClickUp()   {}
         
+        public virtual void ResetWeapon(){}
+        
         public virtual void SetWeapon(PlayerController playerController)
         {
             PlayerController = playerController;
@@ -31,7 +33,7 @@ namespace _Project._Scripts.ScriptBases
         {
             transform.DOLocalMove(hiddenPosition, animationDuration)
                       .SetEase(Ease.InBack);
-            
+            ResetWeapon();
         }
         
     }

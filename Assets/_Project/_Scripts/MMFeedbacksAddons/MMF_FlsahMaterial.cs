@@ -1,3 +1,5 @@
+/*
+
 using UnityEngine;
 using MoreMountains.Feedbacks;
 using MoreMountains.Tools;
@@ -47,13 +49,13 @@ namespace MoreMountains.Feel
         /// The duration of this feedback
         /// </summary>
         ///
-        /*
-        public override float FeedbackDuration
-        {
-            get { return ApplyTimeMultiplier(Timing.Duration); }
-            set { Timing.Duration = value; }
-        }
-        */
+        
+        //public override float FeedbackDuration
+        //{
+        //    get { return ApplyTimeMultiplier(Timing.Duration); }
+        //    set { Timing.Duration = value; }
+        //}
+        
 
         /// <summary>
         /// Custom initialization
@@ -76,7 +78,7 @@ namespace MoreMountains.Feel
         /// <param name="feedbacksIntensity"></param>
         protected override void CustomPlayFeedback(Vector3 position, float feedbacksIntensity = 1.0f)
         {
-            if (!Active /*|| !FeedbackTypeAuthorized*/ || FlashMaterial == null)
+            if (!Active || FlashMaterial == null)
             {
                 return;
             }
@@ -149,3 +151,4 @@ namespace MoreMountains.Feel
         }
     }
 }
+*/

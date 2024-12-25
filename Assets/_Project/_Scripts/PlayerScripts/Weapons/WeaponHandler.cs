@@ -65,6 +65,7 @@ public class WeaponHandler : MonoBehaviour
                      .SetEase(Ease.InBack)
                      .OnComplete(() =>
                      {
+                         currentWeapon.ResetWeapon();
                          Destroy(currentWeapon.gameObject);
                          equipWeapon(weapon);
                      });
@@ -79,6 +80,7 @@ public class WeaponHandler : MonoBehaviour
     {
         if (currentWeapon)
         {
+            currentWeapon.ResetWeapon();
             currentWeapon.transform.DOLocalMove(hiddenPosition, animationDuration)
                      .SetEase(Ease.InBack)
                      .OnComplete(() =>

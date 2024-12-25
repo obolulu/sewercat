@@ -800,6 +800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1298381256390592013}
   attackStateData: {fileID: 11400000, guid: c0f6d8a0a64e46f4e97cb697605eeb26, type: 2}
+  leapStateData: {fileID: 11400000, guid: cc12e0d8e600bd84cba1b32c4159ea40, type: 2}
   attackFeedbacks: {fileID: 814761742620678526}
   hitFeedbacks: {fileID: 5845962622817715206}
   playerController: {fileID: 1820416602112025041, guid: bc815fe6f2270114db0483b9cda35595,
