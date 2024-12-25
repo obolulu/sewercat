@@ -65,12 +65,13 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             _weaponFSM.PlayerController.transform.position = currentPosition;
 
             // Only complete the leap when grounded and past the initial target
-            if (leapProgress > 1f && _weaponFSM.PlayerController.IsGrounded())
+            if ((leapProgress > 1f && _weaponFSM.PlayerController.IsGrounded())
+                || _weaponFSM.PlayerController.IsFacingObstacle())
             {
                 CompleteLeap();
             }
         }
-
+        
         private void CalculateLeapTarget()
         {
             Vector3 forward = _weaponFSM.MainCamera.transform.forward;

@@ -304,6 +304,96 @@ namespace _Project._Scripts.PlayerScripts
             }
             return moveDirection;
         }
+        /*
+        public bool IsFacingObstacle()
+        {
+            Vector3 rayStart = transform.position + Vector3.up * 0.5f; // Start at waist height
+            Vector3 rayDirection = transform.forward;
+            float rayDistance = 0.7f; // Check half meter ahead
+            
+            // Check if there's an obstacle in front
+            if (Physics.Raycast(rayStart, rayDirection, out RaycastHit hit, rayDistance))
+            {
+                return true;
+            }
+            
+            return false;
+        }
+        */
+        public bool IsFacingObstacle()
+        {
+            Vector3 center      = characterController.transform.position;
+            float   radius      = characterController.radius * 0.8f;
+            float   rayDistance = characterController.radius + 0.5f;
+
+            // Get camera forward but ignore vertical component
+            Vector3 checkDirection = cameraTransform.forward;
+            checkDirection.y = 0;
+            checkDirection.Normalize();
+
+            // Primary sphere check at center mass
+            if (Physics.SphereCast(center, radius, checkDirection,
+                    out RaycastHit sphereHit, rayDistance, groundMask, QueryTriggerInteraction.Ignore))
+            {
+                return true;
+            }
+
+            // Secondary checks at multiple heights
+            Vector3[] rayStarts = new Vector3[]
+            {
+                center + (Vector3.up * characterController.height * 0.5f),  // Head level
+                center,                                                     // Center mass
+                center - (Vector3.up * characterController.height * 0.25f), // Knee level
+                center - (Vector3.up * characterController.height * 0.4f)   // Foot level
+            };
+
+            foreach (Vector3 rayStart in rayStarts)
+            {
+                if (Physics.Raycast(rayStart, checkDirection,
+                        out RaycastHit rayHit, rayDistance, groundMask, QueryTriggerInteraction.Ignore))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (!characterController || !cameraTransform) return;
+
+            Vector3 center      = characterController.transform.position;
+            float   radius      = characterController.radius * 0.8f;
+            float   rayDistance = characterController.radius + 0.5f;
+
+            // Get camera forward but ignore vertical component
+            Vector3 checkDirection = cameraTransform.forward;
+            checkDirection.y = 0;
+            checkDirection.Normalize();
+
+            // Draw spherecast
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(center, radius);
+            Gizmos.DrawWireSphere(center   + checkDirection * rayDistance, radius);
+            Gizmos.DrawLine(center, center + checkDirection * rayDistance);
+
+            // Draw raycasts
+            Vector3[] rayStarts = new Vector3[]
+            {
+                center + (Vector3.up * characterController.height * 0.5f),  // Head level
+                center,                                                     // Center mass
+                center - (Vector3.up * characterController.height * 0.25f), // Knee level
+                center - (Vector3.up * characterController.height * 0.4f)   // Foot level
+            };
+
+            Gizmos.color = Color.green;
+            foreach (Vector3 rayStart in rayStarts)
+            {
+                Gizmos.DrawLine(rayStart, rayStart + checkDirection * rayDistance);
+                Gizmos.DrawWireSphere(rayStart, 0.05f);
+            }
+        }
 
         #endregion
 
