@@ -14,12 +14,6 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas
         public  float attackRadius   = 1f;
         public float attackCooldown = 0.5f;
         public  LayerMask whatIsDamageable;
-
-        [Header("Combo Attack Buffer")] 
-        public float earlyExitWindow = 0.1f;
-
-        public float inputBufferDuration = 0.3f;
-        
         
         [Title("Animations & Effects")]
         [Header("Attack Animation")]

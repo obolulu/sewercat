@@ -15,11 +15,8 @@ MonoBehaviour:
   attackDamage: 25
   attackRange: 15
   attackRadius: 1
-  attackCooldown: 0.5
   whatIsDamageable:
     serializedVersion: 2
     m_Bits: 128
-  earlyExitWindow: 0
-  inputBufferDuration: 0
   attackAnimation: {fileID: 4781951162920444690, guid: 2de19fabf4341da4ca95bef7a1592284,
     type: 3}
