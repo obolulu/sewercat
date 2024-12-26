@@ -17,7 +17,8 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas
         
         [Title("Animations & Effects")]
         [Header("Attack Animation")]
-        public AnimationClip attackAnimation;
+        public AttackAnimation attackAnimation;
+        
         //[Header("Attack Effects")]
         //public MMFeedbacks attackFeedbacks;
         //public MMFeedbacks hitFeedbacks;

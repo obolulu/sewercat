@@ -43,7 +43,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 
         private void AttackRoutine()
         {
-            currentState = _weaponFSM.Animancer?.Play(data.attackAnimation);
+            currentState = _weaponFSM.Animancer?.Play(data.attackAnimation.attackAnimation);
             //state.Events(this).Add(data.attackAnimation.length, EndAttack);
 
             if (!eventsAdded)
@@ -106,7 +106,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 
         public override ClawsWeaponFSM.ClawsWeaponState GetNextState()
         {
-            if (!isAttacking || (_weaponFSM.Animancer?.IsPlaying(data.attackAnimation) == false))
+            if (!isAttacking || (_weaponFSM.Animancer?.IsPlaying(data.attackAnimation.attackAnimation) == false))
             {
                 return (ClawsWeaponFSM.ClawsWeaponState.Default);
             }
