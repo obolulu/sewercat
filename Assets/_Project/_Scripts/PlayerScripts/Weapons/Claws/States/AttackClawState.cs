@@ -12,6 +12,10 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private          float          lastAttackTime;
         private          bool           isAttacking;
         
+        //attack buffers
+        private          float          bufferStartTime;
+        private          bool           hasBufferedAttack;
+        
         private          AttackStateData data;
         private AnimancerState currentState;
         private bool eventsAdded;
@@ -28,6 +32,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         public override void EnterState()
         {
             _weaponFSM.ResetState();
+            bufferStartTime = 0f;
             if (Time.time >= lastAttackTime + attackCooldown)
             {
                 StartAttack();
@@ -36,6 +41,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 
         private void StartAttack()
         {
+            _weaponFSM.ResetState();
             isAttacking    = true;
             lastAttackTime = Time.time;
             AttackRoutine();
@@ -56,7 +62,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
                     //_weaponFSM.HitFeedbacks?.PlayFeedbacks();
                     HitDetect();
                 });
-
+                eventsAdded = true;
             }
         }
 
@@ -87,10 +93,42 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 
         public override void UpdateState()
         {
-            if (!isAttacking)
+            if (isAttacking)
+            {
+                if (_weaponFSM.StateRequest == ClawsWeaponFSM.ClawsWeaponState.Attacking)
+                {
+                    if(!hasBufferedAttack/* && Time.time >= bufferStartTime + data.inputBufferDuration*/)
+                    {
+                        hasBufferedAttack = true;
+                        bufferStartTime   = Time.time;
+                    }
+                }
+                if (hasBufferedAttack && currentState != null)
+                {
+                    float normalizedTime = currentState.NormalizedTime;
+                    float bufferElapsedTime  = Time.time             - bufferStartTime;
+                    if (normalizedTime >= 0.5f && bufferElapsedTime <= data.inputBufferDuration)
+                    {
+                        EndAttack();
+                        StartNewAttack();
+                    }
+                    else if (bufferElapsedTime > data.inputBufferDuration)
+                    {
+                        // Cancel buffer if too much time has passed
+                        hasBufferedAttack = false;
+                    }
+                }
+            }
+            else if (!isAttacking)
             {
                 _weaponFSM.TransitionToState(ClawsWeaponFSM.ClawsWeaponState.Default);
             }
+        }
+
+        private void StartNewAttack()
+        {
+            hasBufferedAttack = false;
+            StartAttack();
         }
 
         public override void ExitState()
@@ -102,6 +140,8 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             }
             eventsAdded = false;
             isAttacking = false;
+            hasBufferedAttack = false;
+            bufferStartTime = 0f;
         }
 
         public override ClawsWeaponFSM.ClawsWeaponState GetNextState()
