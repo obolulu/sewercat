@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using _Project._Scripts.EnemyDir;
 using _Project._Scripts.PlayerScripts.SaveSystem;
 using _Project._Scripts.PlayerScripts.Stats;
@@ -60,17 +62,38 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
             Debug.Log("Game Saved on: " + Application.persistentDataPath);
         }
 
-        public SaveData LoadData()
+        public async Task<SaveData> LoadData()
         {
-            if (System.IO.File.Exists(_savePath))
+            // Create a CancellationTokenSource with timeout
+            using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
             {
-                string json = System.IO.File.ReadAllText(_savePath);
-                return JsonUtility.FromJson<SaveData>(json);
-            }
+                try 
+                {
+                    if (!System.IO.File.Exists(_savePath))
+                    {
+                        Debug.LogError("Save file not found in " + _savePath);
+                        return null;
+                    }
 
-            {
-                Debug.LogError("Save file not found in " + _savePath);
-                return null;
+                    // Read file in background thread
+                    string json = await Task.Run(async () => 
+                    {
+                        return await System.IO.File.ReadAllTextAsync(_savePath, cts.Token);
+                    }, cts.Token);
+
+                    // Deserialize on main thread
+                    return await Task.Run(() => JsonUtility.FromJson<SaveData>(json), cts.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    Debug.LogError("Loading save file timed out");
+                    return null;
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"Error loading save file: {e.Message}");
+                    return null;
+                }
             }
         }
 
@@ -123,10 +146,10 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
 
         }
     
-        public void LoadGame()
+        public async void LoadGame()
         {
             playerStats           =  playerStatsHandler.GetStats();
-            var data = LoadData();
+            var data = await LoadData();
             player.transform.position =
                 new UnityEngine.Vector3(data.playerLocation.x, data.playerLocation.y, data.playerLocation.z);
             playerStats.Health          = data.playerHealth;

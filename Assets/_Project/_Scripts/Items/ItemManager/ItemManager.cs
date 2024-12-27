@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Project._Scripts.PlayerScripts.SaveDirectory;
@@ -48,21 +49,29 @@ public class ItemManager : MonoBehaviour
         
     }
     
-    private void OnLoadGame()
+private async void OnLoadGame()
+{
+    try
     {
-        List<int> interactedItems = SaveSystem.Instance.LoadData().interactedItems;
-        //shitty implementation, fix and make it better
-            for(int j = 0; j < items.Length; j++)
-            {
-                if (interactedItems.Contains(items[j]))
-                {
-                    itemManager.transform.GetChild(j).gameObject.SetActive(false);
-                }
-                else
-                {
-                    itemManager.transform.GetChild(j).gameObject.SetActive(true);
-                }
-            }
+        var data = await SaveSystem.Instance.LoadData();
+        if (data == null || data.interactedItems == null) return;
+
+        var interactedItems = data.interactedItems;
         
+        for(int j = 0; j < items.Length; j++)
+        {
+            bool shouldBeActive = !interactedItems.Contains(items[j]);
+            var item = itemManager.transform.GetChild(j).gameObject;
+            
+            if (item != null)
+            {
+                item.SetActive(shouldBeActive);
+            }
+        }
     }
+    catch (Exception e)
+    {
+        Debug.LogError($"Failed to load items: {e.Message}");
+    }
+}
 }

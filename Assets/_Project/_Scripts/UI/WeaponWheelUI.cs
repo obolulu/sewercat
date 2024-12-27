@@ -146,6 +146,7 @@ public class WeaponWheelUI : Menu
 
     private void PositionWeaponIcons()
     {
+        ClearIcons();
         for (int i = 0; i < weapons.Count; i++)
         {
             float angle = (i * 2 * Mathf.PI) / weapons.Count;
@@ -199,6 +200,14 @@ public class WeaponWheelUI : Menu
     
     private void ToggleWheelOn()
     {
+        ClearWeapons();
+        List<ItemData> itemChoices = PlayerStatsHandler.playerInventory.GetInventory(typeof(WeaponData));
+        foreach (var item in itemChoices)
+        {
+            WeaponData weaponData = (WeaponData) item;
+            AddWeapon(weaponData);
+        }
+        PositionWeaponIcons();
         if (isWheelActive)
         {
             ToggleWheelOff();
