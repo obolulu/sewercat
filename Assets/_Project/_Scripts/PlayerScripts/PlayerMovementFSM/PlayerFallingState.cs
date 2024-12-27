@@ -26,6 +26,7 @@ namespace _Project._Scripts.PlayerScripts
         public override void UpdateState()
         {
             controller.Move(0.8f);
+            controller.verticalVelocity.y += controller.gravity * _fallGravityMultiplier * Time.deltaTime;
             controller.ApplyGravity(controller.gravity *_fallGravityMultiplier);
         }
     

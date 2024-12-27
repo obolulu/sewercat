@@ -9202,6 +9202,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1820416602112025041, guid: bc815fe6f2270114db0483b9cda35595,
         type: 3}
+      propertyPath: timeToApex
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820416602112025041, guid: bc815fe6f2270114db0483b9cda35595,
+        type: 3}
+      propertyPath: maxFallSpeed
+      value: -25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820416602112025041, guid: bc815fe6f2270114db0483b9cda35595,
+        type: 3}
+      propertyPath: maxJumpHeight
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1820416602112025041, guid: bc815fe6f2270114db0483b9cda35595,
+        type: 3}
       propertyPath: groundMask.m_Bits
       value: 192
       objectReference: {fileID: 0}

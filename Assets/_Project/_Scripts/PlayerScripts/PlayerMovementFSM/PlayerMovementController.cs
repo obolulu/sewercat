@@ -188,14 +188,14 @@ namespace _Project._Scripts.PlayerScripts
             // Therefore: v0 = -a*t
         
             // Calculate gravity needed for desired apex time
-            gravity = (-2f * maxJumpHeight) / (timeToApex * timeToApex);
+            //gravity = (-2f * maxJumpHeight) / (timeToApex * timeToApex);
         
             // Calculate initial jump velocity needed
-            jumpForce = -gravity * timeToApex;
+            //jumpForce = -gravity * timeToApex;
         
             // Calculate minimum jump velocity (for tap jumps)
             float minJumpVelocity = Mathf.Sqrt(-2f * gravity * minJumpHeight);
-            maxFallSpeed = -jumpForce; // Terminal velocity = max jump speed
+            //maxFallSpeed = -jumpForce; // Terminal velocity = max jump speed
         }
         private void OnDestroy()
         {
