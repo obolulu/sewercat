@@ -67,6 +67,7 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     public void ResetState()
     {
         nextState = ClawsWeaponState.Default;
+        Animancer.Stop();
     }
     public void TryAttack()
     {

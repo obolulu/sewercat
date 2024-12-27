@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: AttackStateData
   m_EditorClassIdentifier: 
   attackDamage: 25
-  attackRange: 15
+  attackRange: 5
   attackRadius: 1
-  attackCooldown: 0.5
+  attackCooldown: 0.1
   whatIsDamageable:
     serializedVersion: 2
     m_Bits: 128
