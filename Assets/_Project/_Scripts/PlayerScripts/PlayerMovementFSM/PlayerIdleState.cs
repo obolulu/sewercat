@@ -12,7 +12,7 @@ namespace _Project._Scripts.PlayerScripts
         }
         public override void EnterState()
         {
-            //controller.ResetVerticalVelocity();
+            controller.ResetVerticalVelocity();
             controller.ResetJump();
         }
     
@@ -20,7 +20,7 @@ namespace _Project._Scripts.PlayerScripts
     
         public override void UpdateState()
         {
-            controller.Move();
+            //controller.Move();
             controller.ApplyGravity(controller.groundedGravity);
         }
     

@@ -53,15 +53,16 @@ namespace _Project._Scripts.PlayerScripts
         [SerializeField] private float jumpCooldown    = 0.5f;
         [SerializeField] private float smoothTime      = 0.1f;
         [SerializeField] private float _coyoteTime     = 0.1f;
-        private                  float _coyoteTimer;
         [SerializeField] private float _jumpBufferTime = 0.1f;
-        private                  float _jumpBufferTimer;
-        private                  float _timeSinceLastJump;
         [SerializeField] private float _initialJumpVelocityMultiplier = 1.2f;
         
+        private float _coyoteTimer;
+        private float _timeSinceLastJump;
+        private float _jumpBufferTimer;
         private float _smoothVelocity;
         public  float lastJumpTime;
         private bool  _hasJumped = false;
+        private bool  _isLeaping;
         
         [TitleGroup("Extras")]
         [Header("Ground Settings")]
@@ -88,6 +89,8 @@ namespace _Project._Scripts.PlayerScripts
         public float CrouchSpeedMultiplier => crouchSpeedMultiplier;
 
         public Vector3 PlayerPosition => transform.position;
+        
+        public bool IsLeaping => _isLeaping;
         
         public InputManager inputManager;
         private bool isCrouching;
@@ -402,9 +405,19 @@ namespace _Project._Scripts.PlayerScripts
         {
             verticalVelocity.y += gravityValue * Time.deltaTime;
         }
+
+        public void ResetVelocity()
+        {
+            ResetVerticalVelocity();
+            ResetHorizontalVelocity();
+        }
         public void ResetVerticalVelocity()
         {
-            verticalVelocity.y = 0f;
+            verticalVelocity = Vector3.zero;
+        }
+        public void ResetHorizontalVelocity()
+        {
+            _currentMoveVelocity = Vector3.zero;
         }
 
         #endregion
@@ -436,6 +449,15 @@ namespace _Project._Scripts.PlayerScripts
             _hasJumped = false;
         }
 
+
+        #endregion
+
+        #region Leaping
+
+        public void SetLeaping(bool leaping)
+        {
+            _isLeaping = leaping;
+        }
 
         #endregion
 

@@ -19,7 +19,8 @@ MonoBehaviour:
   whatIsDamageable:
     serializedVersion: 2
     m_Bits: 128
-  leapDuration: 0.3
-  leapDistance: 8
-  leapHeight: 0.35
+  leapDuration: 0.5
+  leapDistance: 5
+  leapHeight: 0.4
+  airControl: 0.2
   leapAnimation: {fileID: 0}

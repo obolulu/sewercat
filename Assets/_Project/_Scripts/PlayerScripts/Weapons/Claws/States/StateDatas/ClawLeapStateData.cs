@@ -17,6 +17,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas
         public float     leapDuration = 0.4f;
         public float     leapDistance = 5f;
         public float     leapHeight   = 0.5f;
+        public float     airControl   = 0.2f;
         
         [Title("Animations & Effects")]
         [Header("Attack Animation")]

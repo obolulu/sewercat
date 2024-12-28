@@ -17,6 +17,7 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
         Leaping
     }
     
+    
     [Header("Animation")]
     [SerializeField] private AnimancerComponent animator;
 
@@ -28,7 +29,9 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     [SerializeField] private MMFeedbacks attackFeedbacks;
     [SerializeField] private MMFeedbacks hitFeedbacks;
     
+    [Header("PlayerController")]
     [SerializeField] private PlayerController playerController;
+    
     private ClawsWeaponState nextState;
     private Camera mainCamera;
     private float lastAttackTime;
@@ -58,7 +61,7 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
         States[ClawsWeaponState.Blocking] = new BlockingClawState(ClawsWeaponState.Blocking, this);
         States[ClawsWeaponState.Focused] = new FocusedClawState(ClawsWeaponState.Focused, this);
         States[ClawsWeaponState.Leaping] = new LeapingClawState
-            (ClawsWeaponState.Leaping, this, leapStateData);
+            (ClawsWeaponState.Leaping, this, leapStateData, playerController);
         
         CurrentState = States[ClawsWeaponState.Default];
     }
