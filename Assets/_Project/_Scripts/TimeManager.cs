@@ -1,9 +1,11 @@
 using UnityEngine;
 
-public static class TimescaleManager
+public static class TimeManager
 {
     private static float originalFixedDeltaTime = Time.fixedDeltaTime;
-
+    
+    public static float TimeScale => Time.timeScale;
+    
     public static void SetTimeScale(float timeScale)
     {
         Time.timeScale = timeScale;

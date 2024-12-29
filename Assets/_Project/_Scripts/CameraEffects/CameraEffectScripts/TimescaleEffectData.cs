@@ -10,8 +10,8 @@ public class TimeScaleEffectData : CameraEffectData
 
     public override IEnumerator Execute(Camera camera)
     {
-        Time.timeScale = timeScale;
+        TimeManager.SetTimeScale(timeScale);
         yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1f;
+        TimeManager.ResetTimeScale();
     }
 }

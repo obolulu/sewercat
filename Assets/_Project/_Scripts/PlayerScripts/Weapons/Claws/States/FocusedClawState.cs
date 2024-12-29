@@ -15,12 +15,12 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         {
             nextState = ClawsWeaponFSM.ClawsWeaponState.Focused;
             _weaponFSM.ResetState();
-            TimescaleManager.SetTimeScale(0.2f);
+            TimeManager.SetTimeScale(0.2f);
         }
 
         public override void ExitState()
         {
-            TimescaleManager.ResetTimeScale();
+            TimeManager.ResetTimeScale();
         }
 
         public override void UpdateState()
@@ -33,11 +33,11 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             //if player presses focus key again, go back to default
             if (_weaponFSM.StateRequest == ClawsWeaponFSM.ClawsWeaponState.Focused) 
             {
-                nextState = (ClawsWeaponFSM.ClawsWeaponState.Default); return;
+                nextState = ClawsWeaponFSM.ClawsWeaponState.Default; return;
             }
             if (_weaponFSM.StateRequest == ClawsWeaponFSM.ClawsWeaponState.Attacking)
             {
-                nextState = (ClawsWeaponFSM.ClawsWeaponState.Leaping); return;
+                nextState = ClawsWeaponFSM.ClawsWeaponState.Leaping; return;
             }
         }
         public override ClawsWeaponFSM.ClawsWeaponState GetNextState()

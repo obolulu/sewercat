@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas;
+using _Project._Scripts.ScriptBases;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 {
@@ -9,7 +10,6 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private readonly PlayerController _playerController;
         private float _leapStartTime;
         private Vector3 _startPosition;
-        private Vector3 _targetPosition;
         private Vector3 _initialLeapVelocity;
         private float _maxHorizontalSpeed;
         private float _initialVerticalVelocity;
@@ -19,7 +19,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private ClawLeapStateData data;
 
         public LeapingClawState(ClawsWeaponFSM.ClawsWeaponState key, ClawsWeaponFSM weaponFSM,
-                                ClawLeapStateData data,PlayerController playerController) 
+                                ClawLeapStateData data, PlayerController playerController) 
             : base(key)
         {
             _weaponFSM = weaponFSM;
@@ -36,14 +36,12 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             nextState = ClawsWeaponFSM.ClawsWeaponState.Leaping;
             
             CalculateLeapVelocity();
-            //_maxVelocity = _initialLeapVelocity.magnitude;
             _weaponFSM.PlayerController.TransitionToState(PlayerController.PlayerState.Leaping);
         }
 
         private void CalculateLeapVelocity()
         {
             Vector3 forward = _weaponFSM.MainCamera.transform.forward;
-            //forward.y = 0;
             forward.Normalize();
 
             // Calculate initial velocity for the leap
@@ -56,7 +54,8 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             _maxHorizontalSpeed = horizontalVelocity.magnitude;
             _weaponFSM.PlayerController.verticalVelocity = _initialLeapVelocity;
         }
-         private void UpdateLeapDirection()
+
+        private void UpdateLeapDirection()
         {
             // Get the camera's forward direction (including vertical rotation)
             Vector3 cameraForward = _weaponFSM.MainCamera.transform.forward;
@@ -127,6 +126,24 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private void PerformAttack()
         {
             _weaponFSM.AttackFeedbacks?.PlayFeedbacks();
+            HitDetect();
+        }
+
+        private void HitDetect()
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(_weaponFSM.transform.position, 
+                                                          data.attackRange, 
+                                                          data.whatIsDamageable);
+
+            foreach (Collider hit in hitColliders)
+            {
+                if (hit.TryGetComponent<IDamageable>(out var enemy))
+                {
+                    Vector3 hitDirection = (hit.transform.position - _weaponFSM.transform.position).normalized;
+                    _weaponFSM.HitFeedbacks?.PlayFeedbacks();
+                    enemy.TakeDamage(data.attackDamage, hitDirection);
+                }
+            }
         }
 
         public override void ExitState()

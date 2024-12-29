@@ -10,6 +10,7 @@ public class CinemachinePOVExtension : CinemachineExtension
     [SerializeField] private float clampAngle = 80f;
     [SerializeField] private float verticalSensitivity = 10f;
     [SerializeField] private float horizontalSensitivity = 10f;
+    [SerializeField/*, Range(0f,1f)*/] private float slowedSensitivityMultiplier = 2f;
 
     [Header("Movement Tilt")] 
     [SerializeField] private bool isTiltEnabled;
@@ -22,7 +23,7 @@ public class CinemachinePOVExtension : CinemachineExtension
     [SerializeField] private float fallTiltAmount = 0f;
     [SerializeField] private float landTiltAmount   = 2f;
     [SerializeField] private float recoverySpeed    = 10f;  
-    [SerializeField] private float groundCheckDelay = 0.1f; // seconds
+    //[SerializeField] private float groundCheckDelay = 0.1f; // seconds
     
     [Header("References")]
     [SerializeField] private PlayerController controller;
@@ -52,6 +53,7 @@ public class CinemachinePOVExtension : CinemachineExtension
         if (stage == CinemachineCore.Stage.Aim)
         {
             Vector2 deltaInput = InputManager.GetMouseDelta();
+            if(TimeManager.TimeScale < 1f) deltaInput *= TimeManager.TimeScale * slowedSensitivityMultiplier;
             currentRotation.x += deltaInput.x * verticalSensitivity   * Time.unscaledDeltaTime;
             currentRotation.y += deltaInput.y * horizontalSensitivity * Time.unscaledDeltaTime;
             currentRotation.y =  Mathf.Clamp(currentRotation.y, -clampAngle, clampAngle);
