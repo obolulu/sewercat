@@ -79,7 +79,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private void AttackRoutine()
         {
             currentState = _weaponFSM.Animancer?.Play(data.attackAnimation.attackAnimation);
-            if (currentState != null)
+            if (currentState != null && !eventsAdded)
             {
                 currentState.Events(this).OnEnd = EndAttack;
                 currentState.Events(this).Add(0.5f, HitDetect); // Add hit detection at 50% of animation

@@ -52,8 +52,8 @@ public class CinemachinePOVExtension : CinemachineExtension
         if (stage == CinemachineCore.Stage.Aim)
         {
             Vector2 deltaInput = InputManager.GetMouseDelta();
-            currentRotation.x += deltaInput.x * verticalSensitivity   * Time.deltaTime;
-            currentRotation.y += deltaInput.y * horizontalSensitivity * Time.deltaTime;
+            currentRotation.x += deltaInput.x * verticalSensitivity   * Time.unscaledDeltaTime;
+            currentRotation.y += deltaInput.y * horizontalSensitivity * Time.unscaledDeltaTime;
             currentRotation.y =  Mathf.Clamp(currentRotation.y, -clampAngle, clampAngle);
             
             if(isTiltEnabled) HandleMovementTilt(deltaTime);

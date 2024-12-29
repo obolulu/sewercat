@@ -12,6 +12,9 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private Vector3 _targetPosition;
         private Vector3 _initialLeapVelocity;
         private float _maxHorizontalSpeed;
+        private float _initialVerticalVelocity;
+        private float _currentLeapTime;
+
         private ClawsWeaponFSM.ClawsWeaponState nextState;
         private ClawLeapStateData data;
 
@@ -26,6 +29,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 
         public override void EnterState()
         {
+            _currentLeapTime = 0;
             _weaponFSM.PlayerController.SetLeaping(true);
             _leapStartTime = Time.time;
             _startPosition = _weaponFSM.transform.position;
@@ -39,7 +43,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private void CalculateLeapVelocity()
         {
             Vector3 forward = _weaponFSM.MainCamera.transform.forward;
-            forward.y = 0;
+            //forward.y = 0;
             forward.Normalize();
 
             // Calculate initial velocity for the leap
@@ -52,7 +56,28 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             _maxHorizontalSpeed = horizontalVelocity.magnitude;
             _weaponFSM.PlayerController.verticalVelocity = _initialLeapVelocity;
         }
+         private void UpdateLeapDirection()
+        {
+            // Get the camera's forward direction (including vertical rotation)
+            Vector3 cameraForward = _weaponFSM.MainCamera.transform.forward;
+            
+            // Calculate the vertical velocity with gravity
+            float currentVerticalVelocity = _initialVerticalVelocity - (Physics.gravity.y * _currentLeapTime);
+            
+            // Calculate horizontal direction from camera
+            Vector3 horizontalVelocity = cameraForward * _maxHorizontalSpeed;
+            
+            // Combine horizontal and vertical velocities
+            Vector3 finalVelocity = new Vector3(
+                horizontalVelocity.x,
+                currentVerticalVelocity,
+                horizontalVelocity.z
+            );
 
+            _weaponFSM.PlayerController.verticalVelocity = finalVelocity;
+            _weaponFSM.PlayerController.moveVelocity = finalVelocity;
+        }
+        
         public override void UpdateState()
         {
             if (!_weaponFSM.PlayerController.IsLeaping)

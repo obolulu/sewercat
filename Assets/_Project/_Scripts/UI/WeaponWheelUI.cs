@@ -215,7 +215,7 @@ public class WeaponWheelUI : Menu
         }
         isWheelActive = true;
         wheelUI.SetActive(true);
-        Time.timeScale   = slowMotionTimeScale;
+        TimescaleManager.SetTimeScale(slowMotionTimeScale);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible   = true; 
     }
@@ -224,7 +224,7 @@ public class WeaponWheelUI : Menu
     {
         isWheelActive = false;
         wheelUI.SetActive(false);
-        Time.timeScale   = 1f;
+        TimescaleManager.ResetTimeScale();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible   = false;
     }
