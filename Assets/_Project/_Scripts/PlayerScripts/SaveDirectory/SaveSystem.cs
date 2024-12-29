@@ -15,7 +15,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
     [System.Serializable]
     public class EnemyDataCollection
     {
-        public List<EnemySaveData> enemies = new List<EnemySaveData>();
+        public List<Enemy1.EnemySaveData> enemies = new List<Enemy1.EnemySaveData>();
     }
     
     public class SaveSystem : MonoBehaviour

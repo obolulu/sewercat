@@ -11,8 +11,8 @@ namespace _Project._Scripts.EnemyDir
         //List<EnemySaveData>                enemyDataList    = new List<EnemySaveData>();
         //private List<Enemy>                enemies          = new List<Enemy>();
         [SerializeField] private bool debugMode;
-        private Dictionary<string, Enemy> enemyRegistry = new Dictionary<string, Enemy>();
-        private Dictionary<string ,EnemySaveData> enemyDataMap = new Dictionary<string, EnemySaveData>();
+        private Dictionary<string, Enemy1> enemyRegistry = new Dictionary<string, Enemy1>();
+        private Dictionary<string ,Enemy1.EnemySaveData> enemyDataMap = new Dictionary<string, Enemy1.EnemySaveData>();
 
         private void Awake()
         {
@@ -31,13 +31,13 @@ namespace _Project._Scripts.EnemyDir
             enemyRegistry.Clear();
             foreach (Transform child in transform)
             {
-                var enemy = child.GetComponent<Enemy>();
+                var enemy = child.GetComponent<Enemy1>();
                 if (enemy != null)
                 {
                     string enemyId = enemy.EnemyId;
                     enemyRegistry[enemyId] = enemy;
                     
-                    EnemySaveData initialData = enemy.GetSaveData();
+                    Enemy1.EnemySaveData initialData = enemy.GetSaveData();
                     enemyDataMap[enemyId] = initialData;
 
                     if (debugMode) Debug.Log($"Registered enemy: {enemyId}");
@@ -57,7 +57,7 @@ namespace _Project._Scripts.EnemyDir
             foreach (var pair in enemyRegistry)
             {
                 string enemyId = pair.Key;
-                Enemy  enemy   = pair.Value;
+                Enemy1  enemy   = pair.Value;
                 if (enemy != null)
                 {
                     var saveData = enemy.GetSaveData();
@@ -83,7 +83,7 @@ namespace _Project._Scripts.EnemyDir
             foreach (var kvp in enemyRegistry)
             {
                 string enemyId = kvp.Key;
-                Enemy enemy = kvp.Value;
+                Enemy1 enemy = kvp.Value;
 
                 if (enemy != null && enemyDataMap.ContainsKey(enemyId))
                 {
