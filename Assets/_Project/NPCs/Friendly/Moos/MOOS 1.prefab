@@ -654,10 +654,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3870627904729444785}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7073ad09ee211cc45a65abef27707dd9,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 295640229472971820}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
@@ -675,6 +671,14 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6249335263099849195}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7073ad09ee211cc45a65abef27707dd9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 336703324328865567}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7073ad09ee211cc45a65abef27707dd9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5278196806042864146}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       insertIndex: -1
@@ -709,36 +713,6 @@ CapsuleCollider:
   m_Height: 3
   m_Direction: 1
   m_Center: {x: 0, y: -1, z: 0}
---- !u!114 &3870627904729444785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5053692306604913437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5bceccb471274a6e87bfa57c04b3bd1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyId: f2abefb4-bd4c-4870-bc21-76332b4f426e
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  agent: {fileID: 7452034015692522833}
-  disengageRange: 15
-  engageRange: 5
-  maxHealth: 100
-  player: {fileID: 0}
-  enemyStateMachine: {fileID: 295640229472971820}
-  dialogue: {fileID: 257154935865431459}
-  enemySaveData:
-    id: 
-    position: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0, w: 0}
-    health: 0
-    isDisengaged: 0
-    isInActiveCombat: 0
 --- !u!114 &295640229472971820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,6 +806,59 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &336703324328865567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5053692306604913437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aad115aca74ce3c4891b3f6de0b4aae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializedExposedParameters: []
+  _boundGraphSerialization: 
+  _boundGraphObjectReferences: []
+  _boundGraphSource:
+    _version: 0
+    _category: 
+    _comments: 
+    _translation: {x: 0, y: 0}
+    _zoomFactor: 1
+  _firstActivation: 0
+  _enableAction: 0
+  _disableAction: 0
+  _lockBoundGraphPrefabOverrides: 1
+  _preInitializeSubGraphs: 0
+  _updateMode: 3
+  _graph: {fileID: 11400000, guid: f5a6e2921abab5740811bb46ee170aca, type: 2}
+  _blackboard: {fileID: 0}
+--- !u!114 &5278196806042864146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5053692306604913437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca88cd9ada1642c3a1fa6771b6b6913f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: a60cd23b83d9a284db75fcfdfe669b25, type: 2}
+  enemyId: 40eafc20-1b6d-49fa-ad6f-09149e6e2139
+  waypoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  agent: {fileID: 7452034015692522833}
+  stateMachine: {fileID: 295640229472971820}
+  dialogue: {fileID: 257154935865431459}
+  tree: {fileID: 0}
+  player: {fileID: 0}
 --- !u!114 &5291315046392965048
 MonoBehaviour:
   m_ObjectHideFlags: 0

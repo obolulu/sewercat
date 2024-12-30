@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: EnemyDefaultData
   m_EditorClassIdentifier: 
   maxHealth: 100
-  disengageRange: 20
-  engageRange: 10
+  disengageRange: 10.47
+  engageRange: 5.5
   attackRange: 2
   attackDamage: 10
   attackCooldown: 1.5

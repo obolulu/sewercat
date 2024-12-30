@@ -30,7 +30,7 @@ namespace _Project._Scripts.EnemyDir
         [SerializeField] private string enemyId = Guid.NewGuid().ToString();
         public string EnemyId => enemyId;
         [Header("Patrol Settings")]
-        [SerializeField]List<Transform> waypoints;
+        [SerializeField]List<GameObject> waypoints;
         [SerializeField]NavMeshAgent agent;
         
         [Header("StateMachine")]
@@ -39,6 +39,7 @@ namespace _Project._Scripts.EnemyDir
         [SerializeField] private BehaviourTreeOwner tree;
         
         [SerializeField] private Transform player;
+        
         
         #endregion
         
@@ -77,6 +78,8 @@ namespace _Project._Scripts.EnemyDir
             UpdateBlackboard();
             HandleStunState();
         }
+        
+
 
         #endregion
         
@@ -103,7 +106,7 @@ namespace _Project._Scripts.EnemyDir
             blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
             blackboard.SetVariableValue("IsDisengaged", _isDisengaged);
             blackboard.SetVariableValue("PlayerTransform", player);
-            blackboard.SetVariableValue("Waypoints", waypoints);
+            //blackboard.SetVariableValue("Waypoints", waypoints);
             blackboard.SetVariableValue("Agent", agent);
             blackboard.SetVariableValue("AttackRange", enemyData.attackRange);
             blackboard.SetVariableValue("EngageRange", enemyData.engageRange);
@@ -120,11 +123,11 @@ namespace _Project._Scripts.EnemyDir
         {
             var blackboard = tree.blackboard;
             blackboard.SetVariableValue("Health", _currentHealth);
-            blackboard.SetVariableValue("IsStunned", _isStunned);
-            blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
-            blackboard.SetVariableValue("IsDisengaged", _isDisengaged);
-            blackboard.SetVariableValue("CanAttack", CanAttack);
-
+            //blackboard.SetVariableValue("IsStunned", _isStunned);
+            //blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
+            //blackboard.SetVariableValue("IsDisengaged", _isDisengaged);
+            //blackboard.SetVariableValue("CanAttack", CanAttack);
+            tree.Tick();
             if (player != null)
             {
                 float distanceToPlayer = Vector3.Distance(transform.position, player.position);

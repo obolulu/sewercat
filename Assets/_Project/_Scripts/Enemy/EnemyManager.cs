@@ -13,6 +13,18 @@ namespace _Project._Scripts.EnemyDir
         [SerializeField] private bool debugMode;
         private Dictionary<string, Enemy1> enemyRegistry = new Dictionary<string, Enemy1>();
         private Dictionary<string ,Enemy1.EnemySaveData> enemyDataMap = new Dictionary<string, Enemy1.EnemySaveData>();
+        private List<Enemy1> activeEnemies = new List<Enemy1>();
+
+        private void Update()
+        {
+            foreach (var enemy in activeEnemies)
+            {
+                if (enemy != null)
+                {
+                    enemy.CustomUpdate();
+                }
+            }
+        }
 
         private void Awake()
         {
@@ -24,6 +36,12 @@ namespace _Project._Scripts.EnemyDir
         private void Start()
         {
             RegisterEnemies();
+            SetActiveEnemies();
+        }
+        
+        private void SetActiveEnemies()
+        {
+            activeEnemies = enemyRegistry.Values.ToList();
         }
 
         private void RegisterEnemies()

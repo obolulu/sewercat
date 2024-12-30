@@ -58,6 +58,12 @@ public class EnemyStateMachine : StateManager<EnemyStateMachine.EnemyState>
             TransitionToState(nextStateKey);
         }
     }
+    // DO NOT DELETE: only here to override the original FixedUpdate method
+    protected void FixedUpdate()
+    {
+        return;
+    }
+    
     /*
 void FixedUpdate()
 {
