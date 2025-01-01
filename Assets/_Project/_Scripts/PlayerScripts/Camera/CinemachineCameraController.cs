@@ -51,7 +51,7 @@ public class CinemachineCameraController : MonoBehaviour
         }
 
         // Apply camera tilt based on movement
-        float targetTilt = InputManager.moveDirection.x * tiltAngle;
+        float targetTilt = InputManager.State.MoveDirection.x * tiltAngle;
         float currentTilt = Mathf.LerpAngle(cameraTransform.localEulerAngles.z, targetTilt, tiltSpeed * Time.deltaTime);
         cameraTransform.localEulerAngles = new Vector3(
             cameraTransform.localEulerAngles.x,

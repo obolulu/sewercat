@@ -44,7 +44,7 @@ public class UIManager : MonoBehaviour
     {
         InputManager.OpenInventoryMenu += HandleOpenInventoryMenu;
         InputManager.OpenPauseMenu += HandleOpenPauseMenu;
-        InputManager.OpenInventoryEvent += HandleOpenWeaponWheel;
+        InputManager.OpenInventory += HandleOpenWeaponWheel;
     }
 
     private void OnDestroy()
@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
         
         InputManager.OpenInventoryMenu -= HandleOpenInventoryMenu;
         InputManager.OpenPauseMenu -= HandleOpenPauseMenu;
-        InputManager.OpenInventoryEvent -= HandleOpenWeaponWheel;
+        InputManager.OpenInventory -= HandleOpenWeaponWheel;
 
         SaveSystem.OnLoad -= SetupUIs;
     }

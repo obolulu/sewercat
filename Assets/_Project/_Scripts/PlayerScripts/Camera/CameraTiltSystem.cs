@@ -36,7 +36,7 @@ public class CameraTiltSystem : MonoBehaviour
 
     private void HandleMovementTilt()
     {
-        float inputX = InputManager.moveDirection.x;
+        float inputX = InputManager.State.MoveDirection.x;
         targetTilt = inputX * maxTiltAngle;
     }
 

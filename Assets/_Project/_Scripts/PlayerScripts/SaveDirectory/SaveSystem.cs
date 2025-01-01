@@ -15,7 +15,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
     [System.Serializable]
     public class EnemyDataCollection
     {
-        public List<Enemy1.EnemySaveData> enemies = new List<Enemy1.EnemySaveData>();
+        public List<Enemy1.EnemySaveData> enemies = new();
     }
     
     public class SaveSystem : MonoBehaviour
@@ -77,9 +77,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
 
                     // Read file in background thread
                     string json = await Task.Run(async () => 
-                    {
-                        return await System.IO.File.ReadAllTextAsync(_savePath, cts.Token);
-                    }, cts.Token);
+                        await System.IO.File.ReadAllTextAsync(_savePath, cts.Token), cts.Token);
 
                     // Deserialize on main thread
                     return await Task.Run(() => JsonUtility.FromJson<SaveData>(json), cts.Token);

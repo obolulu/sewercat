@@ -35,7 +35,7 @@ namespace Scripts.Player_Scripts.Player_States
         {
 
             
-            if(InputManager.StartJump && _playerStateMachine.isGrounded)
+            if(InputManager.State.IsJumping && _playerStateMachine.isGrounded)
             {
                 return PlayerStateMachine.PlayerState.Jumping;
             }
@@ -43,7 +43,7 @@ namespace Scripts.Player_Scripts.Player_States
             {
                 return PlayerStateMachine.PlayerState.Falling;
             }
-            if(InputManager.moveDirection.magnitude > 0.1f)
+            if(InputManager.State.MoveDirection.magnitude > 0.1f)
             {
                 return PlayerStateMachine.PlayerState.Walking;
             }

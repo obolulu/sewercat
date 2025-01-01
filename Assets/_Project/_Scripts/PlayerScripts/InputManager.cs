@@ -4,262 +4,169 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    private PlayerInputs _inputManager;
-    public static Vector2 moveDirection;
-    public static Vector3 moveDirectionNormalized => moveDirection.normalized;
+    private static InputManager _instance;
+    private PlayerInputs _inputs;
     
-    public static Vector3 MousePosition => Mouse.current.position.ReadValue();
+    public class InputState
+    {
+        public Vector2 MoveDirection { get; set; }
+        public Vector2 MousePosition => Mouse.current.position.ReadValue();
+        public Vector2 MouseDelta => Mouse.current.delta.ReadValue();
+        public bool IsJumping { get; set; }
+        public bool IsCasting { get; set; }
+        public bool IsChangingSpell { get; set; }
+        public bool IsInteracting { get; set; }
+    }
     
-    public static bool StartJump;
-    public static bool CastPressed;
-    public static bool SpellChangePressed;
-    public static bool InteractPressed;
-    public static bool OpenInventory;
-    
-    public static bool SaveButtonPressed;
-    public static bool LoadButtonPressed;
-    
+    public static InputState State { get; private set; } = new InputState();
+
     public static event Action SaveGame;
     public static event Action LoadGame;
-    
-    public static event Action OpenInventoryEvent;
-    public static event Action CloseInventoryEvent;
-    
+    public static event Action OpenInventory;
+    public static event Action CloseInventory;
     public static event Action LeftClickDown;
-    public  static event Action LeftClickUp;
-    
+    public static event Action LeftClickUp;
     public static event Action RightClickDown;
     public static event Action RightClickUp;
-    
     public static event Action OpenPauseMenu;
-
     public static event Action OpenInventoryMenu;
-
-    public static event Action CrouchPressed;
-
-
+    public static event Action Crouch;
     public static event Action PutWeaponDown;
+    public static event Action Special;
+    public static event Action<int> HotbarSlotSelected;
 
-    public static event Action SpecialPressed;
-    
-    
-    private bool               _castPressed;
-    private bool               _jumpPressed;
-    private bool               _leftClickDown;
-    private bool               _leftClickUp;
-
-    public static Vector2 GetMouseDelta()
+    private void Awake()
     {
-        return Mouse.current.delta.ReadValue();
-    }
-    
-    void Awake()
-    {
-        _inputManager = new PlayerInputs();
-    }
-
-    private void OnJump(InputAction.CallbackContext context)
-    {
-        
-        if (context.performed)
+        if (_instance != null)
         {
-            StartJump = true;
+            Destroy(gameObject);
+            return;
         }
-        else if (context.canceled)
+        _instance = this;
+        
+        _inputs = new PlayerInputs();
+        BindInputActions();
+    }
+
+    private void BindInputActions()
+    {
+        BindAction(_inputs.PlayerControls.Move, OnMove);
+        BindContextAction(_inputs.PlayerControls.Jump, OnJump);
+        BindContextAction(_inputs.PlayerControls.CastSpell, OnCastSpell);
+        BindContextAction(_inputs.PlayerControls.RightClick, OnRightClick);
+        BindContextAction(_inputs.PlayerControls.Interact, OnInteract);
+        
+        BindPerformedAction(_inputs.PlayerControls.OpenInventory, _ => OpenInventory?.Invoke());
+        BindPerformedAction(_inputs.PlayerControls.OpenInventoryMenu, _ => OpenInventoryMenu?.Invoke());
+        BindPerformedAction(_inputs.PlayerControls.OpenPauseMenu, _ => OpenPauseMenu?.Invoke());
+        
+        BindPerformedAction(_inputs.PlayerControls.Save, _ => SaveGame?.Invoke());
+        BindPerformedAction(_inputs.PlayerControls.Load, _ => LoadGame?.Invoke());
+        
+        BindPerformedAction(_inputs.PlayerControls.Crouch, _ => Crouch?.Invoke());
+        BindPerformedAction(_inputs.PlayerControls.PutWeaponDown, _ => PutWeaponDown?.Invoke());
+        BindPerformedAction(_inputs.PlayerControls.Special, _ => Special?.Invoke());
+        
+        BindPerformedAction(_inputs.UI.CloseMenu, OnCloseMenu);
+        
+        BindHotbarKeys();
+    }
+
+    private void BindHotbarKeys()
+    {
+        var hotbarActions = new[]
         {
-            StartJump = false;
+            _inputs.PlayerControls.One,
+            _inputs.PlayerControls.Two,
+            _inputs.PlayerControls.Three,
+            _inputs.PlayerControls.Four,
+            _inputs.PlayerControls.Five,
+        };
+
+        for (int i = 0; i < hotbarActions.Length; i++)
+        {
+            int slotIndex = i;
+            BindPerformedAction(hotbarActions[i], _ => HotbarSlotSelected?.Invoke(slotIndex));
         }
     }
 
     private void OnMove(InputAction.CallbackContext context)
     {
-        moveDirection = _inputManager.PlayerControls.Move.ReadValue<Vector2>();
+        State.MoveDirection = context.ReadValue<Vector2>();
     }
 
-    private void OnLeftMouseDown(InputAction.CallbackContext context)
+    private void OnJump(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            LeftClickDown?.Invoke();
-        }
-        
-        else if (context.canceled)
-        {
-            LeftClickUp?.Invoke();
-        }
+        State.IsJumping = context.performed;
     }
-        private void OnRightMouseDown(InputAction.CallbackContext context)
+
+    private void OnCastSpell(InputAction.CallbackContext context)
     {
         if (context.performed)
-        {
-            RightClickDown?.Invoke();
-        }
-        
+            LeftClickDown?.Invoke();
         else if (context.canceled)
-        {
+            LeftClickUp?.Invoke();
+    }
+
+    private void OnRightClick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+            RightClickDown?.Invoke();
+        else if (context.canceled)
             RightClickUp?.Invoke();
-        }
     }
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        if(context.performed)
-        {
-            InteractPressed = true;
-        }
-        else if (context.canceled)
-        {
-            InteractPressed = false;
-        }
-    }
-    private void OnChangeSpell(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            SpellChangePressed = true;
-        }
-        else if (context.canceled)
-        {
-            SpellChangePressed = false;
-        }
+        State.IsInteracting = context.performed;
     }
 
-    private void OnOpenInventory(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
-            OpenInventoryEvent?.Invoke();
-        }
-        else if(context.canceled)
-        {
-            CloseInventoryEvent?.Invoke();
-        }
-    }
-    private void OnOpenInventoryMenu(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
-            OpenInventoryMenu?.Invoke();
-        }
-    }
-
-    private void OnSaveGame(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            SaveGame?.Invoke();
-        }
-    }
-
-    private void OnLoadGame(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
-            LoadGame?.Invoke();
-        }
-    }
-    
-    private void OnopenMenu(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
-            OpenPauseMenu?.Invoke();
-        }
-    }
-
-    private void HandleMenuToggle(bool menuOpen)
-    {
-        if (menuOpen)
-        {
-            _inputManager.PlayerControls.Disable();
-            _inputManager.UI.Enable();
-        }
-        else
-        {
-            _inputManager.PlayerControls.Enable();
-            _inputManager.UI.Disable();        
-        }
-    }
     private void OnCloseMenu(InputAction.CallbackContext context)
     {
         if (context.performed)
-        {
             UIManager.Instance.CloseCurrentMenu();
-        }
-    }
-    private void OnCrouch(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-            CrouchPressed?.Invoke();
     }
 
-    private void OnPutWeaponDown(InputAction.CallbackContext context)
+    public void HandleMenuToggle(bool menuOpen)
     {
-        if(context.performed)
+        if (menuOpen)
         {
-            PutWeaponDown?.Invoke();
+            _inputs.PlayerControls.Disable();
+            _inputs.UI.Enable();
+        }
+        else
+        {
+            _inputs.PlayerControls.Enable();
+            _inputs.UI.Disable();
         }
     }
 
-    private void OnSpecialPressed(InputAction.CallbackContext context)
+    private void BindAction(InputAction action, Action<InputAction.CallbackContext> callback)
     {
-        if(context.performed) SpecialPressed?.Invoke();
+        action.performed += callback;
+        action.canceled += callback;
     }
-    
+
+    private void BindContextAction(InputAction action, Action<InputAction.CallbackContext> callback)
+    {
+        action.performed += callback;
+        action.canceled += callback;
+    }
+
+    private void BindPerformedAction(InputAction action, Action<InputAction.CallbackContext> callback)
+    {
+        action.performed += callback;
+    }
+
     private void OnEnable()
     {
-        _inputManager.Enable();
-        _inputManager.PlayerControls.Jump.performed              += OnJump;
-        _inputManager.PlayerControls.Jump.canceled               += OnJump;
-        _inputManager.PlayerControls.Move.performed              += OnMove;
-        _inputManager.PlayerControls.Move.canceled               += OnMove;
-        _inputManager.PlayerControls.CastSpell.performed         += OnLeftMouseDown;
-        _inputManager.PlayerControls.CastSpell.canceled          += OnLeftMouseDown;
-        _inputManager.PlayerControls.RightClick.performed        += OnRightMouseDown;
-        _inputManager.PlayerControls.RightClick.canceled         += OnRightMouseDown;
-        _inputManager.PlayerControls.Interact.performed          += OnInteract;
-        _inputManager.PlayerControls.ChangeSpell.performed       += OnChangeSpell;
-        _inputManager.PlayerControls.OpenInventory.performed     += OnOpenInventory;
-        _inputManager.PlayerControls.Save.performed              += OnSaveGame;
-        _inputManager.PlayerControls.Load.performed              += OnLoadGame;
-        _inputManager.PlayerControls.OpenPauseMenu.performed     += OnopenMenu;
-        _inputManager.PlayerControls.OpenInventoryMenu.performed += OnOpenInventoryMenu;
-        _inputManager.PlayerControls.Crouch.performed            += OnCrouch;
-        _inputManager.PlayerControls.PutWeaponDown.performed     += OnPutWeaponDown;
-        _inputManager.PlayerControls.Special.performed           += OnSpecialPressed;
-
-
-
-        _inputManager.UI.CloseMenu.performed += OnCloseMenu;
-        
+        _inputs.Enable();
         UIManager.OnMenuToggle += HandleMenuToggle;
-
     }
 
     private void OnDisable()
     {
-        _inputManager.Disable();
-        _inputManager.PlayerControls.Jump.performed              -= OnJump;
-        _inputManager.PlayerControls.Jump.canceled               -= OnJump;
-        _inputManager.PlayerControls.Move.performed              -= OnMove;
-        _inputManager.PlayerControls.Move.canceled               -= OnMove;
-        _inputManager.PlayerControls.CastSpell.performed         -= OnLeftMouseDown;
-        _inputManager.PlayerControls.CastSpell.canceled          -= OnLeftMouseDown;
-        _inputManager.PlayerControls.RightClick.performed        -= OnRightMouseDown;
-        _inputManager.PlayerControls.RightClick.canceled         -= OnRightMouseDown;
-        _inputManager.PlayerControls.Interact.performed          -= OnInteract;
-        _inputManager.PlayerControls.ChangeSpell.performed       -= OnChangeSpell;
-        _inputManager.PlayerControls.OpenInventory.performed     -= OnOpenInventory;
-        _inputManager.PlayerControls.Save.performed              -= OnSaveGame;
-        _inputManager.PlayerControls.Load.performed              -= OnLoadGame;
-        _inputManager.PlayerControls.OpenPauseMenu.performed     -= OnopenMenu;
-        _inputManager.PlayerControls.OpenInventoryMenu.performed -= OnOpenInventoryMenu;
-        _inputManager.PlayerControls.Crouch.performed            -= OnCrouch;
-        _inputManager.PlayerControls.PutWeaponDown.performed     -= OnPutWeaponDown;
-        _inputManager.PlayerControls.Special.performed           -= OnSpecialPressed;
-
-        _inputManager.UI.CloseMenu.performed -= OnCloseMenu;
-
+        _inputs.Disable();
         UIManager.OnMenuToggle -= HandleMenuToggle;
     }
 }

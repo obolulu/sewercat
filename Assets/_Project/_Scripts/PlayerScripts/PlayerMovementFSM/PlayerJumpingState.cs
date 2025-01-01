@@ -34,7 +34,7 @@ namespace _Project._Scripts.PlayerScripts
             controller.Move();
         
             // Apply more gravity when going up and not holding jump
-            float gravityMultiplier = (!InputManager.StartJump && controller.verticalVelocity.y > 0) 
+            float gravityMultiplier = (!InputManager.State.IsJumping && controller.verticalVelocity.y > 0) 
                 ? 1.5f    // Faster fall when releasing jump
                 : _jumpGravityMultiplier;
             
@@ -44,7 +44,7 @@ namespace _Project._Scripts.PlayerScripts
         public override PlayerController.PlayerState GetNextState()
         {
             elapsedTime = Time.time - jumpStartTime;
-            if (controller.verticalVelocity.y > 0 && InputManager.StartJump)
+            if (controller.verticalVelocity.y > 0 && InputManager.State.IsJumping)
             {
                 _jumpReleaseTimer += Time.deltaTime;
                 if (_jumpReleaseTimer < _jumpReleaseDelay) return StateKey;

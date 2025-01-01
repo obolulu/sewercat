@@ -10,10 +10,10 @@ public class PlayerInteract : MonoBehaviour
     private void Update()
     {
         CheckInteract();
-        if (InputManager.InteractPressed)
+        if (InputManager.State.IsInteracting && _canInteract)
         {
             Interact();
-            InputManager.InteractPressed = false;
+            InputManager.State.IsInteracting = false;
         }
         HighlightInteractable(_interactable);
     }

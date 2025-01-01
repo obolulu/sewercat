@@ -127,15 +127,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""1"",
-                    ""type"": ""Button"",
-                    ""id"": ""446d09b8-ec76-4056-bb47-3fb515dcf908"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""OpenInventoryMenu"",
                     ""type"": ""Button"",
                     ""id"": ""8f38f041-40b2-4299-83d2-65b0ceb18d5a"",
@@ -166,6 +157,51 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""Special"",
                     ""type"": ""Button"",
                     ""id"": ""faa1ed3f-89b3-4b4d-a8ea-1fd3482e8539"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""One"",
+                    ""type"": ""Button"",
+                    ""id"": ""0f2b5060-b3ce-451a-bf9f-76d4bd4bd6c3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Two"",
+                    ""type"": ""Button"",
+                    ""id"": ""333fd066-a8b7-42af-bc40-7b64996c0485"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Three"",
+                    ""type"": ""Button"",
+                    ""id"": ""d664e5e4-cb4e-4edc-b3ef-a324075a3f91"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Four"",
+                    ""type"": ""Button"",
+                    ""id"": ""b4ccb91c-7c42-48ad-83d9-38478bf92210"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Five"",
+                    ""type"": ""Button"",
+                    ""id"": ""a8f7bfa6-118b-42e4-bfb7-9f1bd4c51423"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -417,17 +453,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b205925f-624c-4e5c-b842-a8709ec19ac4"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""1"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""d7fade93-30e9-44fd-b1ab-5d8905401b08"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
@@ -489,6 +514,61 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f30175aa-5e42-4fea-943b-26c8e243558f"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""One"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f6ad47c-a9a5-4607-8869-75429176eae6"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Two"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3313b8af-757c-434c-a4ec-151a56e3b499"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Three"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""82afc06d-d14a-49de-9683-f51d075d20b1"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Four"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""99d42ef4-571a-44fd-a205-60167a0c3f3c"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Five"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -575,11 +655,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerControls_Save = m_PlayerControls.FindAction("Save", throwIfNotFound: true);
         m_PlayerControls_Load = m_PlayerControls.FindAction("Load", throwIfNotFound: true);
         m_PlayerControls_OpenPauseMenu = m_PlayerControls.FindAction("OpenPauseMenu", throwIfNotFound: true);
-        m_PlayerControls__1 = m_PlayerControls.FindAction("1", throwIfNotFound: true);
         m_PlayerControls_OpenInventoryMenu = m_PlayerControls.FindAction("OpenInventoryMenu", throwIfNotFound: true);
         m_PlayerControls_PutWeaponDown = m_PlayerControls.FindAction("PutWeaponDown", throwIfNotFound: true);
         m_PlayerControls_Camera = m_PlayerControls.FindAction("Camera", throwIfNotFound: true);
         m_PlayerControls_Special = m_PlayerControls.FindAction("Special", throwIfNotFound: true);
+        m_PlayerControls_One = m_PlayerControls.FindAction("One", throwIfNotFound: true);
+        m_PlayerControls_Two = m_PlayerControls.FindAction("Two", throwIfNotFound: true);
+        m_PlayerControls_Three = m_PlayerControls.FindAction("Three", throwIfNotFound: true);
+        m_PlayerControls_Four = m_PlayerControls.FindAction("Four", throwIfNotFound: true);
+        m_PlayerControls_Five = m_PlayerControls.FindAction("Five", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -656,11 +740,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Save;
     private readonly InputAction m_PlayerControls_Load;
     private readonly InputAction m_PlayerControls_OpenPauseMenu;
-    private readonly InputAction m_PlayerControls__1;
     private readonly InputAction m_PlayerControls_OpenInventoryMenu;
     private readonly InputAction m_PlayerControls_PutWeaponDown;
     private readonly InputAction m_PlayerControls_Camera;
     private readonly InputAction m_PlayerControls_Special;
+    private readonly InputAction m_PlayerControls_One;
+    private readonly InputAction m_PlayerControls_Two;
+    private readonly InputAction m_PlayerControls_Three;
+    private readonly InputAction m_PlayerControls_Four;
+    private readonly InputAction m_PlayerControls_Five;
     public struct PlayerControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -676,11 +764,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Save => m_Wrapper.m_PlayerControls_Save;
         public InputAction @Load => m_Wrapper.m_PlayerControls_Load;
         public InputAction @OpenPauseMenu => m_Wrapper.m_PlayerControls_OpenPauseMenu;
-        public InputAction @_1 => m_Wrapper.m_PlayerControls__1;
         public InputAction @OpenInventoryMenu => m_Wrapper.m_PlayerControls_OpenInventoryMenu;
         public InputAction @PutWeaponDown => m_Wrapper.m_PlayerControls_PutWeaponDown;
         public InputAction @Camera => m_Wrapper.m_PlayerControls_Camera;
         public InputAction @Special => m_Wrapper.m_PlayerControls_Special;
+        public InputAction @One => m_Wrapper.m_PlayerControls_One;
+        public InputAction @Two => m_Wrapper.m_PlayerControls_Two;
+        public InputAction @Three => m_Wrapper.m_PlayerControls_Three;
+        public InputAction @Four => m_Wrapper.m_PlayerControls_Four;
+        public InputAction @Five => m_Wrapper.m_PlayerControls_Five;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -723,9 +815,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @OpenPauseMenu.started += instance.OnOpenPauseMenu;
             @OpenPauseMenu.performed += instance.OnOpenPauseMenu;
             @OpenPauseMenu.canceled += instance.OnOpenPauseMenu;
-            @_1.started += instance.On_1;
-            @_1.performed += instance.On_1;
-            @_1.canceled += instance.On_1;
             @OpenInventoryMenu.started += instance.OnOpenInventoryMenu;
             @OpenInventoryMenu.performed += instance.OnOpenInventoryMenu;
             @OpenInventoryMenu.canceled += instance.OnOpenInventoryMenu;
@@ -738,6 +827,21 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Special.started += instance.OnSpecial;
             @Special.performed += instance.OnSpecial;
             @Special.canceled += instance.OnSpecial;
+            @One.started += instance.OnOne;
+            @One.performed += instance.OnOne;
+            @One.canceled += instance.OnOne;
+            @Two.started += instance.OnTwo;
+            @Two.performed += instance.OnTwo;
+            @Two.canceled += instance.OnTwo;
+            @Three.started += instance.OnThree;
+            @Three.performed += instance.OnThree;
+            @Three.canceled += instance.OnThree;
+            @Four.started += instance.OnFour;
+            @Four.performed += instance.OnFour;
+            @Four.canceled += instance.OnFour;
+            @Five.started += instance.OnFive;
+            @Five.performed += instance.OnFive;
+            @Five.canceled += instance.OnFive;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -775,9 +879,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @OpenPauseMenu.started -= instance.OnOpenPauseMenu;
             @OpenPauseMenu.performed -= instance.OnOpenPauseMenu;
             @OpenPauseMenu.canceled -= instance.OnOpenPauseMenu;
-            @_1.started -= instance.On_1;
-            @_1.performed -= instance.On_1;
-            @_1.canceled -= instance.On_1;
             @OpenInventoryMenu.started -= instance.OnOpenInventoryMenu;
             @OpenInventoryMenu.performed -= instance.OnOpenInventoryMenu;
             @OpenInventoryMenu.canceled -= instance.OnOpenInventoryMenu;
@@ -790,6 +891,21 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Special.started -= instance.OnSpecial;
             @Special.performed -= instance.OnSpecial;
             @Special.canceled -= instance.OnSpecial;
+            @One.started -= instance.OnOne;
+            @One.performed -= instance.OnOne;
+            @One.canceled -= instance.OnOne;
+            @Two.started -= instance.OnTwo;
+            @Two.performed -= instance.OnTwo;
+            @Two.canceled -= instance.OnTwo;
+            @Three.started -= instance.OnThree;
+            @Three.performed -= instance.OnThree;
+            @Three.canceled -= instance.OnThree;
+            @Four.started -= instance.OnFour;
+            @Four.performed -= instance.OnFour;
+            @Four.canceled -= instance.OnFour;
+            @Five.started -= instance.OnFive;
+            @Five.performed -= instance.OnFive;
+            @Five.canceled -= instance.OnFive;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -883,11 +999,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnSave(InputAction.CallbackContext context);
         void OnLoad(InputAction.CallbackContext context);
         void OnOpenPauseMenu(InputAction.CallbackContext context);
-        void On_1(InputAction.CallbackContext context);
         void OnOpenInventoryMenu(InputAction.CallbackContext context);
         void OnPutWeaponDown(InputAction.CallbackContext context);
         void OnCamera(InputAction.CallbackContext context);
         void OnSpecial(InputAction.CallbackContext context);
+        void OnOne(InputAction.CallbackContext context);
+        void OnTwo(InputAction.CallbackContext context);
+        void OnThree(InputAction.CallbackContext context);
+        void OnFour(InputAction.CallbackContext context);
+        void OnFive(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

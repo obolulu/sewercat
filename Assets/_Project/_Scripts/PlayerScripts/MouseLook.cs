@@ -34,7 +34,7 @@ public class MouseLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);//prevent overrotation
         transform.rotation = Quaternion.Euler(xRotation,yRotation,0f);//apply rotation to camera
 
-        float targetTilt = InputManager.moveDirection.x * tiltAngle;
+        float targetTilt = InputManager.State.MoveDirection.x * tiltAngle;
         float currentTilt = Mathf.LerpAngle(transform.localEulerAngles.z, targetTilt, tiltSpeed * Time.deltaTime);
         transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, currentTilt);
         

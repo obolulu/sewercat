@@ -115,8 +115,8 @@ namespace _Project._Scripts.PlayerScripts
 
         private void Update()
         {
-            input = InputManager.moveDirection.normalized;
-            if(InputManager.StartJump) _jumpBufferTimer = _jumpBufferTime;
+            input = InputManager.State.MoveDirection.normalized;
+            if(InputManager.State.IsJumping) _jumpBufferTimer = _jumpBufferTime;
             _jumpBufferTimer -= Time.deltaTime;
             
             if (!IsGrounded(out _))
@@ -176,7 +176,7 @@ namespace _Project._Scripts.PlayerScripts
             _timeSinceLastJump          =  0;
             _hasJumped                  =  false;
             _crouchAction               =  () => SetCrouching(!isCrouching);
-            InputManager.CrouchPressed  += _crouchAction;
+            InputManager.Crouch  += _crouchAction;
             initialCameraHolderPosition =  cameraHolder.transform.localPosition;
 
             
@@ -202,7 +202,7 @@ namespace _Project._Scripts.PlayerScripts
         }
         private void OnDestroy()
         {
-            InputManager.CrouchPressed -= _crouchAction;
+            InputManager.Crouch -= _crouchAction;
 
         }
 

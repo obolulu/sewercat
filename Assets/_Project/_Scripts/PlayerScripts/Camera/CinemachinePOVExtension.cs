@@ -52,7 +52,7 @@ public class CinemachinePOVExtension : CinemachineExtension
         if(Cursor.lockState == CursorLockMode.None) return;
         if (stage == CinemachineCore.Stage.Aim)
         {
-            Vector2 deltaInput = InputManager.GetMouseDelta();
+            Vector2 deltaInput = InputManager.State.MouseDelta;
             if(TimeManager.TimeScale < 1f) deltaInput *= TimeManager.TimeScale * slowedSensitivityMultiplier;
             currentRotation.x += deltaInput.x * verticalSensitivity   * Time.unscaledDeltaTime;
             currentRotation.y += deltaInput.y * horizontalSensitivity * Time.unscaledDeltaTime;
@@ -72,7 +72,7 @@ public class CinemachinePOVExtension : CinemachineExtension
 
     private void HandleMovementTilt(float deltaTime)
     {
-        float targetTilt = InputManager.moveDirection.x * tiltAngle;
+        float targetTilt = InputManager.State.MoveDirection.x * tiltAngle;
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, tiltSpeed * deltaTime);
     }
     private void HandleJumpLandTilt(float deltaTime)

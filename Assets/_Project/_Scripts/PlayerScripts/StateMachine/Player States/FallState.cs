@@ -64,7 +64,8 @@ public class FallState : BaseState<PlayerStateMachine.PlayerState>
             cameraRight.y = 0; // Ignore the vertical component
             cameraRight.Normalize();
 
-            Vector3 targetDirection = (cameraForward * InputManager.moveDirection.y + cameraRight * InputManager.moveDirection.x).normalized;
+            Vector3 targetDirection = (cameraForward * InputManager.State.MoveDirection.y + cameraRight
+                * InputManager.State.MoveDirection.x).normalized;
 
             _playerStateMachine.rb.AddForce(targetDirection * _playerStateMachine.PlayerSpeed/4);            
         }

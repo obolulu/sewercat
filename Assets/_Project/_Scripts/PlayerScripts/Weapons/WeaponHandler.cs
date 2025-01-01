@@ -24,7 +24,7 @@ public class WeaponHandler : MonoBehaviour
         InputManager.LeftClickDown  += Attack;
         InputManager.RightClickDown += OnRightClickDown;
         InputManager.RightClickUp   += OnRightClickUp;
-        InputManager.SpecialPressed += Special;
+        InputManager.Special += Special;
         InputManager.PutWeaponDown  += UnequipWeapon;
     } 
     
@@ -34,9 +34,14 @@ public class WeaponHandler : MonoBehaviour
         InputManager.PutWeaponDown  -= UnequipWeapon;
         InputManager.RightClickDown -= OnRightClickDown;
         InputManager.RightClickUp   -= OnRightClickUp;
-        InputManager.SpecialPressed -= Special;
+        InputManager.Special -= Special;
     }
 
+    #region  shortcuts
+
+    
+
+    #endregion
     #region  Right Click
 
     private void OnRightClickDown()
