@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
-using Debug = FMOD.Debug;
 
 namespace _Project._Scripts.EnemyDir.StateMachine
 {

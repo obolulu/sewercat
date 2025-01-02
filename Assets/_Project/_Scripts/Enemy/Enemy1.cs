@@ -45,7 +45,7 @@ namespace _Project._Scripts.EnemyDir
         
         #region State Variables
         
-        private float _currentHealth;
+        public float _currentHealth;
         private bool  _isStunned;
         private float _stunDuration;
         private bool  _isInActiveCombat;
@@ -100,7 +100,7 @@ namespace _Project._Scripts.EnemyDir
         private void SetupBlackboard()
         {
             var blackboard = tree.blackboard;
-            blackboard.SetVariableValue("Health", _currentHealth);
+            //blackboard.SetVariableValue("Health", _currentHealth);
             blackboard.SetVariableValue("MaxHealth", enemyData.maxHealth);
             blackboard.SetVariableValue("IsStunned", _isStunned);
             blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
@@ -122,7 +122,8 @@ namespace _Project._Scripts.EnemyDir
         private void UpdateBlackboard()
         {
             var blackboard = tree.blackboard;
-            blackboard.SetVariableValue("Health", _currentHealth);
+            Debug.Log(CurrentHealth);
+            //blackboard.SetVariableValue("Health", _currentHealth);
             //blackboard.SetVariableValue("IsStunned", _isStunned);
             //blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
             //blackboard.SetVariableValue("IsDisengaged", _isDisengaged);

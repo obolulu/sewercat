@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using _Project._Scripts.EnemyDir;
 using _Project._Scripts.EnemyDir.BehaviourTree.Structure;
-using _Project._Scripts.EnemyDir;
 using _Project._Scripts.ScriptBases;
 using UnityEngine;
 using UnityEngine.AI;

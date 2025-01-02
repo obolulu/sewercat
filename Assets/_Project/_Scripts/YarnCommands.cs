@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using _Project._Scripts.PlayerScripts.Stats;
 using UnityEngine;
 using Yarn.Unity;
