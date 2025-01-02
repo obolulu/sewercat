@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using _Project._Scripts.EnemyDir;
 using _Project._Scripts.ScriptBases;
@@ -40,6 +41,9 @@ namespace _Project._Scripts.Enemy
         [SerializeField] private FloatingText dialogue;
         [SerializeField] private BehaviourTreeOwner tree;
         
+        //for checking if the player is in view
+        [SerializeField] private EnemyView enemyView;
+        
         #endregion
 
         #region State Variables
@@ -64,6 +68,8 @@ namespace _Project._Scripts.Enemy
         public bool CanAttack => Time.time - _lastAttackTime >= enemyData.attackCooldown;
         
         public bool ShouldDisengage => DistanceToPlayer >= enemyData.disengageRange;
+
+        public bool IsInCombat => _isInActiveCombat;
 
         #endregion
 
@@ -101,6 +107,12 @@ namespace _Project._Scripts.Enemy
             currentHealth = enemyData.maxHealth;
             agent.speed = enemyData.moveSpeed;
             agent.angularSpeed = enemyData.rotationSpeed;
+            InitializeViewColliders();
+        }
+
+        private void InitializeViewColliders()
+        {
+            enemyView.OnEngage += Engage;
         }
 
         private void SetupBlackboard()
@@ -153,17 +165,24 @@ namespace _Project._Scripts.Enemy
 
         #region Engagement
 
+
+        
         public void Engage()
         {
             _isInActiveCombat = true;
+            CombatManager.Instance.RegisterEnemy(this);
+            enemyView.DisableColliders();
+            
         }
         
         public void Disengage()
         {
             _isInActiveCombat = false;
+            enemyView.EnableColliders();
         }
 
         #endregion
+        
         #region Combat
 
         public void TakeDamage(float damage, Vector3 hitDirection)

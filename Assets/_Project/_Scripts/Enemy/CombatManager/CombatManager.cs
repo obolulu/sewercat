@@ -36,7 +36,8 @@ public class CombatManager : MonoBehaviour
     {
         CheckAllEngagement();
     }
-    
+
+
     public void RegisterEnemy(Enemy1 enemy)
     {
         enemyList.Add(enemy);
@@ -55,18 +56,16 @@ public class CombatManager : MonoBehaviour
         }
 
         return;
-
+        
         void CheckEngagement(Enemy1 enemy)
         {
             if(enemy.ShouldDisengage)
             {
                 enemy.Disengage();
             }
-            else
-            {
-                enemy.Engage();
-            }
         }
     }
+    
+    
 
 }
