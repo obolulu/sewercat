@@ -15,54 +15,56 @@ namespace _Project._Scripts.Enemy
         [Serializable]
         public class EnemySaveData
         {
-            public string                 id;
-            public Vector3                position;
+            public string id;
+            public Vector3 position;
             public Quaternion rotation;
-            public float                  health;
-            public bool                   isDisengaged;
-            public bool                   isInActiveCombat;
+            public float health;
+            public bool isDisengaged;
+            public bool isInActiveCombat;
         }
+
         public EnemyDefaultData enemyData;
-        
+
         #region Serialized Fields
-        
-        [Header("Enemy id")]
-        [SerializeField] private string enemyId = Guid.NewGuid().ToString();
-        public string EnemyId => enemyId;
-        [Header("Patrol Settings")]
-        [SerializeField]List<GameObject> waypoints;
-        [SerializeField]NavMeshAgent agent;
-        
-        [Header("StateMachine")]
-        [SerializeField] private EnemyStateMachine stateMachine;
+
+        [Header("Enemy id")] [SerializeField] private string enemyId = Guid.NewGuid().ToString();
+
+        [Header("Patrol Settings")] [SerializeField]
+        List<GameObject> waypoints;
+
+        [SerializeField] NavMeshAgent agent;
+
+        [Header("StateMachine")] [SerializeField]
+        private EnemyStateMachine stateMachine;
+
         [SerializeField] private FloatingText dialogue;
         [SerializeField] private BehaviourTreeOwner tree;
         
-        [SerializeField] private Transform player;
-        
-        
         #endregion
-        
+
         #region State Variables
-        
+
         public float currentHealth;
-        private bool  _isStunned;
+        private bool _isStunned;
         private float _stunDuration;
-        private bool  _isInActiveCombat;
-        private bool  _isDisengaged = true;
+        private bool _isInActiveCombat;
+        private bool _isDisengaged = true;
         private float _lastAttackTime;
-        
+
         #endregion
-        
+
         #region Properties
-        
-        public string Id            => enemyId;
-        
+
+        public string Id => enemyId;
+
         //used in the behaviour tree
-        public float DistanceToPlayer => Vector3.Distance(transform.position, player.position);
+        public float DistanceToPlayer => Vector3.Distance(transform.position, CombatManager.Instance.PlayerPos);
+
         //used in attack logic
-        public bool   CanAttack     => Time.time - _lastAttackTime >= enemyData.attackCooldown;
+        public bool CanAttack => Time.time - _lastAttackTime >= enemyData.attackCooldown;
         
+        public bool ShouldDisengage => DistanceToPlayer >= enemyData.disengageRange;
+
         #endregion
 
         #region Unity Functions
@@ -71,6 +73,7 @@ namespace _Project._Scripts.Enemy
         {
             InitializeEnemy();
         }
+
         private void OnEnable()
         {
             SetupBlackboard();
@@ -81,25 +84,25 @@ namespace _Project._Scripts.Enemy
             UpdateBlackboard();
             HandleStunState();
         }
-        
+
 
 
         #endregion
-        
+
         # region Setup
-        
+
         private void InitializeEnemy()
         {
             if (string.IsNullOrEmpty(enemyId))
             {
                 enemyId = Guid.NewGuid().ToString();
             }
-            
-            currentHealth      = enemyData.maxHealth;
-            agent.speed        = enemyData.moveSpeed;
+
+            currentHealth = enemyData.maxHealth;
+            agent.speed = enemyData.moveSpeed;
             agent.angularSpeed = enemyData.rotationSpeed;
         }
-        
+
         private void SetupBlackboard()
         {
             var blackboard = tree.blackboard;
@@ -108,7 +111,7 @@ namespace _Project._Scripts.Enemy
             blackboard.SetVariableValue("IsStunned", _isStunned);
             blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
             blackboard.SetVariableValue("IsDisengaged", _isDisengaged);
-            blackboard.SetVariableValue("PlayerTransform", player);
+            //blackboard.SetVariableValue("PlayerTransform", player);
             //blackboard.SetVariableValue("Waypoints", waypoints);
             blackboard.SetVariableValue("Agent", agent);
             blackboard.SetVariableValue("AttackRange", enemyData.attackRange);
@@ -118,10 +121,11 @@ namespace _Project._Scripts.Enemy
             blackboard.SetVariableValue("AttackDamage", enemyData.attackDamage);
             blackboard.SetVariableValue("PatrolWaitTime", enemyData.patrolWaitTime);
         }
-        
+
         #endregion
-        
+
         #region Update
+
         private void UpdateBlackboard()
         {
             var blackboard = tree.blackboard;
@@ -131,16 +135,12 @@ namespace _Project._Scripts.Enemy
             //blackboard.SetVariableValue("IsDisengaged", _isDisengaged);
             //blackboard.SetVariableValue("CanAttack", CanAttack);
             tree.Tick();
-            if (player != null)
-            {
-                //float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-                //blackboard.SetVariableValue("DistanceToPlayer", distanceToPlayer);
-            }
         }
+
         private void HandleStunState()
         {
             if (!_isStunned) return;
-            
+
             _stunDuration -= Time.deltaTime;
             if (_stunDuration <= 0)
             {
@@ -148,16 +148,30 @@ namespace _Project._Scripts.Enemy
                 tree.blackboard.SetVariableValue("IsStunned", false);
             }
         }
-        
+
         #endregion
+
+        #region Engagement
+
+        public void Engage()
+        {
+            _isInActiveCombat = true;
+        }
         
+        public void Disengage()
+        {
+            _isInActiveCombat = false;
+        }
+
+        #endregion
         #region Combat
+
         public void TakeDamage(float damage, Vector3 hitDirection)
         {
             float modifiedDamage = damage / enemyData.stunResistance;
             currentHealth = Mathf.Max(0, currentHealth - modifiedDamage);
             tree.blackboard.SetVariableValue("Health", currentHealth);
-            
+
             if (dialogue != null)
             {
                 dialogue.ShowDialogue("Ouch!");
@@ -179,11 +193,11 @@ namespace _Project._Scripts.Enemy
 
         public void GetStunned(float duration)
         {
-            duration     /= enemyData.stunResistance;
-            _isStunned    =  true;
-            _stunDuration =  duration;
+            duration /= enemyData.stunResistance;
+            _isStunned = true;
+            _stunDuration = duration;
             tree.blackboard.SetVariableValue("IsStunned", true);
-            
+
             if (stateMachine != null)
             {
                 CancelAttack();
@@ -199,18 +213,20 @@ namespace _Project._Scripts.Enemy
         {
             gameObject.SetActive(false);
         }
+
         #endregion
-        
+
         #region Save/Load
+
         public EnemySaveData GetSaveData()
         {
             return new EnemySaveData
             {
-                id               = enemyId,
-                position         = transform.position,
-                rotation         = transform.rotation,
-                health           = currentHealth,
-                isDisengaged     = _isDisengaged,
+                id = enemyId,
+                position = transform.position,
+                rotation = transform.rotation,
+                health = currentHealth,
+                isDisengaged = _isDisengaged,
                 isInActiveCombat = _isInActiveCombat
             };
         }
@@ -219,9 +235,9 @@ namespace _Project._Scripts.Enemy
         {
             transform.position = data.position;
             transform.rotation = data.rotation;
-            currentHealth      = data.health;
-            _isDisengaged       = data.isDisengaged;
-            _isInActiveCombat   = data.isInActiveCombat;
+            currentHealth = data.health;
+            _isDisengaged = data.isDisengaged;
+            _isInActiveCombat = data.isInActiveCombat;
 
             if (currentHealth <= 0)
             {
@@ -234,8 +250,9 @@ namespace _Project._Scripts.Enemy
 
             SetupBlackboard();
         }
+
         #endregion
-        
+
     }
 
 

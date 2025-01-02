@@ -53,7 +53,7 @@ namespace _Project._Scripts.EnemyDir
                 var enemy = child.GetComponent<Enemy1>();
                 if (enemy != null)
                 {
-                    string enemyId = enemy.EnemyId;
+                    string enemyId = enemy.Id;
                     enemyRegistry[enemyId] = enemy;
                     
                     Enemy1.EnemySaveData initialData = enemy.GetSaveData();
