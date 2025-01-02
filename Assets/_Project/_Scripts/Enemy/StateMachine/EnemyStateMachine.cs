@@ -39,11 +39,6 @@ public class EnemyStateMachine : StateManager<EnemyStateMachine.EnemyState>
         States[EnemyState.Idle]  = new EnemyIdleState(EnemyState.Idle, _navMeshAgent, _playerTransform, transform);
         CurrentState = States[EnemyState.Chase];
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(this.transform.position, 5);
-    }
 
     public void CustomUpdate()
     {

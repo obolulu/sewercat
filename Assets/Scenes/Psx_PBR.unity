@@ -4616,6 +4616,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock_1 (4)
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 14482395387772978, guid: 40d07eda9fc4a06468dc78e340ec050c,
         type: 3}
       propertyPath: m_Enabled
@@ -4637,6 +4642,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -1089900307388307348, guid: 631146ac6ec5dbd45b761111df95684e,
         type: 3}
+    - target: {fileID: 4934498409085718545, guid: 40d07eda9fc4a06468dc78e340ec050c,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

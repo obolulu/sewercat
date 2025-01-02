@@ -33,7 +33,7 @@ namespace _Project._Scripts.Enemy
         [Header("Patrol Settings")] [SerializeField]
         List<GameObject> waypoints;
 
-        [SerializeField] NavMeshAgent agent;
+        //[SerializeField]  protected NavMeshAgent  agent;
 
         [Header("StateMachine")] [SerializeField]
         private EnemyStateMachine stateMachine;
@@ -77,8 +77,9 @@ namespace _Project._Scripts.Enemy
                 return _cachedDistanceToPlayer;
             }
         }
-        public override bool IsInCombat => _isInActiveCombat;
-        public bool IsLowOnHealth => currentHealth <= enemyData.maxHealth * 0.2f;
+        public override bool IsInCombat      => _isInActiveCombat;
+        //public override bool WantsAggressive { get; }
+        public          bool IsLowOnHealth   => currentHealth <= enemyData.maxHealth * 0.2f;
 
 
         //used in attack logic
@@ -86,16 +87,11 @@ namespace _Project._Scripts.Enemy
         
         public bool ShouldDisengage => DistanceToPlayer >= enemyData.disengageRange;
         
-        public EnemyStrategy Strategy { get; set; }
 
-        public void SetStrategy(EnemyStrategy strategy)
-        {
-            Strategy = strategy;
-            agent.ResetPath();
-        }
+
 
         //bad naming, i know, but it is used in the combat manager to determine if the enemy should engage
-        public bool WantsAgressive
+        public override bool WantsAggressive
         {
             get
             {

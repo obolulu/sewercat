@@ -16,9 +16,9 @@ namespace _Project._Scripts.Enemy
         private const int BaseAggressorCount = 1; // without difficulty
         private int maxAggressors;
     
-        private readonly List<Enemy1> enemyList = new();
-        private List<Enemy1> aggressiveEnemies = new();
-        private readonly List<Enemy1> defensiveEnemies = new();
+        private readonly List<Enemy1>    enemyList         = new();
+        private          List<EnemyBase> aggressiveEnemies = new();
+        private readonly List<EnemyBase> defensiveEnemies  = new();
         //public fields
         public Vector3 PlayerPos => player.PlayerPosition;
         private void Awake()
@@ -49,40 +49,6 @@ namespace _Project._Scripts.Enemy
             CheckAggressiveEnemies();
             CheckDefensiveEnemies();
         }
-/*
-        private void CheckAggressiveEnemies()
-        {
-            maxAggressors = 2; // Could be calculated based on difficulty
-
-            // First: Remove enemies that no longer want to be aggressive
-            for (int i = aggressiveEnemies.Count - 1; i >= 0; i--)
-            {
-                var enemy = aggressiveEnemies[i];
-                if (!enemy.WantsAgressive)
-                {
-                    enemy.SetStrategy(EnemyBase.EnemyStrategy.Defensive);
-                    aggressiveEnemies.RemoveAt(i);
-                }
-            }
-
-            // Then: If we need more aggressors, get the closest eligible enemies
-            if (aggressiveEnemies.Count < maxAggressors)
-            {
-                var availableSpots = maxAggressors - aggressiveEnemies.Count;
-        
-                var candidates = enemyList
-                                 .Where(e => !aggressiveEnemies.Contains(e) && e.WantsAgressive)
-                                 .OrderBy(e => e.DistanceToPlayer)
-                                 .Take(availableSpots);
-
-                foreach (var candidate in candidates)
-                {
-                    candidate.SetStrategy(EnemyBase.EnemyStrategy.Aggressive);
-                    aggressiveEnemies.Add(candidate);
-                }
-            }
-        }
-        */
         private void CheckAggressiveEnemies()
         {
             maxAggressors = 2;
@@ -91,7 +57,7 @@ namespace _Project._Scripts.Enemy
             for (int i = aggressiveEnemies.Count - 1; i >= 0; i--)
             {
                 var enemy = aggressiveEnemies[i];
-                if (!enemy.WantsAgressive)
+                if (!enemy.WantsAggressive)
                 {
                     enemy.SetStrategy(EnemyBase.EnemyStrategy.Defensive);
                     aggressiveEnemies.RemoveAt(i);
@@ -100,7 +66,7 @@ namespace _Project._Scripts.Enemy
 
             // Get ALL potential aggressors sorted by distance
             var allPotentialAggressors = enemyList
-                                         .Where(e => e.WantsAgressive)
+                                         .Where(e => e.WantsAggressive)
                                          .OrderBy(e => e.DistanceToPlayer)
                                          .Take(maxAggressors)
                                          .ToList();
@@ -131,7 +97,7 @@ namespace _Project._Scripts.Enemy
         private List<Enemy1> GetNewCandidates()
         {
             return enemyList
-                .Where(e => !aggressiveEnemies.Contains(e) && e.WantsAgressive)
+                .Where(e => !aggressiveEnemies.Contains(e) && e.WantsAggressive)
                 .OrderBy(e => e.DistanceToPlayer)
                 .ToList();
         }
