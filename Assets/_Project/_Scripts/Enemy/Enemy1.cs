@@ -11,7 +11,7 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace _Project._Scripts.Enemy
 {
-    public class Enemy1 : MonoBehaviour, ICustomUpdate, IDamageable
+    public class Enemy1 : EnemyBase, ICustomUpdate, IDamageable
     {
         [Serializable]
         public class EnemySaveData
@@ -44,6 +44,8 @@ namespace _Project._Scripts.Enemy
         //for checking if the player is in view
         [SerializeField] private EnemyView enemyView;
         
+        
+        
         #endregion
 
         #region State Variables
@@ -62,14 +64,26 @@ namespace _Project._Scripts.Enemy
         public string Id => enemyId;
 
         //used in the behaviour tree
-        public float DistanceToPlayer => Vector3.Distance(transform.position, CombatManager.Instance.PlayerPos);
+        public float DistanceToPlayer => Vector3.Distance(transform.position, CombatManager.CombatManager.Instance.PlayerPos);
+        public bool IsInCombat => _isInActiveCombat;
+        public bool IsLowOnHealth => currentHealth <= currentHealth / 5;
+
 
         //used in attack logic
         public bool CanAttack => Time.time - _lastAttackTime >= enemyData.attackCooldown;
         
         public bool ShouldDisengage => DistanceToPlayer >= enemyData.disengageRange;
-
-        public bool IsInCombat => _isInActiveCombat;
+        
+        //bad naming, i know, but it is used in the combat manager to determine if the enemy should engage
+        public bool WantsAgressive
+        {
+            get
+            {
+                if (IsLowOnHealth) return false;
+                if (DistanceToPlayer > enemyData.engageRange) return false;
+                return true;
+            }
+        }
 
         #endregion
 
@@ -170,7 +184,7 @@ namespace _Project._Scripts.Enemy
         public void Engage()
         {
             _isInActiveCombat = true;
-            CombatManager.Instance.RegisterEnemy(this);
+            CombatManager.CombatManager.Instance.RegisterEnemy(this);
             enemyView.DisableColliders();
             
         }
@@ -178,6 +192,7 @@ namespace _Project._Scripts.Enemy
         public void Disengage()
         {
             _isInActiveCombat = false;
+            CombatManager.CombatManager.Instance.UnregisterEnemy(this);
             enemyView.EnableColliders();
         }
 
