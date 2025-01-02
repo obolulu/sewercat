@@ -57,6 +57,7 @@ namespace _Project._Scripts.Enemy
         private bool _isDisengaged = true;
         private float _lastAttackTime;
 
+
         #endregion
 
         #region Properties
@@ -64,9 +65,20 @@ namespace _Project._Scripts.Enemy
         public string Id => enemyId;
 
         //used in the behaviour tree
-        public float DistanceToPlayer => Vector3.Distance(transform.position, CombatManager.CombatManager.Instance.PlayerPos);
-        public bool IsInCombat => _isInActiveCombat;
-        public bool IsLowOnHealth => currentHealth <= currentHealth / 5;
+        private       float _cachedDistanceToPlayer;
+        private       float _lastDistanceUpdateTime;
+        private const float DistanceUpdateInterval = 0.1f;
+
+        public float DistanceToPlayer {
+            get {
+                if (!(Time.time - _lastDistanceUpdateTime > DistanceUpdateInterval)) return _cachedDistanceToPlayer;
+                _cachedDistanceToPlayer = Vector3.Distance(transform.position, CombatManager.Instance.PlayerPos);
+                _lastDistanceUpdateTime = Time.time;
+                return _cachedDistanceToPlayer;
+            }
+        }
+        public override bool IsInCombat => _isInActiveCombat;
+        public bool IsLowOnHealth => currentHealth <= enemyData.maxHealth * 0.2f;
 
 
         //used in attack logic
@@ -74,13 +86,21 @@ namespace _Project._Scripts.Enemy
         
         public bool ShouldDisengage => DistanceToPlayer >= enemyData.disengageRange;
         
+        public EnemyStrategy Strategy { get; set; }
+
+        public void SetStrategy(EnemyStrategy strategy)
+        {
+            Strategy = strategy;
+            agent.ResetPath();
+        }
+
         //bad naming, i know, but it is used in the combat manager to determine if the enemy should engage
         public bool WantsAgressive
         {
             get
             {
                 if (IsLowOnHealth) return false;
-                if (DistanceToPlayer > enemyData.engageRange) return false;
+                //if (DistanceToPlayer > enemyData.engageRange) return false;
                 return true;
             }
         }
@@ -99,7 +119,7 @@ namespace _Project._Scripts.Enemy
             SetupBlackboard();
         }
 
-        public void CustomUpdate()
+        public override void CustomUpdate()
         {
             UpdateBlackboard();
             HandleStunState();
@@ -135,7 +155,7 @@ namespace _Project._Scripts.Enemy
             //blackboard.SetVariableValue("Health", _currentHealth);
             blackboard.SetVariableValue("MaxHealth", enemyData.maxHealth);
             blackboard.SetVariableValue("IsStunned", _isStunned);
-            blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
+            //blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
             blackboard.SetVariableValue("IsDisengaged", _isDisengaged);
             //blackboard.SetVariableValue("PlayerTransform", player);
             //blackboard.SetVariableValue("Waypoints", waypoints);
@@ -152,14 +172,11 @@ namespace _Project._Scripts.Enemy
 
         #region Update
 
+
+
         private void UpdateBlackboard()
         {
             var blackboard = tree.blackboard;
-            //blackboard.SetVariableValue("Health", _currentHealth);
-            //blackboard.SetVariableValue("IsStunned", _isStunned);
-            //blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
-            //blackboard.SetVariableValue("IsDisengaged", _isDisengaged);
-            //blackboard.SetVariableValue("CanAttack", CanAttack);
             tree.Tick();
         }
 
@@ -184,7 +201,7 @@ namespace _Project._Scripts.Enemy
         public void Engage()
         {
             _isInActiveCombat = true;
-            CombatManager.CombatManager.Instance.RegisterEnemy(this);
+            CombatManager.Instance.RegisterEnemy(this);
             enemyView.DisableColliders();
             
         }
@@ -192,7 +209,7 @@ namespace _Project._Scripts.Enemy
         public void Disengage()
         {
             _isInActiveCombat = false;
-            CombatManager.CombatManager.Instance.UnregisterEnemy(this);
+            CombatManager.Instance.UnregisterEnemy(this);
             enemyView.EnableColliders();
         }
 
@@ -200,7 +217,7 @@ namespace _Project._Scripts.Enemy
         
         #region Combat
 
-        public void TakeDamage(float damage, Vector3 hitDirection)
+        public override void TakeDamage(float damage, Vector3 hitDirection)
         {
             float modifiedDamage = damage / enemyData.stunResistance;
             currentHealth = Mathf.Max(0, currentHealth - modifiedDamage);

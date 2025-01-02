@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using _Project._Scripts.Enemy;
@@ -16,7 +17,7 @@ namespace _Project._Scripts.EnemyDir
         private Dictionary<string ,Enemy1.EnemySaveData> enemyDataMap = new Dictionary<string, Enemy1.EnemySaveData>();
         private List<Enemy1> activeEnemies = new List<Enemy1>();
 
-        private void Update()
+        private void CustomUpdate()
         {
             foreach (var enemy in activeEnemies)
             {
@@ -27,6 +28,15 @@ namespace _Project._Scripts.EnemyDir
             }
         }
 
+        private IEnumerator PeriodicUpdate()
+        {
+            while (true)
+            {
+                CustomUpdate();
+                yield return new WaitForSeconds(0.1f);
+            }
+
+        }
         private void Awake()
         {
             //SaveSystem.OnSave += SaveEnemyData;
@@ -38,6 +48,7 @@ namespace _Project._Scripts.EnemyDir
         {
             RegisterEnemies();
             SetActiveEnemies();
+            StartCoroutine(PeriodicUpdate());
         }
         
         private void SetActiveEnemies()

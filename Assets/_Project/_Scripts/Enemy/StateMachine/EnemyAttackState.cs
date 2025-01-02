@@ -37,7 +37,6 @@ namespace _Project._Scripts.EnemyDir.StateMachine
 
         public override void EnterState()
         {
-            Debug.Log("Entering attack state");
             lastAttackTime = Time.time - attackCooldown; // Allow immediate first attack
         }
 
@@ -103,7 +102,7 @@ namespace _Project._Scripts.EnemyDir.StateMachine
                 IDamageable target       = hit.GetComponent<IDamageable>();
                 Vector3     hitDirection = (hit.transform.position - enemyTransform.position).normalized;
                 target.TakeDamage(damage, hitDirection);
-                Debug.Log("Player hit for " + damage + " damage.");
+                //Debug.Log("Player hit for " + damage + " damage.");
                 hasHitPlayer = true;
             }
         }

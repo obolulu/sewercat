@@ -23,7 +23,6 @@ namespace _Project._Scripts.EnemyDir.StateMachine
 
         public override void EnterState()
         {
-            UnityEngine.Debug.Log("entering idle state");
             navMeshAgent.isStopped = true;
             lastAttackTime         = Time.time;
         }
