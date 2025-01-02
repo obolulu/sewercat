@@ -11351,11 +11351,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _parentBlackboard: {fileID: 0}
-  _serializedBlackboard: '{"_variables":{"Health":{"_propertyPath":"_Project._Scripts.EnemyDir.Enemy1._currentHealth","_name":"Health","_id":"c5c41707-961c-4e58-8741-886b021b8ef8","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+  _serializedBlackboard: '{"_variables":{"Health":{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.currentHealth","_name":"Health","_id":"c5c41707-961c-4e58-8741-886b021b8ef8","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"DistanceToPlayer":{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.DistanceToPlayer","_name":"DistanceToPlayer","_id":"bc5e1ab4-a54d-4277-a5bb-b947bac46c6c","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
   _objectReferences: []
   _serializedVariables:
-  - _json: '{"_propertyPath":"_Project._Scripts.EnemyDir.Enemy1._currentHealth","_name":"Health","_id":"c5c41707-961c-4e58-8741-886b021b8ef8","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+  - _json: '{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.currentHealth","_name":"Health","_id":"c5c41707-961c-4e58-8741-886b021b8ef8","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.DistanceToPlayer","_name":"DistanceToPlayer","_id":"bc5e1ab4-a54d-4277-a5bb-b947bac46c6c","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
     _references: []
 --- !u!1660057539 &9223372036854775807

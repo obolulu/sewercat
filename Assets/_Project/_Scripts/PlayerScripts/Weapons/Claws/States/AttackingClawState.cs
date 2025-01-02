@@ -93,10 +93,18 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             Collider[] hitColliders = Physics.OverlapSphere(_weaponFSM.transform.position, 
                                                           data.attackRange, 
                                                           data.whatIsDamageable);
-
+            Collider closestEnemy    = null;
+            float    closestDistance = float.MaxValue;
+            
             foreach (Collider hit in hitColliders)
             {
-                if (hit.TryGetComponent<IDamageable>(out var enemy))
+                float distance = Vector3.Distance(_weaponFSM.transform.position, hit.transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestEnemy    = hit;
+                }
+                if (closestEnemy.TryGetComponent<IDamageable>(out var enemy))
                 {
                     Vector3 hitDirection = (hit.transform.position - _weaponFSM.transform.position).normalized;
                     _weaponFSM.HitFeedbacks?.PlayFeedbacks();

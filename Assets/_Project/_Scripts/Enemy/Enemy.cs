@@ -10,7 +10,7 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace _Project._Scripts.Enemy
 {
-    public class Enemy1 : MonoBehaviour, ICustomUpdate, IDamageable
+    public class Enemy : MonoBehaviour, ICustomUpdate, IDamageable
     {
         [Serializable]
         public class EnemySaveData
@@ -58,9 +58,7 @@ namespace _Project._Scripts.Enemy
         
         public string Id            => enemyId;
         
-        //used in the behaviour tree
         public float DistanceToPlayer => Vector3.Distance(transform.position, player.position);
-        //used in attack logic
         public bool   CanAttack     => Time.time - _lastAttackTime >= enemyData.attackCooldown;
         
         #endregion

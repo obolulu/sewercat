@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using _Project._Scripts.Enemy;
 using _Project._Scripts.EnemyDir;
 using _Project._Scripts.PlayerScripts.SaveSystem;
 using _Project._Scripts.PlayerScripts.Stats;
