@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    private static InputManager _instance;
+    public static InputManager Instance;
     private PlayerInputs _inputs;
     
     public class InputState
@@ -37,12 +37,12 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
-        _instance = this;
+        Instance = this;
         
         _inputs = new PlayerInputs();
         BindInputActions();

@@ -98,7 +98,6 @@ namespace _Project._Scripts.PlayerScripts
         public Vector3   moveVelocity;
         public Vector3 verticalVelocity;
         private Vector2   input;
-        private bool     isLocked;
         
         private Action    _crouchAction;
         
@@ -540,7 +539,6 @@ private void SetCrouching(bool boolean)
 
         public void LockPlayer()
         {
-            isLocked         = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible   = true;
             input            = Vector2.zero;
@@ -550,7 +548,6 @@ private void SetCrouching(bool boolean)
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible   = false;
-            isLocked         = false;
         }
 
         #endregion
