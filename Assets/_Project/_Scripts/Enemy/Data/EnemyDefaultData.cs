@@ -7,7 +7,7 @@ namespace _Project._Scripts.EnemyDir
     {
         [Header("Combat")]
         public float maxHealth = 100f;
-        public float disengageRange = 20f;
+        public float disengageRange = 30f;
         public float engageRange    = 10f;
         public float attackRange    = 2f;
         public float attackDamage   = 10f;

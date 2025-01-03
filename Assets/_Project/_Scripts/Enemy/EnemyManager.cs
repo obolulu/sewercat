@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using _Project._Scripts.Enemy;
 using _Project._Scripts.PlayerScripts.SaveDirectory;
+using _Project._Scripts.ScriptBases;
 using UnityEngine;
 
 namespace _Project._Scripts.EnemyDir
@@ -12,10 +13,10 @@ namespace _Project._Scripts.EnemyDir
     {
         //List<EnemySaveData>                enemyDataList    = new List<EnemySaveData>();
         //private List<Enemy>                enemies          = new List<Enemy>();
-        [SerializeField] private bool debugMode;
-        private Dictionary<string, Enemy1> enemyRegistry = new Dictionary<string, Enemy1>();
-        private Dictionary<string ,Enemy1.EnemySaveData> enemyDataMap = new Dictionary<string, Enemy1.EnemySaveData>();
-        private List<Enemy1> activeEnemies = new List<Enemy1>();
+        [SerializeField] private bool                                        debugMode;
+        private                  Dictionary<string, EnemyBase>               enemyRegistry = new();
+        private                  Dictionary<string ,EnemyBase.EnemySaveData> enemyDataMap  = new();
+        private                  List<EnemyBase>                             activeEnemies = new List<EnemyBase>();
 
         private void CustomUpdate()
         {
@@ -61,13 +62,13 @@ namespace _Project._Scripts.EnemyDir
             enemyRegistry.Clear();
             foreach (Transform child in transform)
             {
-                var enemy = child.GetComponent<Enemy1>();
+                var enemy = child.GetComponent<EnemyBase>();
                 if (enemy != null)
                 {
                     string enemyId = enemy.Id;
                     enemyRegistry[enemyId] = enemy;
                     
-                    Enemy1.EnemySaveData initialData = enemy.GetSaveData();
+                    EnemyBase.EnemySaveData initialData = enemy.GetSaveData();
                     enemyDataMap[enemyId] = initialData;
 
                     if (debugMode) Debug.Log($"Registered enemy: {enemyId}");
@@ -86,8 +87,8 @@ namespace _Project._Scripts.EnemyDir
         
             foreach (var pair in enemyRegistry)
             {
-                string enemyId = pair.Key;
-                Enemy1  enemy   = pair.Value;
+                string    enemyId = pair.Key;
+                EnemyBase enemy   = pair.Value;
                 if (enemy != null)
                 {
                     var saveData = enemy.GetSaveData();
@@ -112,8 +113,8 @@ namespace _Project._Scripts.EnemyDir
             
             foreach (var kvp in enemyRegistry)
             {
-                string enemyId = kvp.Key;
-                Enemy1 enemy = kvp.Value;
+                string    enemyId = kvp.Key;
+                EnemyBase enemy   = kvp.Value;
 
                 if (enemy != null && enemyDataMap.ContainsKey(enemyId))
                 {

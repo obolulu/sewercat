@@ -7,6 +7,7 @@ using _Project._Scripts.Enemy;
 using _Project._Scripts.EnemyDir;
 using _Project._Scripts.PlayerScripts.SaveSystem;
 using _Project._Scripts.PlayerScripts.Stats;
+using _Project._Scripts.ScriptBases;
 using UnityEngine;
 using UnityEngine.Windows;
 using Vector3 = System.Numerics.Vector3;
@@ -16,7 +17,7 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
     [System.Serializable]
     public class EnemyDataCollection
     {
-        public List<Enemy1.EnemySaveData> enemies = new();
+        public List<EnemyBase.EnemySaveData> enemies = new();
     }
     
     public class SaveSystem : MonoBehaviour

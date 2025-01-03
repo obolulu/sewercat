@@ -3,6 +3,7 @@ using _Project._Scripts.Enemy;
 using _Project._Scripts.EnemyDir;
 using NodeCanvas.BehaviourTrees;
 using NodeCanvas.Framework;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace _Project._Scripts.ScriptBases
@@ -11,8 +12,26 @@ namespace _Project._Scripts.ScriptBases
     {
         #region ID
 
-        [Header("Enemy id")] [SerializeField] private string enemyId = Guid.NewGuid().ToString();
-        public string Id => enemyId;
+        [SerializeField] private string id; // Serialized for debugging
+        public string Id
+        {
+            get
+            {
+                // Generate a new ID if none exists
+                if (string.IsNullOrEmpty(id))
+                {
+                    id = System.Guid.NewGuid().ToString();
+                }
+                return id;
+            }
+            private set => id = value;
+        }
+        [Button("Generate New GUID")]
+        private void GenerateNewGuid()
+        {
+            if(string.IsNullOrEmpty(id) ) Id = System.Guid.NewGuid().ToString();
+            Debug.Log($"New GUID generated: {Id}");
+        }
 
         #endregion
         
@@ -70,9 +89,9 @@ namespace _Project._Scripts.ScriptBases
         // Abstract properties and methods
         public abstract bool WantsAggressive { get; } // Changed to be abstract since Enemy1 overrides it
         //public abstract void CustomUpdate();
-        
-        protected bool _isInActiveCombat = false;
-        public bool IsInCombat      => _isInActiveCombat;
+
+        private bool _isInActiveCombat = false;
+        public  bool IsInCombat      => _isInActiveCombat;
 
         
 
@@ -110,9 +129,9 @@ namespace _Project._Scripts.ScriptBases
 
         private void InitializeEnemy()
         {
-            if (string.IsNullOrEmpty(enemyId))
+            if (string.IsNullOrEmpty(Id))
             {
-                enemyId = Guid.NewGuid().ToString();
+                Id = Guid.NewGuid().ToString();
             }
 
             currentHealth = enemyData.maxHealth;
@@ -153,11 +172,11 @@ namespace _Project._Scripts.ScriptBases
         {
             return new EnemySaveData
             {
-                id = enemyId,
-                position = transform.position,
-                rotation = transform.rotation,
-                health = currentHealth,
-                isDisengaged = _isDisengaged,
+                id               = Id,
+                position         = transform.position,
+                rotation         = transform.rotation,
+                health           = currentHealth,
+                isDisengaged     = _isDisengaged,
                 isInActiveCombat = _isInActiveCombat
             };
         }
