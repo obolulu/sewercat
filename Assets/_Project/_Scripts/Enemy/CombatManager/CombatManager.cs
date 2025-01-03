@@ -58,7 +58,7 @@ namespace _Project._Scripts.Enemy
                 var enemy = aggressiveEnemies[i];
                 if (!enemy.WantsAggressive)
                 {
-                    enemy.SetStrategy(EnemyBase.EnemyStrategy.Defensive);
+                    enemy.ChangeStrategy(EnemyBase.EnemyStrategy.Defensive);
                     aggressiveEnemies.RemoveAt(i);
                 }
             }
@@ -74,7 +74,7 @@ namespace _Project._Scripts.Enemy
                 var enemy = aggressiveEnemies[i];
                 if (!allPotentialAggressors.Contains(enemy))
                 {
-                    enemy.SetStrategy(EnemyBase.EnemyStrategy.Defensive);
+                    enemy.ChangeStrategy(EnemyBase.EnemyStrategy.Defensive);
                     aggressiveEnemies.RemoveAt(i);
                 }
             }
@@ -84,7 +84,7 @@ namespace _Project._Scripts.Enemy
             {
                 if (!aggressiveEnemies.Contains(candidate))
                 {
-                    candidate.SetStrategy(EnemyBase.EnemyStrategy.Aggressive);
+                    candidate.ChangeStrategy(EnemyBase.EnemyStrategy.Aggressive);
                     aggressiveEnemies.Add(candidate);
                 }
             }

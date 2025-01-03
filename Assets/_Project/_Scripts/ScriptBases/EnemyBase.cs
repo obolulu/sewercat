@@ -9,8 +9,13 @@ namespace _Project._Scripts.ScriptBases
 {
     public abstract class EnemyBase : MonoBehaviour
     {
+        #region ID
+
         [Header("Enemy id")] [SerializeField] private string enemyId = Guid.NewGuid().ToString();
         public string Id => enemyId;
+
+        #endregion
+        
         [System.Serializable]
         public class EnemySaveData
         {
@@ -29,13 +34,25 @@ namespace _Project._Scripts.ScriptBases
             Passive,
         }
 
+        #region References
+
+        [Header("References")]
+        
         [SerializeField] protected UnityEngine.AI.NavMeshAgent agent;
         [SerializeField] protected BehaviourTreeOwner tree;
+        //For the enemy barks with floating text
+        [SerializeField] private FloatingText dialogue;
+        //for checking if the player is in view
+        [SerializeField] protected EnemyView enemyView;
+        #endregion
+
 
         protected EnemyStrategy currentStrategy;
         
         public EnemyDefaultData enemyData;
-        
+
+        #region DistanceToPlayer
+
         private       float _cachedDistanceToPlayer;
         private       float _lastDistanceUpdateTime;
         private const float DistanceUpdateInterval = 0.1f;
@@ -47,6 +64,9 @@ namespace _Project._Scripts.ScriptBases
                 return _cachedDistanceToPlayer;
             }
         }
+
+        #endregion
+
         // Abstract properties and methods
         public abstract bool WantsAggressive { get; } // Changed to be abstract since Enemy1 overrides it
         //public abstract void CustomUpdate();
@@ -55,16 +75,13 @@ namespace _Project._Scripts.ScriptBases
         public bool IsInCombat      => _isInActiveCombat;
 
         
-        //for checking if the player is in view
-        [SerializeField] protected EnemyView enemyView;
-        [SerializeField] private FloatingText dialogue;
 
         // Public property to access strategy
         public EnemyStrategy Strategy => currentStrategy;
         
         public bool ShouldDisengage => DistanceToPlayer >= enemyData.disengageRange;
         
-        public          bool IsLowOnHealth   => currentHealth <= enemyData.maxHealth * 0.2f;
+        public bool IsLowOnHealth   => currentHealth <= enemyData.maxHealth * 0.2f;
         
         public float currentHealth;
         
@@ -73,6 +90,23 @@ namespace _Project._Scripts.ScriptBases
         protected float _stunDuration;
         protected bool _isDisengaged = true;
         protected float _lastAttackTime;
+
+        #region Update
+        private void HandleStunState()
+        {
+            if (!_isStunned) return;
+
+            _stunDuration -= Time.deltaTime;
+            if (_stunDuration <= 0)
+            {
+                _isStunned = false;
+                tree.blackboard.SetVariableValue("IsStunned", false);
+            }
+        }
+
+        #endregion
+        
+        #region Initialization
 
         private void InitializeEnemy()
         {
@@ -91,24 +125,12 @@ namespace _Project._Scripts.ScriptBases
         {
             enemyView.OnEngage += Engage;
         }
-        
-        public void Engage()
-        {
-            _isInActiveCombat = true;
-            CombatManager.Instance.RegisterEnemy(this);
-            enemyView.DisableColliders();
-            
-        }
-        
-        public void Disengage()
-        {
-            _isInActiveCombat = false;
-            CombatManager.Instance.UnregisterEnemy(this);
-            enemyView.EnableColliders();
-        }
-        
 
-        public virtual void SetStrategy(EnemyStrategy newStrategy)
+        #endregion
+
+        #region strategy
+
+        protected virtual void SetStrategy(EnemyStrategy newStrategy)
         {
             currentStrategy = newStrategy;
             if (agent != null)
@@ -116,6 +138,14 @@ namespace _Project._Scripts.ScriptBases
                 agent.ResetPath();
             }
         }
+
+        public virtual void ChangeStrategy(EnemyStrategy newStrategy)
+        {
+            if (currentStrategy == newStrategy) return;
+            SetStrategy(newStrategy);
+        }
+
+        #endregion
         
         #region Save/Load
 
@@ -151,6 +181,12 @@ namespace _Project._Scripts.ScriptBases
 
             SetupBlackboard();
         }
+
+        
+        #endregion
+
+        #region combat functions
+
         public virtual void TakeDamage(float damage, Vector3 hitDirection)
         {
             float modifiedDamage = damage / enemyData.stunResistance;
@@ -172,6 +208,25 @@ namespace _Project._Scripts.ScriptBases
         {
             gameObject.SetActive(false);
         }
+        
+        #region Engagement
+        
+        public void Engage()
+        {
+            _isInActiveCombat = true;
+            CombatManager.Instance.RegisterEnemy(this);
+            enemyView.DisableColliders();
+            
+        }
+        
+        public void Disengage()
+        {
+            _isInActiveCombat = false;
+            CombatManager.Instance.UnregisterEnemy(this);
+            enemyView.EnableColliders();
+        }
+
+        #endregion
         
         #endregion
 
@@ -200,13 +255,9 @@ namespace _Project._Scripts.ScriptBases
         private void SetupBlackboard()
         {
             var blackboard = tree.blackboard;
-            //blackboard.SetVariableValue("Health", _currentHealth);
             blackboard.SetVariableValue("MaxHealth", enemyData.maxHealth);
             blackboard.SetVariableValue("IsStunned", _isStunned);
-            //blackboard.SetVariableValue("IsInCombat", _isInActiveCombat);
             blackboard.SetVariableValue("IsDisengaged", _isDisengaged);
-            //blackboard.SetVariableValue("PlayerTransform", player);
-            //blackboard.SetVariableValue("Waypoints", waypoints);
             blackboard.SetVariableValue("Agent", agent);
             blackboard.SetVariableValue("AttackRange", enemyData.attackRange);
             blackboard.SetVariableValue("EngageRange", enemyData.engageRange);

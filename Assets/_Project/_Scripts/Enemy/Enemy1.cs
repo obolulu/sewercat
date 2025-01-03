@@ -5,6 +5,7 @@ using _Project._Scripts.EnemyDir;
 using _Project._Scripts.ScriptBases;
 using NodeCanvas.BehaviourTrees;
 using NodeCanvas.Framework;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using Vector3 = UnityEngine.Vector3;
@@ -15,17 +16,13 @@ namespace _Project._Scripts.Enemy
     {
         #region Serialized Fields
 
-
-        [Header("Patrol Settings")] [SerializeField]
-        List<GameObject> waypoints;
-
-        //[SerializeField]  protected NavMeshAgent  agent;
-
+        [Header("Patrol Settings")] 
+        [SerializeField] private bool isEnemyPatrolling = false;
+        [ShowIf("isEnemyPatrolling")]
+        [SerializeField] List<GameObject> waypoints;
+        
         [Header("StateMachine")] [SerializeField]
         private EnemyStateMachine stateMachine;
-        
-
-        
         
         
         #endregion
@@ -40,33 +37,10 @@ namespace _Project._Scripts.Enemy
         #region Properties
 
 
-        //used in the behaviour tree
-        /*
-        private       float _cachedDistanceToPlayer;
-        private       float _lastDistanceUpdateTime;
-        private const float DistanceUpdateInterval = 0.1f;
-
-        public float DistanceToPlayer {
-            get {
-                if (!(Time.time - _lastDistanceUpdateTime > DistanceUpdateInterval)) return _cachedDistanceToPlayer;
-                _cachedDistanceToPlayer = Vector3.Distance(transform.position, CombatManager.Instance.PlayerPos);
-                _lastDistanceUpdateTime = Time.time;
-                return _cachedDistanceToPlayer;
-            }
-        }
-        */
-        //public override bool WantsAggressive { get; }
-
-
         //used in attack logic
-        public bool CanAttack => Time.time - _lastAttackTime >= enemyData.attackCooldown;
-        
-        //public bool ShouldDisengage => DistanceToPlayer >= enemyData.disengageRange;
-        
+        //public bool CanAttack => Time.time - _lastAttackTime >= enemyData.attackCooldown;
 
-
-
-        //bad naming, i know, but it is used in the combat manager to determine if the enemy should engage
+        //is used in the combat manager to determine if the enemy should engage
         public override bool WantsAggressive
         {
             get
@@ -83,34 +57,10 @@ namespace _Project._Scripts.Enemy
 
 
 
-        #region Update
-
-
-
-
-
-        private void HandleStunState()
-        {
-            if (!_isStunned) return;
-
-            _stunDuration -= Time.deltaTime;
-            if (_stunDuration <= 0)
-            {
-                _isStunned = false;
-                tree.blackboard.SetVariableValue("IsStunned", false);
-            }
-        }
-
-        #endregion
-
-        #region Engagement
 
 
         
-        
-
-        #endregion
-        
+        /*
         #region Combat
 
 
@@ -143,6 +93,7 @@ namespace _Project._Scripts.Enemy
 
 
         #endregion
+        */
 
     }
 

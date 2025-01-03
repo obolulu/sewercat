@@ -1319,6 +1319,11 @@ PrefabInstance:
       value: '{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.Strategy","_name":"Strategy","_id":"9db605cf-6203-4877-abf6-8c3a642ae26e","$type":"NodeCanvas.Framework.Variable`1[[_Project._Scripts.ScriptBases.EnemyBase+EnemyStrategy,
         Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
       objectReference: {fileID: 0}
+    - target: {fileID: 2014403971816669306, guid: 6f058e4891c6f994da4345deb3945fa2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2041377013851161337, guid: 6f058e4891c6f994da4345deb3945fa2,
         type: 3}
       propertyPath: m_IsActive
@@ -1349,6 +1354,11 @@ PrefabInstance:
       propertyPath: m_BlockingMask.m_Bits
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4682195670055161625, guid: 6f058e4891c6f994da4345deb3945fa2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5053692306604913437, guid: 6f058e4891c6f994da4345deb3945fa2,
         type: 3}
       propertyPath: m_Name
@@ -1369,6 +1379,11 @@ PrefabInstance:
       propertyPath: enemyView
       value: 
       objectReference: {fileID: 287274076}
+    - target: {fileID: 5278196806042864146, guid: 6f058e4891c6f994da4345deb3945fa2,
+        type: 3}
+      propertyPath: isEnemyPatrolling
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5291315046392965048, guid: 6f058e4891c6f994da4345deb3945fa2,
         type: 3}
       propertyPath: _Animator
