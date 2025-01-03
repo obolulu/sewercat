@@ -16,7 +16,7 @@ namespace _Project._Scripts.Enemy
         private const int BaseAggressorCount = 1; // without difficulty
         private int maxAggressors;
     
-        private readonly List<Enemy1>    enemyList         = new();
+        private readonly List<EnemyBase>    enemyList         = new();
         private          List<EnemyBase> aggressiveEnemies = new();
         private readonly List<EnemyBase> defensiveEnemies  = new();
         //public fields
@@ -53,7 +53,6 @@ namespace _Project._Scripts.Enemy
         {
             maxAggressors = 2;
 
-            // First: Remove enemies that no longer want to be aggressive
             for (int i = aggressiveEnemies.Count - 1; i >= 0; i--)
             {
                 var enemy = aggressiveEnemies[i];
@@ -64,14 +63,12 @@ namespace _Project._Scripts.Enemy
                 }
             }
 
-            // Get ALL potential aggressors sorted by distance
             var allPotentialAggressors = enemyList
                                          .Where(e => e.WantsAggressive)
                                          .OrderBy(e => e.DistanceToPlayer)
                                          .Take(maxAggressors)
                                          .ToList();
 
-            // Remove current aggressors that aren't in the top closest enemies
             for (int i = aggressiveEnemies.Count - 1; i >= 0; i--)
             {
                 var enemy = aggressiveEnemies[i];
@@ -94,42 +91,40 @@ namespace _Project._Scripts.Enemy
         }
 
         
-        private List<Enemy1> GetNewCandidates()
+        private List<EnemyBase> GetNewCandidates()
         {
             return enemyList
                 .Where(e => !aggressiveEnemies.Contains(e) && e.WantsAggressive)
                 .OrderBy(e => e.DistanceToPlayer)
                 .ToList();
         }
-        /*
-        private void SetAggressiveEnemies()
-        {
-            foreach(var enemy in aggressiveEnemies)
-            {
-                enemy.Strategy = EnemyBase.EnemyStrategy.Aggressive;
-            }
-        }*/
+        
         private void CheckDefensiveEnemies()
         {
         
         }
 
 
-        public void RegisterEnemy(Enemy1 enemy)
+        public void RegisterEnemy(EnemyBase enemy)
         {
             enemyList.Add(enemy);
         }
     
-        public void UnregisterEnemy(Enemy1 enemy)
+        public void UnregisterEnemy(EnemyBase enemy)
         {
             enemyList.Remove(enemy);
             aggressiveEnemies.Remove(enemy);
             defensiveEnemies.Remove(enemy);
         }
 
+        public void MakeStrategyRequest(EnemyBase enemy)
+        {
+            
+        }
+
         private void CheckAllEngagement()
         {
-            List<Enemy1> enemiesToDisengage = enemyList.Where(enemy => enemy.ShouldDisengage).ToList();
+            List<EnemyBase> enemiesToDisengage = enemyList.Where(enemy => enemy.ShouldDisengage).ToList();
             
             foreach (var enemy in enemiesToDisengage)
             {
