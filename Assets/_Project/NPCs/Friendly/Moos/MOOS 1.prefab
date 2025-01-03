@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Feedbacks: []
-  InitializationMode: 2
+  InitializationMode: 1
   AutoInitialization: 1
   SafeMode: 3
   Direction: 0
@@ -100,7 +100,7 @@ MonoBehaviour:
   CooldownDuration: 0
   InitialDelay: 0
   CanPlay: 1
-  CanPlayWhileAlreadyPlaying: 1
+  CanPlayWhileAlreadyPlaying: 0
   ChanceToPlay: 100
   FeedbacksIntensity: 1
   Events:
@@ -137,14 +137,94 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   DebugActive: 0
-  FeedbacksList: []
+  FeedbacksList:
+  - rid: 2209788012740476928
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   StopFeedbacksOnDisable: 0
   PlayCount: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 2209788012740476928
+      type: {class: MMFeedbackFMOD, ns: MoreMountains.Feedbacks, asm: Assembly-CSharp}
+      data:
+        Active: 1
+        UniqueID: -182338912
+        Label: FMOD Sound
+        ChannelMode: 0
+        Channel: 0
+        MMChannelDefinition: {fileID: 0}
+        Chance: 100
+        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
+        Timing:
+          TimescaleMode: 0
+          ExcludeFromHoldingPauses: 0
+          ContributeToTotalDuration: 1
+          InitialDelay: 0
+          CooldownDuration: 0
+          InterruptsOnStop: 1
+          NumberOfRepeats: 0
+          RepeatForever: 0
+          DelayBetweenRepeats: 1
+          PlayCount: 0
+          LimitPlayCount: 0
+          MaxPlayCount: 3
+          SetPlayCountToZeroOnReset: 0
+          MMFeedbacksDirectionCondition: 0
+          PlayDirection: 0
+          ConstantIntensity: 0
+          UseIntensityInterval: 0
+          IntensityIntervalMin: 0
+          IntensityIntervalMax: 0
+          Sequence: {fileID: 0}
+          TrackID: 0
+          Quantized: 0
+          TargetBPM: 120
+        AutomatedTargetAcquisition:
+          Mode: 0
+          ChildIndex: 0
+        RandomizeOutput: 0
+        RandomMultiplier: {x: 0.8, y: 1}
+        RandomizeDuration: 0
+        RandomDurationMultiplier: {x: 0.5, y: 2}
+        UseRange: 0
+        RangeDistance: 5
+        UseRangeFalloff: 0
+        RangeFalloff:
+          serializedVersion: 2
+          m_Curve:
+          - serializedVersion: 3
+            time: 0
+            value: 1
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 1
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          m_PreInfinity: 2
+          m_PostInfinity: 2
+          m_RotationOrder: 4
+        RemapRangeFalloff: {x: 0, y: 1}
+        AutomaticShakerSetupButton:
+          ButtonText: 
+        Owner: {fileID: 5758218016994610434}
+        DebugActive: 0
+        eventSO: {fileID: 11400000, guid: 6c4af108689a91b42870bf7630550473, type: 2}
+        usePosition: 1
+        useOwnerPosition: 1
+        specificPosition: {x: 0, y: 0, z: 0}
+        parameters: []
 --- !u!222 &7572615494099425846
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -412,15 +492,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -622,7 +702,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 0
 --- !u!1001 &5396222411916070476
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -639,32 +719,32 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.57
+      value: 2.81
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25.55
+      value: 13.921
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
@@ -674,7 +754,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
         type: 3}
@@ -831,8 +911,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   animancer: {fileID: 5291315046392965048}
-  attackClip: {fileID: 4781951162920444690, guid: 2de19fabf4341da4ca95bef7a1592284,
-    type: 3}
+  attackClip: {fileID: 7400000, guid: d2866d3fa5a1f184ab385ef01d060065, type: 2}
   attackFeedbacks: {fileID: 5758218016994610434}
 --- !u!195 &7452034015692522833
 NavMeshAgent:
@@ -933,7 +1012,7 @@ MonoBehaviour:
   _preInitializeSubGraphs: 0
   _updateMode: 3
   _graph: {fileID: 11400000, guid: f5a6e2921abab5740811bb46ee170aca, type: 2}
-  _blackboard: {fileID: 0}
+  _blackboard: {fileID: 1800267182030776087}
 --- !u!114 &5278196806042864146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,11 +1025,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca88cd9ada1642c3a1fa6771b6b6913f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyId: 40eafc20-1b6d-49fa-ad6f-09149e6e2139
+  enemyId: 
   agent: {fileID: 7452034015692522833}
-  tree: {fileID: 0}
+  tree: {fileID: 336703324328865567}
   dialogue: {fileID: 257154935865431459}
-  enemyView: {fileID: 0}
+  enemyView: {fileID: 2109363234805527384}
   enemyData: {fileID: 11400000, guid: a60cd23b83d9a284db75fcfdfe669b25, type: 2}
   currentHealth: 0
   isEnemyPatrolling: 0
@@ -991,7 +1070,10 @@ MonoBehaviour:
   _serializedBlackboard: '{"_variables":{"Health":{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.currentHealth","_name":"Health","_id":"c5c41707-961c-4e58-8741-886b021b8ef8","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"DistanceToPlayer":{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.DistanceToPlayer","_name":"DistanceToPlayer","_id":"bc5e1ab4-a54d-4277-a5bb-b947bac46c6c","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
     mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"ShouldDisengage":{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.ShouldDisengage","_name":"ShouldDisengage","_id":"b1e56c9c-10c0-48b4-ab78-d9992be4fc1e","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
-    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}}}'
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"EngageRange":{"_name":"EngageRange","_id":"338bd308-ab79-45d4-84eb-cd2f1c27a1b4","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"IsInCombat":{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.IsInCombat","_name":"IsInCombat","_id":"0eb6a699-3496-4e8c-a741-983609a80ac2","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+    mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"},"Strategy":{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.Strategy","_name":"Strategy","_id":"9db605cf-6203-4877-abf6-8c3a642ae26e","$type":"NodeCanvas.Framework.Variable`1[[_Project._Scripts.ScriptBases.EnemyBase+EnemyStrategy,
+    Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}}}'
   _objectReferences: []
   _serializedVariables:
   - _json: '{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.currentHealth","_name":"Health","_id":"c5c41707-961c-4e58-8741-886b021b8ef8","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
@@ -1002,6 +1084,15 @@ MonoBehaviour:
     _references: []
   - _json: '{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.ShouldDisengage","_name":"ShouldDisengage","_id":"b1e56c9c-10c0-48b4-ab78-d9992be4fc1e","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
       mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_name":"EngageRange","_id":"338bd308-ab79-45d4-84eb-cd2f1c27a1b4","$type":"NodeCanvas.Framework.Variable`1[[System.Single,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.IsInCombat","_name":"IsInCombat","_id":"0eb6a699-3496-4e8c-a741-983609a80ac2","$type":"NodeCanvas.Framework.Variable`1[[System.Boolean,
+      mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]"}'
+    _references: []
+  - _json: '{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.Strategy","_name":"Strategy","_id":"9db605cf-6203-4877-abf6-8c3a642ae26e","$type":"NodeCanvas.Framework.Variable`1[[_Project._Scripts.ScriptBases.EnemyBase+EnemyStrategy,
+      Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
     _references: []
 --- !u!4 &5578133426327726503 stripped
 Transform:
