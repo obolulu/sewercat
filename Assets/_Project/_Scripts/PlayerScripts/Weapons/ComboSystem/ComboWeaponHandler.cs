@@ -6,6 +6,8 @@ namespace _Project._Scripts.PlayerScripts.Weapons.ComboSystem
     public class ComboWeaponHandler : WeaponBase
     {
         [SerializeField] private ComboManager comboManager;
+        [SerializeField] private ComboChainSO defaultComboChain;
+        
         private                  bool         hasAttackInput;
         private                  bool         hasSpecialInput;
 

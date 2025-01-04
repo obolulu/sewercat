@@ -16,9 +16,17 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.NewSystem
         
             if (!Manager.ComboManager.IsInCombo)
             {
-                // Start new combo
-                _currentAttack = Manager.ComboManager.CurrentAttack;
-                //?? Manager.ComboManager.CurrentComboChain.startingAttacks[0];
+                // Start new combo with first attack in chain
+                if (Manager.ComboManager.CurrentComboChain != null && 
+                    Manager.ComboManager.CurrentComboChain.startingAttacks.Length > 0)
+                {
+                    _currentAttack = Manager.ComboManager.CurrentComboChain.startingAttacks[0];
+                }
+                else
+                {
+                    Debug.LogError("No combo chain or starting attacks defined!");
+                    return;
+                }
             }
             else
             {

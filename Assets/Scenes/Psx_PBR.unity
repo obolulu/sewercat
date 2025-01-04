@@ -1273,7 +1273,7 @@ PrefabInstance:
     - target: {fileID: 5578133426327726503, guid: 6f058e4891c6f994da4345deb3945fa2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.497322
+      value: -2.19
       objectReference: {fileID: 0}
     - target: {fileID: 5578133426327726503, guid: 6f058e4891c6f994da4345deb3945fa2,
         type: 3}
@@ -9567,6 +9567,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.020007487
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007613506345140912, guid: bc815fe6f2270114db0483b9cda35595,
+        type: 3}
+      propertyPath: m_RequiresOpaqueTextureOption
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
