@@ -21,9 +21,14 @@ public enum ComboInputType
 public class AttackAnimation : ScriptableObject
 {
     public AnimationClip         attackAnimation;
+    [Header("Combo stuff")]
     public float                 earlyComboWindowStart = 0.6f;
-    public float                 comboWindowEnd        = 0.9f;
-    public List<ComboTransition> possibleCombos        = new List<ComboTransition>();
+    public              float                 comboWindowEnd   = 0.9f;
+    public              List<ComboTransition> possibleCombos   = new List<ComboTransition>();
+    [Header("")] 
+    public float damageMultiplier = 1f; //
+    [Header("Polish")]
+    public FMODEventSO attackSound;
     
     private bool           hasBufferedInput;
     private ComboInputType bufferedInputType;

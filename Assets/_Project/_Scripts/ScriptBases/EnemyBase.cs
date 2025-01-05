@@ -225,6 +225,8 @@ namespace _Project._Scripts.ScriptBases
         }
         private void HandleDeath()
         {
+            CombatManager.Instance.UnregisterEnemy(this);
+            EnemyManager.Instance.SetEnemyInactive(this);
             gameObject.SetActive(false);
         }
         
@@ -264,6 +266,10 @@ namespace _Project._Scripts.ScriptBases
         public virtual void CustomUpdate()
         {
             UpdateBlackboard();
+            if (_isInActiveCombat)
+            {
+                Engage();
+            }
         }
         #endregion
         

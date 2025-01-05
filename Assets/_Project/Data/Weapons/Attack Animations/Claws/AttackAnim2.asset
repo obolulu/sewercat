@@ -16,7 +16,5 @@ MonoBehaviour:
     type: 3}
   earlyComboWindowStart: 0.6
   comboWindowEnd: 0.9
-  possibleCombos:
-  - nextAttack: {fileID: 11400000, guid: 196e7ffce66580c47a9b83ceccb81a72, type: 2}
-    inputType: 0
-    transitionWindow: 0.2
+  possibleCombos: []
+  attackSound: {fileID: 11400000, guid: 8a059a410134c36418e7cc5142814230, type: 2}

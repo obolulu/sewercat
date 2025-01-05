@@ -9503,6 +9503,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4103133563971100809, guid: bc815fe6f2270114db0483b9cda35595,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.601
+      objectReference: {fileID: 0}
     - target: {fileID: 4485491897835477536, guid: bc815fe6f2270114db0483b9cda35595,
         type: 3}
       propertyPath: dialogueRunner
@@ -9567,6 +9572,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.020007487
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661159204798202932, guid: bc815fe6f2270114db0483b9cda35595,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8007613506345140912, guid: bc815fe6f2270114db0483b9cda35595,
         type: 3}

@@ -333,7 +333,7 @@ MonoBehaviour:
     - rid: 2209787642359054342
       type: {class: MMFeedbackFMOD, ns: MoreMountains.Feedbacks, asm: Assembly-CSharp}
       data:
-        Active: 1
+        Active: 0
         UniqueID: -1613697987
         Label: FMOD Sound
         ChannelMode: 0

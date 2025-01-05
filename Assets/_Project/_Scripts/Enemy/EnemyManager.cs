@@ -11,12 +11,11 @@ namespace _Project._Scripts.EnemyDir
 {
     public class EnemyManager : MonoBehaviour
     {
-        //List<EnemySaveData>                enemyDataList    = new List<EnemySaveData>();
-        //private List<Enemy>                enemies          = new List<Enemy>();
+        public static            EnemyManager                                Instance;
         [SerializeField] private bool                                        debugMode;
         private                  Dictionary<string, EnemyBase>               enemyRegistry = new();
         private                  Dictionary<string ,EnemyBase.EnemySaveData> enemyDataMap  = new();
-        private                  List<EnemyBase>                             activeEnemies = new List<EnemyBase>();
+        private                  HashSet<EnemyBase>                          activeEnemies = new();
 
         private void CustomUpdate()
         {
@@ -31,10 +30,11 @@ namespace _Project._Scripts.EnemyDir
 
         private IEnumerator PeriodicUpdate()
         {
+            var wait = new WaitForSeconds(0.1f);
             while (true)
             {
                 CustomUpdate();
-                yield return new WaitForSeconds(0.1f);
+                yield return wait;
             }
 
         }
@@ -42,6 +42,15 @@ namespace _Project._Scripts.EnemyDir
         {
             //SaveSystem.OnSave += SaveEnemyData;
             SaveSystem.OnLoad += LoadEnemyData;
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(this);
+            }
         
         }
 
@@ -54,7 +63,19 @@ namespace _Project._Scripts.EnemyDir
         
         private void SetActiveEnemies()
         {
-            activeEnemies = enemyRegistry.Values.ToList();
+            /*
+            foreach(var enemy in enemyRegistry.Values)
+            {
+                if (enemy.isActiveAndEnabled)
+                {
+                    activeEnemies.Add(enemy);
+                }
+            }
+            activeEnemies = enemyRegistry.Values.ToHashSet();
+            */
+            activeEnemies = enemyRegistry.Values
+                                         .Where(enemy => enemy.isActiveAndEnabled)
+                                         .ToHashSet();
         }
 
         private void RegisterEnemies()
@@ -79,6 +100,14 @@ namespace _Project._Scripts.EnemyDir
         private void OnDestroy()
         {
             SaveSystem.OnLoad -= LoadEnemyData;
+        }
+
+        public void SetEnemyInactive(EnemyBase enemy)
+        {
+            if (activeEnemies.Contains(enemy))
+            {
+                activeEnemies.Remove(enemy);
+            }
         }
 
         public EnemyDataCollection SaveEnemyData()
@@ -126,6 +155,7 @@ namespace _Project._Scripts.EnemyDir
                     if (debugMode) Debug.LogWarning($"Failed to load data for enemy: {enemyId}");
                 }
             }
+            SetActiveEnemies();
         }
         public void UpdateSaveData(EnemyDataCollection collection)
         {

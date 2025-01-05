@@ -85,8 +85,10 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
                 currentState.Clip.wrapMode = WrapMode.Once;
                 eventsAdded                = true;
             }
-        
+            
             _weaponFSM.AttackFeedbacks?.PlayFeedbacks();
+            AudioManager.Instance.PlaySound(currentAttackAnimation?.attackSound, 
+                                                  _weaponFSM.transform.position);
         }
         
         private void HitDetect()
@@ -109,7 +111,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
                 {
                     Vector3 hitDirection = (hit.transform.position - _weaponFSM.transform.position).normalized;
                     _weaponFSM.HitFeedbacks?.PlayFeedbacks();
-                    enemy.TakeDamage(data.attackDamage, hitDirection);
+                    enemy.TakeDamage(data.attackDamage * currentAttackAnimation.damageMultiplier, hitDirection);
                 }
             }
         }

@@ -1,7 +1,5 @@
 using _Project._Scripts.Items;
 using _Project._Scripts.PlayerScripts;
-using _Project._Scripts.PlayerScripts.Weapons.Claws.NewSystem;
-using _Project._Scripts.PlayerScripts.Weapons.ComboSystem;
 using _Project._Scripts.ScriptBases;
 using DG.Tweening;
 using UnityEngine;
@@ -11,7 +9,6 @@ public class WeaponHandler : MonoBehaviour
     [SerializeField] private WeaponData currentWeaponData;
     [SerializeField] private WeaponBase currentWeapon;
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private PlayerCombatController combatController;
     
     [Header("Animation Settings")]
     [SerializeField] private Vector3 hiddenPosition = new Vector3(0, -0.5f, 0);
@@ -25,16 +22,6 @@ public class WeaponHandler : MonoBehaviour
         InputManager.RightClickUp += OnRightClickUp;
         InputManager.Special += Special;
         InputManager.PutWeaponDown += UnequipWeapon;
-
-        // Get or add combat controller
-        if (combatController == null)
-        {
-            combatController = GetComponent<PlayerCombatController>();
-        }
-        if (combatController == null)
-        {
-            combatController = gameObject.AddComponent<PlayerCombatController>();
-        }
     }
 
     private void OnDestroy()
@@ -77,12 +64,6 @@ public class WeaponHandler : MonoBehaviour
         // Setup weapon
         currentWeapon.SetWeapon(playerController);
         currentWeapon.transform.localPosition = hiddenPosition;
-        
-        // Initialize combat controller with the weapon
-        if (weaponObj.GetComponent<ComboWeaponHandler>() != null)
-        {
-            combatController.EquipWeapon(weaponObj);
-        }
         
         // Animate weapon into position
         currentWeapon.transform.DOLocalMove(visiblePosition, animationDuration)

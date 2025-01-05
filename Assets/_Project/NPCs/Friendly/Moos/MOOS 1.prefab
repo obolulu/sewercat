@@ -862,6 +862,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1800267182030776087}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7073ad09ee211cc45a65abef27707dd9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1273289576492398878}
   m_SourcePrefab: {fileID: 100100000, guid: 7073ad09ee211cc45a65abef27707dd9, type: 3}
 --- !u!1 &5053692306604913437 stripped
 GameObject:
@@ -1025,7 +1029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca88cd9ada1642c3a1fa6771b6b6913f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyId: 
+  id: 
   agent: {fileID: 7452034015692522833}
   tree: {fileID: 336703324328865567}
   dialogue: {fileID: 257154935865431459}
@@ -1094,6 +1098,23 @@ MonoBehaviour:
   - _json: '{"_propertyPath":"_Project._Scripts.Enemy.Enemy1.Strategy","_name":"Strategy","_id":"9db605cf-6203-4877-abf6-8c3a642ae26e","$type":"NodeCanvas.Framework.Variable`1[[_Project._Scripts.ScriptBases.EnemyBase+EnemyStrategy,
       Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]"}'
     _references: []
+--- !u!114 &1273289576492398878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5053692306604913437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2acf0adf62718e4199b68a60cb21ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: 0
+  UseRandomUID: 1
+  UseRootUID: 1
+  UseRootColor: 1
+  Color: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &5578133426327726503 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7073ad09ee211cc45a65abef27707dd9,
