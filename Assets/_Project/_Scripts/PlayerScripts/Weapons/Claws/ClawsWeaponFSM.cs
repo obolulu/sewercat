@@ -41,6 +41,10 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     public AnimancerComponent Animancer       => animator;
     public Camera      MainCamera      => mainCamera;
     public float       LastAttackTime  { get; set; }
+    
+    private ComboInputType currentInputType;
+    public  ComboInputType CurrentInputType => currentInputType;
+    
 
     #region feedbacks
 
@@ -74,6 +78,7 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     }
     public void TryAttack()
     {
+        currentInputType = ComboInputType.LightAttack;
         nextState = ClawsWeaponState.Attacking;
     }
 

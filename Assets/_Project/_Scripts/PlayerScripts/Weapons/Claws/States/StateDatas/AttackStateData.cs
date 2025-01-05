@@ -1,5 +1,7 @@
-﻿using MoreMountains.Feedbacks;
+﻿using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using Sirenix.OdinInspector;
+using Sirenix.Serialization;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas
 {
@@ -9,7 +11,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas
     public class AttackStateData : StateData
     {
         [Header("Attack Data")]
-        public  float     attackDamage = 10f;
+        public  float attackDamage = 10f;
         public  float attackRange    = 2f;
         public  float attackRadius   = 1f;
         public float attackCooldown = 0.5f;
@@ -17,7 +19,9 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas
         
         [Title("Animations & Effects")]
         [Header("Attack Animation")]
-        public AttackAnimation attackAnimation;
+        public AttackAnimation defaultAttack;        
+        //[OdinSerialize]
+        //public Dictionary<string, AttackAnimation> AttackAnimations = new();
         
         //[Header("Attack Effects")]
         //public MMFeedbacks attackFeedbacks;

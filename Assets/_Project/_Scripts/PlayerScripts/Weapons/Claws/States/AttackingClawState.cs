@@ -13,17 +13,19 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private          bool           isAttacking;
         private          float          currentAnimationTime;
         
-        private          AttackStateData data;
+        private AttackAnimation currentAttackAnimation;
+        private AttackStateData data;
         private AnimancerState currentState;
         private bool eventsAdded;
 
         public AttackClawState(ClawsWeaponFSM.ClawsWeaponState key, ClawsWeaponFSM weaponFSM, AttackStateData data) :
             base(key)
         {
-            _weaponFSM     = weaponFSM;
-            this.data      = data;
-            attackCooldown = data.attackCooldown;
-            lastAttackTime = -attackCooldown;
+            _weaponFSM             = weaponFSM;
+            this.data              = data;
+            attackCooldown         = data.attackCooldown;
+            lastAttackTime         = -attackCooldown;
+            currentAttackAnimation = data.defaultAttack;  // Initialize with default attack
         }
 
         public override void EnterState()
@@ -38,54 +40,53 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         public override void UpdateState()
         {
             if (!isAttacking) return;
-            
+        
             if (currentState != null)
             {
                 currentAnimationTime = currentState.Time / currentState.Duration;
-                
+            
                 // Check if we're in the combo window
-                if (currentState.NormalizedTime >= data.attackAnimation.earlyComboWindowStart /*&& 
-                    currentState.NormalizedTime <= data.attackAnimation.comboWindowEnd*/)
+                if (currentState.NormalizedTime >= currentAttackAnimation.earlyComboWindowStart)
                 {
                     // If attack input is received during combo window, buffer it
                     if (_weaponFSM.StateRequest == ClawsWeaponFSM.ClawsWeaponState.Attacking)
                     {
-                        data.attackAnimation.BufferInput();
+                        currentAttackAnimation.BufferInput(_weaponFSM.CurrentInputType);
                     }
                 }
-                
+            
                 // When we reach the end of combo window
-                if (currentState.NormalizedTime >= data.attackAnimation.comboWindowEnd)
+                if (currentState.NormalizedTime >= currentAttackAnimation.comboWindowEnd)
                 {
-                    // Check if we have a buffered input
-                    if (data.attackAnimation.HasBufferedInput)
+                    // Check if we have a buffered input and valid next attack
+                    if (currentAttackAnimation.TryGetNextAttack(out var nextAttack))
                     {
-                        data.attackAnimation.ConsumeBufferedInput();
-                        StartAttack(); // Start the next attack in the combo
+                        currentAttackAnimation.ConsumeBufferedInput();
+                        currentAttackAnimation = nextAttack;
+                        StartAttack();
                     }
                 }
             }
         }
+
 
         private void StartAttack()
         {
             _weaponFSM.ResetState();
-            isAttacking = true;
+            isAttacking    = true;
             lastAttackTime = Time.time;
-            AttackRoutine();
-            _weaponFSM.AttackFeedbacks?.PlayFeedbacks();
-        }
-
-        private void AttackRoutine()
-        {
-            currentState = _weaponFSM.Animancer?.Play(data.attackAnimation.attackAnimation);
+        
+            // Use current attack animation
+            currentState = _weaponFSM.Animancer?.Play(currentAttackAnimation.attackAnimation);
             if (currentState != null && !eventsAdded)
             {
                 currentState.Events(this).OnEnd = EndAttack;
-                currentState.Events(this).Add(0.5f, HitDetect); // Add hit detection at 50% of animation
-                currentState.Clip.wrapMode = WrapMode.Once; // Prevent looping
-                eventsAdded = true;
+                currentState.Events(this).Add(0.5f, HitDetect);
+                currentState.Clip.wrapMode = WrapMode.Once;
+                eventsAdded                = true;
             }
+        
+            _weaponFSM.AttackFeedbacks?.PlayFeedbacks();
         }
         
         private void HitDetect()
@@ -116,8 +117,9 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         private void EndAttack()
         {
             isAttacking = false;
-            if (!data.attackAnimation.HasBufferedInput)
+            if (!currentAttackAnimation.HasBufferedInput)
             {
+                currentAttackAnimation = data.defaultAttack; // Reset to default attack if combo ends
                 _weaponFSM.ResetWeapon();
             }
         }
@@ -125,14 +127,14 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         public override void ExitState()
         {
             isAttacking = false;
-            data.attackAnimation.ConsumeBufferedInput(); // Clear any remaining buffered input
+            currentAttackAnimation.ConsumeBufferedInput();
+            currentAttackAnimation = data.defaultAttack; // Reset to default attack
             if (currentState != null && eventsAdded)
             {
                 currentState.Events(this).Clear();
                 eventsAdded = false;
             }
         }
-
         public override ClawsWeaponFSM.ClawsWeaponState GetNextState()
         {
             if (!isAttacking)

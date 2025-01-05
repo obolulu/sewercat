@@ -19,7 +19,4 @@ MonoBehaviour:
   whatIsDamageable:
     serializedVersion: 2
     m_Bits: 128
-  attackAnimation:
-    attackAnimation: {fileID: 7400000, guid: d2866d3fa5a1f184ab385ef01d060065, type: 2}
-    earlyComboWindowStart: 0.6
-    comboWindowEnd: 0.9
+  defaultAttack: {fileID: 11400000, guid: 196e7ffce66580c47a9b83ceccb81a72, type: 2}

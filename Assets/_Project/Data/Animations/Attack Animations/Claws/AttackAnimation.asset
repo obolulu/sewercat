@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2de782aeb4e084a912f4b4d12f3dcb, type: 3}
+  m_Name: AttackAnimation
+  m_EditorClassIdentifier: 
+  attackAnimation: {fileID: 4781951162920444690, guid: 2de19fabf4341da4ca95bef7a1592284,
+    type: 3}
+  earlyComboWindowStart: 0.6
+  comboWindowEnd: 0.9
+  possibleCombos:
+  - nextAttack: {fileID: 11400000, guid: 07159c378398e7d4bba76730fe9c715d, type: 2}
+    inputType: 0
+    transitionWindow: 0.2
