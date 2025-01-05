@@ -32,8 +32,8 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.NewSystem
                 return ComboState.Idle;
             }
         
-            if (Manager.WeaponHandler.ConsumeAttackInput() && 
-                Manager.ComboManager.CanContinueCombo())
+            if (Manager.WeaponHandler.ConsumeAttackInput() 
+                && Manager.ComboManager.CanContinueCombo())
             {
                 return ComboState.Attack;
             }

@@ -12,6 +12,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.NewSystem
     
         public override void EnterState()
         {
+            Debug.Log("Entering Attack State");
             _stateTime = 0f;
         
             if (!Manager.ComboManager.IsInCombo)

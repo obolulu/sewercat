@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws.NewSystem
 {
     public class ClawsIdleState : ComboStateBase
