@@ -44,9 +44,12 @@ namespace _Project._Scripts.ScriptBases
             public float health;
             public bool isDisengaged;
             public bool isInActiveCombat;
+            public EnemyStrategy strategy;
+
         }
         public enum EnemyStrategy
         {
+            None,
             Aggressive,
             Defensive,
             Fleeing,
@@ -66,7 +69,7 @@ namespace _Project._Scripts.ScriptBases
         #endregion
 
 
-        protected EnemyStrategy currentStrategy;
+        private EnemyStrategy currentStrategy;
         
         public EnemyDefaultData enemyData;
 
@@ -177,7 +180,8 @@ namespace _Project._Scripts.ScriptBases
                 rotation         = transform.rotation,
                 health           = currentHealth,
                 isDisengaged     = _isDisengaged,
-                isInActiveCombat = _isInActiveCombat
+                isInActiveCombat = _isInActiveCombat,
+                strategy = currentStrategy
             };
         }
 
@@ -188,7 +192,7 @@ namespace _Project._Scripts.ScriptBases
             currentHealth = data.health;
             _isDisengaged = data.isDisengaged;
             _isInActiveCombat = data.isInActiveCombat;
-
+            currentStrategy = data.strategy;
             if (currentHealth <= 0)
             {
                 HandleDeath();
@@ -196,6 +200,13 @@ namespace _Project._Scripts.ScriptBases
             else
             {
                 gameObject.SetActive(true);
+                enemyView.EnableColliders(); // Add this line to re-enable colliders
+            }
+
+            if (_isInActiveCombat)
+            {
+                CombatManager.Instance.RegisterEnemy(this);
+                enemyView.DisableColliders();
             }
 
             SetupBlackboard();
@@ -225,6 +236,8 @@ namespace _Project._Scripts.ScriptBases
         }
         private void HandleDeath()
         {
+            _isInActiveCombat = false;
+            currentStrategy   = EnemyStrategy.None;
             CombatManager.Instance.UnregisterEnemy(this);
             EnemyManager.Instance.SetEnemyInactive(this);
             gameObject.SetActive(false);
@@ -234,9 +247,12 @@ namespace _Project._Scripts.ScriptBases
         
         public void Engage()
         {
+        if (!_isInActiveCombat)
+        {
             _isInActiveCombat = true;
             CombatManager.Instance.RegisterEnemy(this);
             enemyView.DisableColliders();
+        }
             
         }
         

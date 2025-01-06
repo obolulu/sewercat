@@ -140,6 +140,9 @@ namespace _Project._Scripts.EnemyDir
         {
             if (enemyDataMap == null) return;
             
+            CombatManager.Instance.ClearEnemies();
+            activeEnemies.Clear();
+
             foreach (var kvp in enemyRegistry)
             {
                 string    enemyId = kvp.Key;
@@ -147,7 +150,12 @@ namespace _Project._Scripts.EnemyDir
 
                 if (enemy != null && enemyDataMap.ContainsKey(enemyId))
                 {
+                    enemy.gameObject.SetActive(true);
                     enemy.LoadSaveData(enemyDataMap[enemyId]);
+                    if (enemy.gameObject.activeSelf) // Add this check
+                    {
+                        activeEnemies.Add(enemy); // Add this line to rebuild active enemies
+                    }
                     if (debugMode) Debug.Log($"Loaded data for enemy: {enemyId}");
                 }
                 else

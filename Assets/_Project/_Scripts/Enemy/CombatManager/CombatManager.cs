@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using _Project._Scripts.EnemyDir;
 using _Project._Scripts.PlayerScripts;
+using _Project._Scripts.PlayerScripts.SaveDirectory;
 using _Project._Scripts.ScriptBases;
 using UnityEngine;
 
@@ -16,7 +18,7 @@ namespace _Project._Scripts.Enemy
         private const int BaseAggressorCount = 1; // without difficulty
         private int maxAggressors;
     
-        private readonly List<EnemyBase>    enemyList         = new();
+        private readonly HashSet<EnemyBase>    enemyList         = new();
         private          List<EnemyBase> aggressiveEnemies = new();
         private readonly List<EnemyBase> defensiveEnemies  = new();
         //public fields
@@ -32,10 +34,9 @@ namespace _Project._Scripts.Enemy
             {
                 Destroy(this);
             }
-        
 
         }
-    
+        
         //is called in FixedUpdate for now, will change in the future to tick after a while like 0.2 or 0.5 seconds
         private void FixedUpdate()
         {
@@ -84,9 +85,17 @@ namespace _Project._Scripts.Enemy
             {
                 if (!aggressiveEnemies.Contains(candidate))
                 {
-                    candidate.ChangeStrategy(EnemyBase.EnemyStrategy.Aggressive);
                     aggressiveEnemies.Add(candidate);
                 }
+            }
+            SetAggressiveEnemies();
+        }
+
+        private void SetAggressiveEnemies()
+        {
+            foreach (var enemy in aggressiveEnemies)
+            {
+                enemy.ChangeStrategy(EnemyBase.EnemyStrategy.Aggressive);
             }
         }
 
@@ -121,7 +130,14 @@ namespace _Project._Scripts.Enemy
         {
             
         }
-
+        
+        public void ClearEnemies()
+        {
+            enemyList.Clear();
+            aggressiveEnemies.Clear();
+            defensiveEnemies.Clear();
+        }
+        
         private void CheckAllEngagement()
         {
             List<EnemyBase> enemiesToDisengage = enemyList.Where(enemy => enemy.ShouldDisengage).ToList();

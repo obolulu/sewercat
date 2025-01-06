@@ -148,8 +148,14 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
     
         public async void LoadGame()
         {
-            playerStats           =  playerStatsHandler.GetStats();
+            playerStats = playerStatsHandler.GetStats();
             var data = await LoadData();
+            if (data == null)
+            {
+                Debug.LogWarning("No save data found, starting new game");
+                return;
+            }
+            try{
             player.transform.position =
                 new UnityEngine.Vector3(data.playerLocation.x, data.playerLocation.y, data.playerLocation.z);
             playerStats.Health          = data.playerHealth;
@@ -161,6 +167,11 @@ namespace _Project._Scripts.PlayerScripts.SaveDirectory
             LoadItems(data);
             
             OnLoad?.Invoke();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error during load process: {e.Message}");
+            }
 
         }
         
