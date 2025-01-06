@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2de782aeb4e084a912f4b4d12f3dcb, type: 3}
   m_Name: AttackAnimation
   m_EditorClassIdentifier: 
-  attackAnimation: {fileID: 4781951162920444690, guid: 2de19fabf4341da4ca95bef7a1592284,
-    type: 3}
+  attackAnimation: {fileID: 7400000, guid: d2866d3fa5a1f184ab385ef01d060065, type: 2}
   earlyComboWindowStart: 0.6
   comboWindowEnd: 0.9
   possibleCombos:
   - nextAttack: {fileID: 11400000, guid: 07159c378398e7d4bba76730fe9c715d, type: 2}
     inputType: 0
     transitionWindow: 0.2
+  damageMultiplier: 1
   attackSound: {fileID: 11400000, guid: 6c4af108689a91b42870bf7630550473, type: 2}
