@@ -74,7 +74,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             {
                 StartAttack();
             }
-            else
+            else if(!isAttacking)
             {
                 EndAttack();
             }
@@ -115,8 +115,8 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             currentState = _weaponFSM.Animancer?.Play(currentAttackAnimation.attackAnimation);
             if (currentState != null && !currentState.HasEvents)
             {
-                //currentState.Events(this).OnEnd = EndAttack;
                 currentState.Events(this).Add(0.5f, HitDetect);
+                currentState.Events(this).OnEnd = EndAttack;
                 currentState.Clip.wrapMode = WrapMode.Once;
             }
 
@@ -159,6 +159,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             {
                 currentAttackAnimation = data.defaultAttack; // Reset to default attack if combo ends
             }
+            currentState = null;
         }
 
         public override void ExitState()
@@ -170,18 +171,17 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 
         public override ClawsWeaponFSM.ClawsWeaponState GetNextState()
         {
-
-            if (_weaponFSM.StateRequest != ClawsWeaponFSM.ClawsWeaponState.Attacking)
+            if(_weaponFSM.StateRequest == ClawsWeaponFSM.ClawsWeaponState.Blocking)
             {
-                if(_weaponFSM.StateRequest != ClawsWeaponFSM.ClawsWeaponState.Default)
-                {
-                    return _weaponFSM.StateRequest;
-                }
+                return ClawsWeaponFSM.ClawsWeaponState.Blocking;
             }
-            if (!isAttacking)
+            if (!isAttacking 
+                && _weaponFSM.StateRequest != ClawsWeaponFSM.ClawsWeaponState.Attacking)
             {
                 return ClawsWeaponFSM.ClawsWeaponState.Default;
             }
+            
+
 
             return StateKey;
         }
