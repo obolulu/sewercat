@@ -24,7 +24,8 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     [Header("Stats")] 
     [SerializeField] private AttackStateData attackStateData;
     [SerializeField] private ClawLeapStateData leapStateData;
-    
+    [SerializeField] private BlockStateData    blockStateData;
+    public BlockStateData BlockStateData => blockStateData;
     [Header("Feedbacks")]
     [SerializeField] private MMFeedbacks attackFeedbacks;
     [SerializeField] private MMFeedbacks hitFeedbacks;
@@ -36,6 +37,7 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     private Camera mainCamera;
     private float lastAttackTime;
 
+    public bool IsBlocking{ get; set; }
     public ClawsWeaponState StateRequest => nextState; // request from the player controller for the next state
     public PlayerController PlayerController => playerController;
     public AnimancerComponent Animancer       => animator;
@@ -71,11 +73,16 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     }
     
     
-    public void ResetState()
+    public void ResetAnimation()
     {
-        nextState = ClawsWeaponState.Default;
         Animancer.Stop();
     }
+    public void ResetWeaponState()
+    {
+        nextState        = ClawsWeaponState.Default;
+        currentInputType = ComboInputType.None;
+    }
+
     public void TryAttack()
     {
         currentInputType = ComboInputType.LightAttack;
@@ -97,9 +104,6 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
         nextState = ClawsWeaponState.Default;
     }
     
-    public void ResetWeapon()
-    {
-        TransitionToState(ClawsWeaponState.Default);
-    }
+
 }
 }

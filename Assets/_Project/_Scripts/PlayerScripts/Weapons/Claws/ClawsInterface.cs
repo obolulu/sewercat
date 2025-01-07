@@ -40,7 +40,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws
         
         public override void ResetWeapon()
         {
-            stateManager.ResetWeapon();
+            stateManager.ResetWeaponState();
         } 
     }
 }

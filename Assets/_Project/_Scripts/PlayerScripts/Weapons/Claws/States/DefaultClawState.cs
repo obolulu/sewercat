@@ -15,7 +15,7 @@ public class DefaultClawState : BaseState<ClawsWeaponFSM.ClawsWeaponState>
 
     public override void EnterState()
     {
-        _weaponFSM.ResetState();
+        //_weaponFSM.ResetState();
     }
 
     public override void ExitState() { }

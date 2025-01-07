@@ -12,6 +12,7 @@ public class ComboTransition
 
 public enum ComboInputType
 {
+    None,
     LightAttack,
     HeavyAttack,
     Special
@@ -32,7 +33,6 @@ public class AttackAnimation : ScriptableObject
     
     private bool           hasBufferedInput;
     private ComboInputType bufferedInputType;
-    public bool           EventsAdded { get; set; }
     
     public void BufferInput(ComboInputType inputType)
     {

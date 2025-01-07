@@ -150,7 +150,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         {
             _weaponFSM.PlayerController.SetLeaping(false);
             _weaponFSM.PlayerController.TransitionToState(PlayerController.PlayerState.Walking);
-            _weaponFSM.ResetState();
+            _weaponFSM.ResetAnimation();
         }
 
         public override ClawsWeaponFSM.ClawsWeaponState GetNextState()

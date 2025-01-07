@@ -14,7 +14,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         public override void EnterState()
         {
             nextState = ClawsWeaponFSM.ClawsWeaponState.Focused;
-            _weaponFSM.ResetState();
+            _weaponFSM.ResetAnimation();
             TimeManager.SetTimeScale(0.2f);
         }
 

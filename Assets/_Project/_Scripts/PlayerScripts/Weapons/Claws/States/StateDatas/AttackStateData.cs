@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using MoreMountains.Feedbacks;
-using Sirenix.OdinInspector;
-using Sirenix.Serialization;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas
 {
-    using UnityEngine;
 
     [CreateAssetMenu(fileName = "AttackStateData", menuName = "State Data/Claws/Attack State Data")]
     public class AttackStateData : StateData

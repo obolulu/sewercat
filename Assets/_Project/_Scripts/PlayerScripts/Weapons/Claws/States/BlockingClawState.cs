@@ -1,5 +1,5 @@
-﻿using Animancer;
-using UnityEngine;
+﻿using _Project._Scripts.PlayerScripts.Weapons.Claws.States.StateDatas;
+using Animancer;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 {
@@ -7,8 +7,10 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
     {
         private readonly ClawsWeaponFSM                  _weaponFSM;
         private          AnimancerState                  _blockAnimationState;
-        private          bool                            _isBlocking;
         private          ClawsWeaponFSM.ClawsWeaponState nextState;
+        
+        private          bool                            _isBlocking;
+
 
         public BlockingClawState(ClawsWeaponFSM.ClawsWeaponState key, ClawsWeaponFSM weaponFSM) : base(key)
         {
@@ -20,7 +22,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             _isBlocking = true;
             nextState = StateKey;
             _weaponFSM.PlayerController.SetBlocking(true);
-            //_blockAnimationState = _weaponFSM.Animancer.Play(_weaponFSM.BlockAnimation);
+            _blockAnimationState = _weaponFSM.Animancer.Play(_weaponFSM.BlockStateData.blockAnimation);
         }
 
         public override void ExitState()
@@ -28,6 +30,15 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             _isBlocking = false;
             _weaponFSM.PlayerController.SetBlocking(false);
             _blockAnimationState?.Stop();
+        _blockAnimationState = _weaponFSM.Animancer.Play(_weaponFSM.BlockStateData.blockEndAnimation);
+
+        if(_blockAnimationState != null && !_blockAnimationState.HasEvents)
+        {
+            _blockAnimationState.Events(this).OnEnd = () =>
+            {
+                //_weaponFSM.ResetState
+            };
+        }
         }
 
         public override void UpdateState()

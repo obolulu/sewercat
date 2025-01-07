@@ -33,6 +33,8 @@ public class InputManager : MonoBehaviour
     public static event Action Crouch;
     public static event Action PutWeaponDown;
     public static event Action Special;
+
+    public static event Action      ControlPressed;
     public static event Action<int> HotbarSlotSelected;
 
     private void Awake()
@@ -66,6 +68,7 @@ public class InputManager : MonoBehaviour
         BindPerformedAction(_inputs.PlayerControls.Crouch, _ => Crouch?.Invoke());
         BindPerformedAction(_inputs.PlayerControls.PutWeaponDown, _ => PutWeaponDown?.Invoke());
         BindPerformedAction(_inputs.PlayerControls.Special, _ => Special?.Invoke());
+        BindPerformedAction(_inputs.PlayerControls.Control, _ => ControlPressed?.Invoke());
         
         BindPerformedAction(_inputs.UI.CloseMenu, OnCloseMenu);
         

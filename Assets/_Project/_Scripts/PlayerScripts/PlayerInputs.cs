@@ -206,6 +206,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Control"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac96e0a3-a36b-44d0-be7d-24489a6d6998"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -571,6 +580,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Five"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e0a62bd4-3d65-41b7-8974-0532114d1d43"",
+                    ""path"": ""<Keyboard>/leftCtrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Control"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -664,6 +684,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerControls_Three = m_PlayerControls.FindAction("Three", throwIfNotFound: true);
         m_PlayerControls_Four = m_PlayerControls.FindAction("Four", throwIfNotFound: true);
         m_PlayerControls_Five = m_PlayerControls.FindAction("Five", throwIfNotFound: true);
+        m_PlayerControls_Control = m_PlayerControls.FindAction("Control", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -749,6 +770,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Three;
     private readonly InputAction m_PlayerControls_Four;
     private readonly InputAction m_PlayerControls_Five;
+    private readonly InputAction m_PlayerControls_Control;
     public struct PlayerControlsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -773,6 +795,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Three => m_Wrapper.m_PlayerControls_Three;
         public InputAction @Four => m_Wrapper.m_PlayerControls_Four;
         public InputAction @Five => m_Wrapper.m_PlayerControls_Five;
+        public InputAction @Control => m_Wrapper.m_PlayerControls_Control;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -842,6 +865,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Five.started += instance.OnFive;
             @Five.performed += instance.OnFive;
             @Five.canceled += instance.OnFive;
+            @Control.started += instance.OnControl;
+            @Control.performed += instance.OnControl;
+            @Control.canceled += instance.OnControl;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -906,6 +932,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Five.started -= instance.OnFive;
             @Five.performed -= instance.OnFive;
             @Five.canceled -= instance.OnFive;
+            @Control.started -= instance.OnControl;
+            @Control.performed -= instance.OnControl;
+            @Control.canceled -= instance.OnControl;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -1008,6 +1037,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnThree(InputAction.CallbackContext context);
         void OnFour(InputAction.CallbackContext context);
         void OnFive(InputAction.CallbackContext context);
+        void OnControl(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
