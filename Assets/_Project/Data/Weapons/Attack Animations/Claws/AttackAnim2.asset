@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d2de782aeb4e084a912f4b4d12f3dcb, type: 3}
   m_Name: AttackAnim2
   m_EditorClassIdentifier: 
-  attackAnimation: {fileID: 4781951162920444690, guid: 2de19fabf4341da4ca95bef7a1592284,
+  attackAnimation: {fileID: 6530208104204547914, guid: 120269a8edf824b46a279e50fe6ff39f,
     type: 3}
   earlyComboWindowStart: 0.6
   comboWindowEnd: 0.9
