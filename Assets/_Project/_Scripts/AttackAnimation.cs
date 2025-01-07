@@ -32,6 +32,7 @@ public class AttackAnimation : ScriptableObject
     
     private bool           hasBufferedInput;
     private ComboInputType bufferedInputType;
+    public bool           EventsAdded { get; set; }
     
     public void BufferInput(ComboInputType inputType)
     {

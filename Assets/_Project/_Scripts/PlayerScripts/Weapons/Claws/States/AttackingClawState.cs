@@ -78,12 +78,12 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         
             // Use current attack animation
             currentState = _weaponFSM.Animancer?.Play(currentAttackAnimation.attackAnimation);
-            if (currentState != null && !eventsAdded)
+            if (currentState != null && !currentAttackAnimation.EventsAdded)
             {
                 currentState.Events(this).OnEnd = EndAttack;
                 currentState.Events(this).Add(0.5f, HitDetect);
                 currentState.Clip.wrapMode = WrapMode.Once;
-                eventsAdded                = true;
+                currentAttackAnimation.EventsAdded = true;
             }
             
             _weaponFSM.AttackFeedbacks?.PlayFeedbacks();
