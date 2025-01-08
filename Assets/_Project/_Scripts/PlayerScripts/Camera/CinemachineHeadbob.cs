@@ -61,12 +61,12 @@ public class CameraHeadbob : MonoBehaviour
                 _defaultPosY + verticalBob,
                 transform.localPosition.z);
             // Play footstep sounds
-            if (Mathf.Sin(_timer) > 0.99f && playNextFootstep) // Trigger at the peak
+            if (Mathf.Sin(_timer) < -0.99f && playNextFootstep) // Trigger at the peak
             {
                 PlayFootstepSound();
                 playNextFootstep = false;
             }
-            else if (Mathf.Sin(_timer) < -0.99f) // Reset for the next cycle
+            else if (Mathf.Sin(_timer) > 0.99f) // Reset for the next cycle
             {
                 playNextFootstep = true;
             }
@@ -84,6 +84,6 @@ public class CameraHeadbob : MonoBehaviour
 
     private void PlayFootstepSound()
     {
-        OnFootstep?.Invoke(transform.position);
+        OnFootstep?.Invoke(playerController.transform.position);
     }
 }

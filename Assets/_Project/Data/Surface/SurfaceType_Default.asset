@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb4acf23a8f24006a98a1ea3bc36d923, type: 3}
   m_Name: SurfaceType_Default
   m_EditorClassIdentifier: 
-  footstepSound: {fileID: 11400000, guid: 8a059a410134c36418e7cc5142814230, type: 2}
+  footstepSound: {fileID: 11400000, guid: 0926f8cdf9941d94fa21261bf9735d3f, type: 2}
   jumpSound: {fileID: 11400000, guid: 6c4af108689a91b42870bf7630550473, type: 2}
   landSound: {fileID: 0}

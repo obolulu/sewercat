@@ -107,12 +107,12 @@ public class CinemachinePOVExtension : CinemachineExtension
             _timer += deltaTime * 14f; // Walking bobbing speed
 
             // Trigger footstep sound at the peak of the bob
-            if (Mathf.Sin(_timer) > 0.99f && playNextFootstep)
+            if (Mathf.Sin(_timer) < -0.99f && playNextFootstep)
             {
-                OnFootstep?.Invoke(controller.transform.position); // Invoke footstep event
+                //OnFootstep?.Invoke(controller.transform.position); // Invoke footstep event
                 playNextFootstep = false;
             }
-            else if (Mathf.Sin(_timer) < -0.99f) // Reset for the next cycle
+            else if (Mathf.Sin(_timer) > 0.99f) // Reset for the next cycle
             {
                 playNextFootstep = true;
             }

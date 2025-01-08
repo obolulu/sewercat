@@ -9648,6 +9648,11 @@ PrefabInstance:
       propertyPath: horizontalSensitivity
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 2014757688034238675, guid: bc815fe6f2270114db0483b9cda35595,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3609885518904306256, guid: bc815fe6f2270114db0483b9cda35595,
         type: 3}
       propertyPath: m_LocalPosition.x

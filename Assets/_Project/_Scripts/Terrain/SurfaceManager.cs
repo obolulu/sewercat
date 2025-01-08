@@ -20,12 +20,12 @@ namespace _Project._Scripts.Terrain
 
         private void OnEnable()
         {
-            CinemachinePOVExtension.OnFootstep += HandleFootstep;
+            CameraHeadbob.OnFootstep += HandleFootstep;
         }
 
         private void OnDisable()
         {
-            CinemachinePOVExtension.OnFootstep -= HandleFootstep;
+            CameraHeadbob.OnFootstep -= HandleFootstep;
         }
 
         public void HandleFootstep(Vector3 position)
