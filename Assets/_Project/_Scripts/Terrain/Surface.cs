@@ -10,7 +10,7 @@ namespace _Project._Scripts.Terrain
         [Tooltip("The surface type effects for this terrain.")]
         public SurfaceTypeSO SurfaceEffects => surfaceType;
 
-        private void PlayFootstep()
+        public void PlayFootstep()
         {
             FootstepSystem.PlaySound(surfaceType.footstepSound, transform.position);
         }

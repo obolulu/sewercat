@@ -28,7 +28,7 @@ public class CameraHeadbob : MonoBehaviour
     
     private bool playNextFootstep = true;
     
-    public static event Action OnFootstep;
+    public static event Action<Vector3> OnFootstep;
 
     private void Start()
     {
@@ -84,6 +84,6 @@ public class CameraHeadbob : MonoBehaviour
 
     private void PlayFootstepSound()
     {
-        OnFootstep?.Invoke();
+        OnFootstep?.Invoke(transform.position);
     }
 }
