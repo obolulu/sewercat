@@ -39,7 +39,7 @@ namespace _Project._Scripts.PlayerScripts
         [SerializeField] private float crouchSpeedMultiplier = 0.6f;
         private float _standingHeight;
 
-
+        
         [TitleGroup("Jump Settings")] [Header("Jump Settings")]
         public float jumpForce;
         [SerializeField] private float maxJumpHeight   = 2f;   // Maximum height in meters/units

@@ -25,6 +25,10 @@ public class CameraHeadbob : MonoBehaviour
     private float            _defaultPosX = 0;
     private float            _timer       = 0;
     private Vector3          targetBobPosition;
+    
+    private bool playNextFootstep = true;
+    
+    public static event Action OnFootstep;
 
     private void Start()
     {
@@ -56,7 +60,16 @@ public class CameraHeadbob : MonoBehaviour
                 _defaultPosX + horizontalBob,
                 _defaultPosY + verticalBob,
                 transform.localPosition.z);
-
+            // Play footstep sounds
+            if (Mathf.Sin(_timer) > 0.99f && playNextFootstep) // Trigger at the peak
+            {
+                PlayFootstepSound();
+                playNextFootstep = false;
+            }
+            else if (Mathf.Sin(_timer) < -0.99f) // Reset for the next cycle
+            {
+                playNextFootstep = true;
+            }
         }
         else
         {
@@ -67,5 +80,10 @@ public class CameraHeadbob : MonoBehaviour
 
         transform.localPosition = Vector3.Lerp(transform.localPosition, targetBobPosition,
             Time.deltaTime * smoothTransitionSpeed);
+    }
+
+    private void PlayFootstepSound()
+    {
+        OnFootstep?.Invoke();
     }
 }

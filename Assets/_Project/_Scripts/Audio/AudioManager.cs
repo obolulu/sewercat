@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 using System.Collections.Generic;
+using _Project._Scripts.Audio.Footsteps;
 
 public class AudioManager : MonoBehaviour
 {
@@ -118,6 +120,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+
     private void OnDestroy()
     {
         foreach (var instance in activeInstances.Values)
@@ -126,5 +129,19 @@ public class AudioManager : MonoBehaviour
             instance.release();
         }
         activeInstances.Clear();
+    }
+
+    private void OnEnable()
+    {
+        FootstepSystem.OnPlaySound += HandlePlaySound;
+    }
+
+    private void OnDisable()
+    {
+        FootstepSystem.OnPlaySound -= HandlePlaySound;
+    }
+    private void HandlePlaySound(FMODEventSO soundEvent, Vector3 position)
+    {
+        PlaySound(soundEvent, position);
     }
 }
