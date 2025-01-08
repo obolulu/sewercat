@@ -2566,6 +2566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: 0
 --- !u!65 &655741906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7673,6 +7674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: 0
 --- !u!1001 &1796274098
 PrefabInstance:
   m_ObjectHideFlags: 0
