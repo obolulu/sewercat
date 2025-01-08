@@ -80,6 +80,11 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     public void ResetWeaponState()
     {
         nextState        = ClawsWeaponState.Default;
+        ResetWeaponInput();
+    }
+
+    public void ResetWeaponInput()
+    {
         currentInputType = ComboInputType.None;
     }
 

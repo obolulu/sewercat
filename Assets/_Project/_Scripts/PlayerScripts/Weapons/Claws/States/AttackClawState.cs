@@ -32,7 +32,6 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
         {
             //_weaponFSM.ResetState();
             //_weaponFSM.ResetWeapon();
-            _weaponFSM.ResetAnimation();
             if (Time.time >= lastAttackTime + attackCooldown)
             {
                 StartAttack();
@@ -104,6 +103,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
 
         private void StartAttack()
         {
+            _weaponFSM.ResetWeaponInput();
             if (currentState != null)
             {
                 currentState.Stop();
