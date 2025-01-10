@@ -115,7 +115,7 @@ namespace _Project._Scripts.PlayerScripts.Weapons.Claws.States
             currentState = _weaponFSM.Animancer?.Play(currentAttackAnimation.attackAnimation);
             if (currentState != null && !currentState.HasEvents)
             {
-                currentState.Events(this).Add(0.5f, HitDetect);
+                currentState.Events(this).Add(0.4f, HitDetect);
                 currentState.Events(this).OnEnd = EndAttack;
                 currentState.Clip.wrapMode = WrapMode.Once;
             }

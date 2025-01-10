@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f69e7fabbd4454b2c02826f0519d74, type: 3}
   m_Name: BlockStateData
   m_EditorClassIdentifier: 
-  blockAnimation: {fileID: 7400000, guid: 7e9e3c7db8ad8e04d82cd8b89e77fd7c, type: 2}
-  blockEndAnimation: {fileID: 7400000, guid: 3eb6a29f42dbcf142894b59ee51718a4, type: 2}
+  blockAnimation: {fileID: 7400000, guid: 2ca7680b1bbe7164e8ed0c6339f6967d, type: 2}
+  blockEndAnimation: {fileID: 7400000, guid: f656f4768d3ba4a458ace1e182003abe, type: 2}
   blockIdleAnimation: {fileID: 0}

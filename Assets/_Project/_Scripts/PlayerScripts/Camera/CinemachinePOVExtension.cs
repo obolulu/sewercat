@@ -109,7 +109,7 @@ public class CinemachinePOVExtension : CinemachineExtension
             // Trigger footstep sound at the peak of the bob
             if (Mathf.Sin(_timer) < -0.99f && playNextFootstep)
             {
-                //OnFootstep?.Invoke(controller.transform.position); // Invoke footstep event
+                OnFootstep?.Invoke(controller.transform.position); // Invoke footstep event
                 playNextFootstep = false;
             }
             else if (Mathf.Sin(_timer) > 0.99f) // Reset for the next cycle
