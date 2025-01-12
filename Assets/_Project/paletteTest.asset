@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1a3723b335e7004992e0a3ddfd87702, type: 3}
   m_Name: paletteTest
   m_EditorClassIdentifier: 
-  Source: {fileID: 2800000, guid: cb20b3bfa4de9cd4084d3626193b6898, type: 3}
+  Source: {fileID: 2800000, guid: 7d4a58367b919884aad0376ed862cc60, type: 3}
   Method: 0
   Weights: {x: 0, y: 0, z: 0}
   VConversionCurve:
