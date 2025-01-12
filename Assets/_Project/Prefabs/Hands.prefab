@@ -818,7 +818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d753c1fdee5e43bb91e9a3c5234a64af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stateManager: {fileID: 5412496187586451897}
+  weapon: {fileID: 5412496187586451897}
 --- !u!114 &1298381256390592013
 MonoBehaviour:
   m_ObjectHideFlags: 0

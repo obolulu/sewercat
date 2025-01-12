@@ -6,7 +6,7 @@ using MoreMountains.Feedbacks;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws
 {
-public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponState>, IWeapon
+public sealed class ClawsWeaponFSM : ComboWeaponFSM<ClawsWeaponFSM.ClawsWeaponState>, IComboWeapon
 {
     public enum ClawsWeaponState
     {
@@ -77,7 +77,7 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
     {
         Animancer.Stop();
     }
-    public void ResetWeaponState()
+    public override void ResetWeaponState()
     {
         nextState        = ClawsWeaponState.Default;
         ResetWeaponInput();
@@ -88,23 +88,23 @@ public sealed class ClawsWeaponFSM : StateManager<ClawsWeaponFSM.ClawsWeaponStat
         currentInputType = ComboInputType.None;
     }
 
-    public void TryAttack()
+    public override void TryAttack()
     {
         currentInputType = ComboInputType.LightAttack;
         nextState = ClawsWeaponState.Attacking;
     }
 
-    public void Special()
+    public override void Special()
     {
         nextState = ClawsWeaponState.Focused;
     }
 
-    public void OnRightClickDown()
+    public override void OnRightClickDown()
     {
         nextState = ClawsWeaponState.Blocking;
     }
 
-    public void OnRightClickUp()
+    public override void OnRightClickUp()
     {
         nextState = ClawsWeaponState.Default;
     }

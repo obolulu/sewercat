@@ -4,43 +4,33 @@ using UnityEngine;
 
 namespace _Project._Scripts.PlayerScripts.Weapons.Claws
 {
-    public sealed class WeaponInterface : WeaponBase
+    public sealed class ComboWeaponInterface : WeaponBase
     {
-        [SerializeField] private ClawsWeaponFSM stateManager;
-        
-        public override void SetWeapon(PlayerController playerController)
-        {
-            base.SetWeapon(playerController);
-        }
-
-        public void OnDestroy()
-        {
-            //throw new NotImplementedException();
-        }
+        [SerializeField] private ComboWeaponFSM<ClawsWeaponFSM.ClawsWeaponState> weapon;
         
         public override void TryAttack()
         {
-            stateManager.TryAttack();
+            weapon.TryAttack();
         }
 
         public override void Special()
         {
-            stateManager.Special();
+            weapon.Special();
         }
 
         public override void OnRightClickDown()
         {
-            stateManager.OnRightClickDown();
+            weapon.OnRightClickDown();
         }
 
         public override void OnRightClickUp()
         {
-            stateManager.OnRightClickUp();
+            weapon.OnRightClickUp();
         }
         
         public override void ResetWeapon()
         {
-            stateManager.ResetWeaponState();
+            weapon.ResetWeaponState();
         } 
     }
 }

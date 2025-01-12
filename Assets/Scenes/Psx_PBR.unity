@@ -2567,6 +2567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: 0
 --- !u!65 &655741906
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5654,7 +5655,12 @@ PrefabInstance:
     - target: {fileID: 1689167671858751268, guid: 5d8bbe194beca10478924c3571b1fe5a,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.20019531
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689167671858751268, guid: 5d8bbe194beca10478924c3571b1fe5a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -28.699951
       objectReference: {fileID: 0}
     - target: {fileID: 2203330531234554108, guid: 5d8bbe194beca10478924c3571b1fe5a,
         type: 3}
@@ -5804,6 +5810,11 @@ PrefabInstance:
     - target: {fileID: 7725291965591368991, guid: 5d8bbe194beca10478924c3571b1fe5a,
         type: 3}
       propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8663949313648683196, guid: 5d8bbe194beca10478924c3571b1fe5a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8666250424978026709, guid: 5d8bbe194beca10478924c3571b1fe5a,
@@ -7905,6 +7916,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06a2af0a77d645fba4a789c9221cabe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointID: 0
 --- !u!1001 &1796274098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9343,7 +9355,7 @@ Transform:
   m_GameObject: {fileID: 2017504993}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 1004, y: 411, z: 800}
+  m_LocalPosition: {x: 318, y: 411, z: 982}
   m_LocalScale: {x: 200, y: 1, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
